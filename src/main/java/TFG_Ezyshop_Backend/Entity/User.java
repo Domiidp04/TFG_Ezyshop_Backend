@@ -1,11 +1,14 @@
 package TFG_Ezyshop_Backend.Entity;
 
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -40,8 +43,14 @@ public class User {
 	
 	private String description;
 	
-	@ManyToOne
+	@ManyToOne //nombre en BD de la FK
 	@JoinColumn( name = "role_id", insertable = false, updatable = false )
-	private Role role;
+	private Role roleUser;
+	
+	@OneToMany( mappedBy = "user" )  //Nombre del atributo de @ManyToOne
+	private List<Order> orders;
+	
+	@OneToMany( mappedBy = "user" )  //Nombre del atributo de @ManyToOne
+	private List<Assessment> assessments;
 
 }

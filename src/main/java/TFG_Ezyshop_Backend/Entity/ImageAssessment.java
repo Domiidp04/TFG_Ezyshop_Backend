@@ -1,30 +1,29 @@
 package TFG_Ezyshop_Backend.Entity;
 
-import java.util.Date;
-import java.util.List;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
 @Data
-@Table( name = "Roles" )
-public class Role {
-
+@Table( name = "Image_Assessment" )
+public class ImageAssessment {
+	
 	@Id
 	@GeneratedValue( strategy = GenerationType.IDENTITY )
 	private long id;
 	
-	private String role;
+	@Lob
+	private byte[] image;
 	
-	private Date granted_date;
-	
-	@OneToMany( mappedBy = "role" ) //Nombre del atributo de @ManyToOne
-	private List<User> users;
-	
+	@ManyToOne
+	@JoinColumn( name = "assessment_id", insertable = false, updatable = false )
+	private Assessment assessment;
+
 }

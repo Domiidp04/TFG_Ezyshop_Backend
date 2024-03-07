@@ -1,8 +1,10 @@
 package TFG_Ezyshop_Backend.Entity;
 
+
 import java.util.Date;
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,18 +15,26 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table( name = "Roles" )
-public class Role {
+@Table( name = "Discounts" )
+public class Discount {
 
 	@Id
 	@GeneratedValue( strategy = GenerationType.IDENTITY )
 	private long id;
 	
-	private String role;
+	private String title;
 	
-	private Date granted_date;
+	private String code;
 	
-	@OneToMany( mappedBy = "role" ) //Nombre del atributo de @ManyToOne
-	private List<User> users;
+	@Column( name = "start_date" )
+	private Date startDate;
+	
+	@Column( name = "final_date" )
+	private Date finalDate;
+	
+	private int use;
+	
+	@OneToMany( mappedBy = "discount" )
+	private List<Order> orders;
 	
 }

@@ -1,6 +1,5 @@
 package TFG_Ezyshop_Backend.Entity;
 
-import java.util.Date;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -13,18 +12,19 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table( name = "Roles" )
-public class Role {
+@Table( name = "Categories" )
+public class Category {
 
 	@Id
 	@GeneratedValue( strategy = GenerationType.IDENTITY )
 	private long id;
 	
-	private String role;
+	private String title;
 	
-	private Date granted_date;
+	private String description;
 	
-	@OneToMany( mappedBy = "role" ) //Nombre del atributo de @ManyToOne
-	private List<User> users;
+	private boolean disabled;
 	
+	@OneToMany( mappedBy = "category" )
+	private List<Product> products;
 }
