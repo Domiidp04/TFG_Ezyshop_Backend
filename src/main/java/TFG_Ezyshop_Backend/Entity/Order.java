@@ -21,7 +21,7 @@ public class Order {
 
 	@Id
 	@GeneratedValue( strategy = GenerationType.IDENTITY )
-	private long id;
+	private Long id;
 	
 	@Column( name = "order_date" )
 	private Date orderDate;
@@ -30,16 +30,16 @@ public class Order {
 	private Date shippingDate;
 	
 	@Column( name = "total_amount" )
-	private double totalAmount;
+	private Double totalAmount;
 	
 	@Column( name = "shipping_amount" )
-	private double shippingAmount;
+	private Double shippingAmount;
 	
 	@Column( name = "saved_amount" )
-	private double savedAmount;
+	private Double savedAmount;
 	
 	@Column( name = "payment_amount" )
-	private double paymentAmount;
+	private Double paymentAmount;
 	
 	@ManyToOne
 	@JoinColumn( name = "discount_id", updatable = false, insertable = false )

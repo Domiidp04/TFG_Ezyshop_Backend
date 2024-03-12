@@ -17,13 +17,13 @@ public class Category {
 
 	@Id
 	@GeneratedValue( strategy = GenerationType.IDENTITY )
-	private long id;
+	private Long id;
 	
 	private String title;
 	
 	private String description;
 	
-	private boolean disabled;
+	private Boolean disabled;
 	
 	@OneToMany( mappedBy = "categoryProduct" )
 	private List<Product> products;

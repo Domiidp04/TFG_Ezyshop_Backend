@@ -17,7 +17,7 @@ public class ImageAssessment {
 	
 	@Id
 	@GeneratedValue( strategy = GenerationType.IDENTITY )
-	private long id;
+	private Long id;
 	
 	@Lob
 	private byte[] image;

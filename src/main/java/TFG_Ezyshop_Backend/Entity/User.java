@@ -19,7 +19,7 @@ public class User {
 
 	@Id
 	@GeneratedValue( strategy = GenerationType.IDENTITY )
-	private long id;
+	private Long id;
 	
 	private String username;
 	
@@ -27,9 +27,9 @@ public class User {
 	
 	private String email;
 	
-	private boolean locked;
+	private Boolean locked;
 	
-	private boolean disabled;
+	private Boolean disabled;
 	
 	private String name;
 	

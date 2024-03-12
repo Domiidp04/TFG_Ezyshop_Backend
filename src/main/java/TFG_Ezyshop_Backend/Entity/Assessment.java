@@ -20,7 +20,7 @@ public class Assessment {
 
 	@Id
 	@GeneratedValue( strategy = GenerationType.IDENTITY )
-	private long id;
+	private Long id;
 	
 	private String title;
 	
@@ -28,7 +28,7 @@ public class Assessment {
 	
 	private Date date;
 	
-	private boolean disabled;
+	private Boolean disabled;
 	
 	@ManyToOne
 	@JoinColumn( name = "user_id", insertable = false, updatable = false )

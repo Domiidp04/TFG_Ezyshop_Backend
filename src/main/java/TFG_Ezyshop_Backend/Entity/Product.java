@@ -20,19 +20,19 @@ public class Product {
 
 	@Id
 	@GeneratedValue( strategy = GenerationType.IDENTITY )
-	private long id;
+	private Long id;
 	
 	private String title;
 	
 	private String description;
 	
-	private double price;
+	private Double price;
 	
-	private double discount_price;
+	private Double discount_price;
 	
-	private int stock;
+	private Integer stock;
 	
-	private boolean disabled;
+	private Boolean disabled;
 	
 	@ManyToOne
 	@JoinColumn( name = "category_id", insertable = false, updatable = false )
