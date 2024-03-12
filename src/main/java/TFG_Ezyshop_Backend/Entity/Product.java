@@ -1,8 +1,8 @@
 package TFG_Ezyshop_Backend.Entity;
 
 import java.util.List;
-import java.util.Locale.Category;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -28,7 +28,8 @@ public class Product {
 	
 	private Double price;
 	
-	private Double discount_price;
+	@Column( name = "discount_price" )
+	private Double discountPrice;
 	
 	private Integer stock;
 	

@@ -19,22 +19,22 @@ public class DiscountService {
 	
 	
 	public List<Discount> getAll(){
-		return discountRepository.getAll();
+		return discountRepository.findAll();
 	}
 	
 	public Discount save(Discount discount) {
-		return discountRepository.create(discount);
+		return discountRepository.save(discount);
 	}
 	
 	public Boolean delete(Long discountId) {
 		return getDiscount(discountId).map(discount -> {
-			discountRepository.delete(discountId);
+			discountRepository.deleteById(discountId);
 		return true;
 		}).orElse(false);
 	}
 	
 	public Optional<Discount> getDiscount(Long discountId){
-		return discountRepository.getDiscount(discountId);
+		return discountRepository.findById(discountId);
 	}
 	
 }

@@ -1,4 +1,4 @@
-package TFG_Ezyshop_Backend.TFG_Ezyshop_Backend;
+package TFG_Ezyshop_Backend;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -18,22 +18,22 @@ public class ProductService {
 	}
 	
 	public List<Product> getAll(){
-		return productRepository.getAll();
+		return productRepository.findAll();
 	}
 	
 	public Product save(Product product) {
-		return productRepository.create(product);
+		return productRepository.save(product);
 	}
 	
 	public Boolean delete(Long productId) {
 		return getProduct(productId).map(product -> {
-			productRepository.delete(productId);
+			productRepository.deleteById(productId);
 			return true;
 		}).orElse(false);
 	}
 	
 	public Optional<Product> getProduct(Long productId){
-		return productRepository.getProduct(productId);
+		return productRepository.findById(productId);
 	}
 
 }

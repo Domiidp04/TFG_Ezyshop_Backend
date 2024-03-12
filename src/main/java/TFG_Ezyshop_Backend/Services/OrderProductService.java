@@ -18,22 +18,22 @@ public class OrderProductService {
 	}
 	
 	public List<OrderProduct> getAll(){
-		return orderProductRepository.getAll();
+		return orderProductRepository.findAll();
 	}
 	
 	public OrderProduct save(OrderProduct orderProduct) {
-		return orderProductRepository.create(orderProduct);
+		return orderProductRepository.save(orderProduct);
 	}
 	
 	public Boolean delete(Long orderProductId) {
 		return getOrderProduct(orderProductId).map(orderProduct -> {
-			orderProductRepository.delete(orderProductId);
+			orderProductRepository.deleteById(orderProductId);
 		return true;
 		}).orElse(false);
 	}
 	
 	public Optional<OrderProduct> getOrderProduct(Long orderProductId){
-		return orderProductRepository.getOrderProduct(orderProductId);
+		return orderProductRepository.findById(orderProductId);
 	}
 	
 	

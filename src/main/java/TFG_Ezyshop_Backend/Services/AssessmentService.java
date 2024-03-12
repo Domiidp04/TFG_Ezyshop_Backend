@@ -19,21 +19,21 @@ public class AssessmentService {
 	
 	
 	public List<Assessment> getAll(){
-		return assessmentRepository.getAll();
+		return assessmentRepository.findAll();
 	}
 	
 	public Assessment save(Assessment user) {
-		return assessmentRepository.create(user);
+		return assessmentRepository.save(user);
 	}
 	
 	public Boolean delete(Long assessmentId) {
 		return getAssessment(assessmentId).map(assessment -> {
-			assessmentRepository.delete(assessmentId);
+			assessmentRepository.deleteById(assessmentId);
 		return true;
 		}).orElse(false);
 	}
 	
 	public Optional<Assessment> getAssessment(Long assessmentId){
-		return assessmentRepository.getAssessment(assessmentId);
+		return assessmentRepository.findById(assessmentId);
 	}
 }

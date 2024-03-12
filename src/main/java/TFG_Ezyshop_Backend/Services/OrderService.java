@@ -18,21 +18,21 @@ public class OrderService {
 	}
 	
 	public List<Order> getAll(){
-		return orderRepository.getAll();
+		return orderRepository.findAll();
 	}
 	
 	public Order save(Order order) {
-		return orderRepository.create(order);
+		return orderRepository.save(order);
 	}
 	
 	public Boolean delete(Long orderId) {
 		return getOrder(orderId).map(order -> {
-			orderRepository.delete(orderId);
+			orderRepository.deleteById(orderId);
 		return true;
 		}).orElse(false);
 	}
 	
 	public Optional<Order> getOrder(Long orderId){
-		return orderRepository.getOrder(orderId);
+		return orderRepository.findById(orderId);
 	}
 }

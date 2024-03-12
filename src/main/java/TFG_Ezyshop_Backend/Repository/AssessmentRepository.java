@@ -9,8 +9,8 @@ import TFG_Ezyshop_Backend.Entity.Assessment;
 
 public interface AssessmentRepository extends JpaRepository<Assessment, Long>{
 
-	public List<Assessment> getAll();
-	public Optional<Assessment> getAssessment(Long assessmentId);
-	public Assessment create(Assessment assessment); 
-	public void delete(Long assessmentId);
+//	public List<Assessment> getAll();
+//	public Optional<Assessment> getAssessment(Long assessmentId);
+//	public Assessment create(Assessment assessment); 
+//	public void delete(Long assessmentId);
 }

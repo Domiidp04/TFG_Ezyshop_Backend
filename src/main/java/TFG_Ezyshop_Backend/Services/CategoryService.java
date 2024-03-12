@@ -18,22 +18,22 @@ public class CategoryService {
 	}
 	
 	public List<Category> getAll(){
-		return categoryRepository.getAll();
+		return categoryRepository.findAll();
 	}
 	
 	public Category save(Category category) {
-		return categoryRepository.create(category);
+		return categoryRepository.save(category);
 	}
 	
 	public Boolean delete(Long categoryId) {
 		return getCategory(categoryId).map(category -> {
-			categoryRepository.delete(categoryId);
+			categoryRepository.deleteById(categoryId);
 		return true;
 		}).orElse(false);
 	}
 	
 	public Optional<Category> getCategory(Long categoryId){
-		return categoryRepository.getCategory(categoryId);
+		return categoryRepository.findById(categoryId);
 	}
 	
 	

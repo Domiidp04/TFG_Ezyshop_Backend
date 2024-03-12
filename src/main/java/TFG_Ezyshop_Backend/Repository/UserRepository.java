@@ -9,9 +9,9 @@ import TFG_Ezyshop_Backend.Entity.User;
 
 public interface UserRepository extends JpaRepository<User, Long>{
 
-	public List<User> getAll();
-	public Optional<User> getUser(Long userId);
-	public User create(User user); 
-	public void delete(Long userId);
+//	public List<User> getAll();
+//	public Optional<User> getUser(Long userId);
+//	public User create(User user); 
+//	public void delete(Long userId);
 	
 }
