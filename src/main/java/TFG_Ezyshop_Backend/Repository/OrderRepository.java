@@ -10,7 +10,7 @@ import TFG_Ezyshop_Backend.Entity.Order;
 public interface OrderRepository extends JpaRepository<Order, Long>{
 	
 	public List<Order> getAll();
-	public Optional<Order> getUser(Long orderId);
+	public Optional<Order> getOrder(Long orderId);
 	public Order create(Order order); 
 	public void delete(Long orderId);
 

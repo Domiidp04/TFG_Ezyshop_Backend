@@ -10,7 +10,7 @@ import TFG_Ezyshop_Backend.Entity.Category;
 public interface CategoryRepository extends JpaRepository<Category , Long>{
 
 	public List<Category> getAll();
-	public Optional<Category> getUser(Long categoryId);
+	public Optional<Category> getCategory(Long categoryId);
 	public Category create(Category category); 
 	public void delete(Long categoryId);
 	
