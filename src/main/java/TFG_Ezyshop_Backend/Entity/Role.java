@@ -24,7 +24,7 @@ public class Role {
 	
 	private Date granted_date;
 	
-	@OneToMany( mappedBy = "role" ) //Nombre del atributo de @ManyToOne
+	@OneToMany( mappedBy = "roleUser" ) //Nombre del atributo de @ManyToOne
 	private List<User> users;
 	
 }

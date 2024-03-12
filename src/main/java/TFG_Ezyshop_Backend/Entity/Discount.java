@@ -34,7 +34,7 @@ public class Discount {
 	
 	private int use;
 	
-	@OneToMany( mappedBy = "discount" )
+	@OneToMany( mappedBy = "discountOrder" )
 	private List<Order> orders;
 	
 }

@@ -36,15 +36,15 @@ public class Product {
 	
 	@ManyToOne
 	@JoinColumn( name = "category_id", insertable = false, updatable = false )
-	private Category category;
+	private Category categoryProduct;
 	
-	@OneToMany( mappedBy = "product" )
+	@OneToMany( mappedBy = "productImageProduct" )
 	private List<ImageProduct> images;
 	
-	@OneToMany( mappedBy = "product" )
+	@OneToMany( mappedBy = "productOrderProduct" )
 	private List<OrderProduct> ordersProducts;
 	
-	@OneToMany(mappedBy = "product")
+	@OneToMany(mappedBy = "productAssessment")
 	private List<Assessment> assessments;
 	
 }

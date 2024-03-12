@@ -38,7 +38,7 @@ public class Assessment {
 	@JoinColumn( name = "product_id", insertable = false, updatable = false )
 	private Product productAssessment;
 	
-	@OneToMany( mappedBy = "assessment" )
+	@OneToMany( mappedBy = "assessmentImageAssessment" )
 	private List<ImageAssessment> images;
 	
 }

@@ -49,7 +49,7 @@ public class Order {
 	@JoinColumn( name = "user_id", updatable = false, insertable = false )
 	private User userOrder;
 	
-	@OneToMany( mappedBy = "order" )
+	@OneToMany( mappedBy = "orderOrderProduct" )
 	private List<OrderProduct> orders;
 	
 	

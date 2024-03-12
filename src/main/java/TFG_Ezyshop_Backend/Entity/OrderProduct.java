@@ -25,10 +25,10 @@ public class OrderProduct {
 	
 	@ManyToOne
 	@JoinColumn( name = "order_id", insertable = false, updatable = false )
-	private Order order;
+	private Order orderOrderProduct;
 	
 	@ManyToOne
 	@JoinColumn( name = "product_id", insertable = false, updatable = false )
-	private Product product;
+	private Product productOrderProduct;
 
 }

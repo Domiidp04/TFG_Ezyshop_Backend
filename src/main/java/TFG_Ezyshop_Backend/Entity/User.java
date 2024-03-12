@@ -47,10 +47,10 @@ public class User {
 	@JoinColumn( name = "role_id", insertable = false, updatable = false )
 	private Role roleUser;
 	
-	@OneToMany( mappedBy = "user" )  //Nombre del atributo de @ManyToOne
+	@OneToMany( mappedBy = "userOrder" )  //Nombre del atributo de @ManyToOne
 	private List<Order> orders;
 	
-	@OneToMany( mappedBy = "user" )  //Nombre del atributo de @ManyToOne
+	@OneToMany( mappedBy = "userAssessment" )  //Nombre del atributo de @ManyToOne
 	private List<Assessment> assessments;
 
 }

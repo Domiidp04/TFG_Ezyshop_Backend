@@ -24,6 +24,6 @@ public class ImageAssessment {
 	
 	@ManyToOne
 	@JoinColumn( name = "assessment_id", insertable = false, updatable = false )
-	private Assessment assessment;
+	private Assessment assessmentImageAssessment;
 
 }

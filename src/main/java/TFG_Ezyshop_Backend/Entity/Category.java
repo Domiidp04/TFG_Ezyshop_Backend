@@ -25,6 +25,6 @@ public class Category {
 	
 	private boolean disabled;
 	
-	@OneToMany( mappedBy = "category" )
+	@OneToMany( mappedBy = "categoryProduct" )
 	private List<Product> products;
 }

@@ -24,6 +24,6 @@ public class ImageProduct {
 	
 	@ManyToOne
 	@JoinColumn( name = "product_id", insertable = false, updatable = false )
-	private Product product;
+	private Product productImageProduct;
 
 }
