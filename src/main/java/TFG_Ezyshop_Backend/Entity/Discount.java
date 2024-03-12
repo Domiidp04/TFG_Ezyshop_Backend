@@ -32,6 +32,8 @@ public class Discount {
 	@Column( name = "final_date" )
 	private Date finalDate;
 	
+	private boolean expired;
+	
 	private int use;
 	
 	@OneToMany( mappedBy = "discountOrder" )
