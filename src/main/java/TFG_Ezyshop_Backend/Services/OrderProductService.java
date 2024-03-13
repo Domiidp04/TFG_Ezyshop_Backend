@@ -2,9 +2,11 @@ package TFG_Ezyshop_Backend.Services;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import TFG_Ezyshop_Backend.Dto.OrderProductDto;
 import TFG_Ezyshop_Backend.Entity.OrderProduct;
 import TFG_Ezyshop_Backend.Repository.OrderProductRepository;
 
@@ -17,8 +19,11 @@ public class OrderProductService {
 		this.orderProductRepository = orderProductRepository;
 	}
 	
-	public List<OrderProduct> getAll(){
-		return orderProductRepository.findAll();
+	public List<OrderProductDto> getAll(){
+		List<OrderProduct>ordersProducts = orderProductRepository.findAll();
+		return ordersProducts.stream()
+				.map(OrderProductDto::new)
+				.collect(Collectors.toList());
 	}
 	
 	public OrderProduct save(OrderProduct orderProduct) {

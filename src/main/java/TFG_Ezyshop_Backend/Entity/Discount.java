@@ -10,6 +10,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.PostLoad;
+import jakarta.persistence.PostUpdate;
 import jakarta.persistence.Table;
 import lombok.Data;
 
@@ -38,5 +40,25 @@ public class Discount {
 	
 	@OneToMany( mappedBy = "discountOrder" )
 	private List<Order> orders;
+	
+	@PostLoad
+    @PostUpdate
+    public void checkDiscount() {
+        Date now = new Date();
+        if ((this.startDate == null || !now.before(this.startDate)) &&
+            (this.finalDate == null || !now.after(this.finalDate)) &&
+            (this.use == null || this.use > 0)) {
+            this.expired = false;
+        } else {
+            this.expired = true;
+        }
+    }
+
+    public void use() {
+        if (this.use != null && this.use > 0) {
+            this.use--;
+            checkDiscount();
+        }
+    }
 	
 }

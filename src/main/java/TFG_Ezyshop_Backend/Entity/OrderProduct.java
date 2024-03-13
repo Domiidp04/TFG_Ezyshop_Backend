@@ -19,7 +19,7 @@ public class OrderProduct {
 	@GeneratedValue( strategy = GenerationType.IDENTITY )
 	private Long id;
 	
-	private Double amount;
+	private Integer amount;
 	
 	private Double price;
 	
