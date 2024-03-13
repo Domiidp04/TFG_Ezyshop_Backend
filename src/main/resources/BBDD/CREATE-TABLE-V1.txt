@@ -50,7 +50,7 @@ CREATE TABLE Categories(
 	id SERIAL PRIMARY KEY,
 	title VARCHAR UNIQUE NOT NULL,
 	description VARCHAR NOT NULL,
-	disabled BOOLEAN DEFAULT false NOT NULL
+	disabled BOOLEAN DEFAULT true NOT NULL
 );
 
 

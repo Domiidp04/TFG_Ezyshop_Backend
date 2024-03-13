@@ -1,5 +1,6 @@
 package TFG_Ezyshop_Backend.Entity;
 
+import java.util.Date;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -42,6 +43,8 @@ public class User {
 	private String number;
 	
 	private String description;
+	
+	private Date date;
 	
 	@ManyToOne //nombre en BD de la FK
 	@JoinColumn( name = "role_id", insertable = false, updatable = false )

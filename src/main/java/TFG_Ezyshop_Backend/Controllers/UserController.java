@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import TFG_Ezyshop_Backend.Dto.UserDto;
+import TFG_Ezyshop_Backend.Dto.AdminUserDto;
 import TFG_Ezyshop_Backend.Entity.User;
 import TFG_Ezyshop_Backend.Services.UserService;
 
@@ -29,8 +29,8 @@ public class UserController {
 	
 
 	@GetMapping
-	public ResponseEntity<List<UserDto>> getAll(){
-		return new ResponseEntity<List<UserDto>>(userService.getAll(), HttpStatus.OK);
+	public ResponseEntity<List<AdminUserDto>> getAll(){
+		return new ResponseEntity<List<AdminUserDto>>(userService.getAll(), HttpStatus.OK);
 	}
 	
 	@GetMapping("{userId}")
