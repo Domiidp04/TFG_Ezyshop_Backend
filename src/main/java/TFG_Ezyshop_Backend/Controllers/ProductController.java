@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import TFG_Ezyshop_Backend.Dto.ProductDto;
+import TFG_Ezyshop_Backend.Dto.AdminProductDto;
 import TFG_Ezyshop_Backend.Services.ProductService;
 
 @RestController
@@ -22,8 +22,11 @@ private final ProductService productService;
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<ProductDto>> getAll(){
+	public ResponseEntity<List<AdminProductDto>> getAll(){
 		System.out.println(productService.getAll());
-		return new ResponseEntity<List<ProductDto>>(productService.getAll(), HttpStatus.OK);
+		System.out.println("hola");
+		return new ResponseEntity<List<AdminProductDto>>(productService.getAll(), HttpStatus.OK);
 	}
+	
+	
 }

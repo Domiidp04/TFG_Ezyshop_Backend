@@ -22,7 +22,12 @@ public class ProductDto {
 		this.title = product.getTitle();
 		this.description = product.getDescription();
 		this.price = product.getPrice();
-		this.discount_price = product.getDiscountPrice();
+		//Validamos que si el precio de descuento es null o no | NullPointException
+		if (product.getDiscountPrice() == null) {
+			this.discount_price = null;
+		} else {
+			this.discount_price = product.getDiscountPrice();
+		}
 		this.stock = product.getStock();
 		this.category = new CategoryDto(product.getCategoryProduct());
 		
