@@ -34,7 +34,7 @@ public class AdminOrderDto {
 		this.paymentAmount = order.getPaymentAmount();
 		this.orderDate = order.getOrderDate();
 		this.shippingDate = order.getShippingDate();
-		
+		this.discount = order.getDiscountOrder() !=null ? this.discount = order.getDiscountOrder().getCode() : null;
 		//Validamos el null del codigo de descuento
 		if (order.getDiscountOrder() == null) {
 			this.discount = null;

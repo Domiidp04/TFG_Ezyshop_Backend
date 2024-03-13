@@ -23,6 +23,7 @@ private final ProductService productService;
 	
 	@GetMapping
 	public ResponseEntity<List<ProductDto>> getAll(){
+		System.out.println(productService.getAll());
 		return new ResponseEntity<List<ProductDto>>(productService.getAll(), HttpStatus.OK);
 	}
 }
