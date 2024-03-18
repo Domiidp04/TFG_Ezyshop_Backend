@@ -2,9 +2,11 @@ package TFG_Ezyshop_Backend.services;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
+import TFG_Ezyshop_Backend.dto.DiscountDto;
 import TFG_Ezyshop_Backend.entities.Discount;
 import TFG_Ezyshop_Backend.repositories.DiscountRepository;
 
@@ -18,8 +20,11 @@ public class DiscountService {
 	}
 	
 	
-	public List<Discount> getAll(){
-		return discountRepository.findAll();
+	public List<DiscountDto> getAll(){
+		List<Discount> discounts = discountRepository.findAll();
+		return discounts.stream()
+				.map(DiscountDto::new)
+				.collect(Collectors.toList());
 	}
 	
 	public Discount save(Discount discount) {

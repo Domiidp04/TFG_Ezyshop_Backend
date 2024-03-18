@@ -1,13 +1,15 @@
 package TFG_Ezyshop_Backend.dto;
 
 import java.util.Date;
+import java.util.List;
 
 import TFG_Ezyshop_Backend.entities.Discount;
+import TFG_Ezyshop_Backend.entities.Order;
 import lombok.Data;
 
 @Data
 public class AdminDiscountDto {
-
+	
 	private Long id;
 	
 	private String title;
@@ -22,6 +24,8 @@ public class AdminDiscountDto {
 	
 	private Integer use;
 	
+	private List<Order> orders;
+
 	public AdminDiscountDto(Discount discount) {
 		this.id = discount.getId();
 		this.title = discount.getTitle();
@@ -30,5 +34,9 @@ public class AdminDiscountDto {
 		this.finalDate = discount.getFinalDate();
 		this.expired = discount.getExpired();
 		this.use = discount.getUse();
+		this.orders = discount.getOrders();
 	}
+	
+	
+
 }
