@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import TFG_Ezyshop_Backend.dto.AdminUserDto;
-import TFG_Ezyshop_Backend.entities.User;
+import TFG_Ezyshop_Backend.entities.UserEntity;
 import TFG_Ezyshop_Backend.services.UserService;
 
 @RestController
@@ -34,7 +34,7 @@ public class UserController {
 	}
 	
 	@GetMapping("/{userId}")
-	public ResponseEntity<User> getById(@PathVariable("userId") long userId){
+	public ResponseEntity<UserEntity> getById(@PathVariable("userId") long userId){
 		
 		return userService.getUser(userId)
 				.map(user -> new ResponseEntity<>(user, HttpStatus.OK))
@@ -42,13 +42,13 @@ public class UserController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<User> create (@RequestBody User user){
-		return new ResponseEntity<User>(userService.save(user),HttpStatus.CREATED);
+	public ResponseEntity<UserEntity> create (@RequestBody UserEntity user){
+		return new ResponseEntity<UserEntity>(userService.save(user),HttpStatus.CREATED);
 	}
 	
 	
 	@PutMapping("/{userId}")
-	public ResponseEntity<User> update(@PathVariable("userId") long userId, @RequestBody User user){
+	public ResponseEntity<UserEntity> update(@PathVariable("userId") long userId, @RequestBody UserEntity user){
 	    if (userId == user.getId()) {
 	        return userService.getUser(userId)
 	                .map(userDB -> {
@@ -63,11 +63,11 @@ public class UserController {
 
 	
 	@DeleteMapping("/{userId}")
-	public ResponseEntity<User> delete(@PathVariable("userId") long userId){
+	public ResponseEntity<UserEntity> delete(@PathVariable("userId") long userId){
 		if (userService.delete(userId)) {
-			return new ResponseEntity<User>(HttpStatus.OK);
+			return new ResponseEntity<UserEntity>(HttpStatus.OK);
 		}else {
-			return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
+			return new ResponseEntity<UserEntity>(HttpStatus.NOT_FOUND);
 		}
 	}
 

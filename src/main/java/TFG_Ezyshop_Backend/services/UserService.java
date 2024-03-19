@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
 import TFG_Ezyshop_Backend.dto.AdminUserDto;
-import TFG_Ezyshop_Backend.entities.User;
+import TFG_Ezyshop_Backend.entities.UserEntity;
 import TFG_Ezyshop_Backend.repositories.UserRepository;
 
 @Service
@@ -22,13 +22,13 @@ public class UserService {
 	
 
 	public List<AdminUserDto> getAll(){
-		List<User>users = userRepository.findAll();
+		List<UserEntity>users = userRepository.findAll();
 		return users.stream()
 				.map(AdminUserDto::new)
 				.collect(Collectors.toList());
 	}
 	
-	public User save(User user) {
+	public UserEntity save(UserEntity user) {
 		return userRepository.save(user);
 	}
 	
@@ -39,7 +39,7 @@ public class UserService {
 		}).orElse(false);
 	}
 	
-	public Optional<User> getUser(Long userId){
+	public Optional<UserEntity> getUser(Long userId){
 		return userRepository.findById(userId);
 	}
 }
