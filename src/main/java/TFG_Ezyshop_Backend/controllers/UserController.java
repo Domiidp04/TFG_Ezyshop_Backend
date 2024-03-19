@@ -33,13 +33,12 @@ public class UserController {
 		return new ResponseEntity<List<AdminUserDto>>(userService.getAll(), HttpStatus.OK);
 	}
 	
-	@GetMapping("{userId}")
+	@GetMapping("/{userId}")
 	public ResponseEntity<User> getById(@PathVariable("userId") long userId){
 		
 		return userService.getUser(userId)
 				.map(user -> new ResponseEntity<>(user, HttpStatus.OK))
 				.orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-		
 	}
 	
 	@PostMapping

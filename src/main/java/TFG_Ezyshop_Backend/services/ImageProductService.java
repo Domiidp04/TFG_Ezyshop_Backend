@@ -21,17 +21,15 @@ public class ImageProductService {
     	this.imageProductRepository = imageProductRepository;
     }
 
-    public ImageProduct saveImage(Long productId, MultipartFile file) throws IOException {
-        Optional<Product> product = productService.getById(productId);
-        if (product.isPresent()) {
-            ImageProduct imageProduct = new ImageProduct();
-            imageProduct.setProductImageProduct(product.get());
-            imageProduct.setImage(file.getBytes());
-            return imageProductRepository.save(imageProduct);
-        } else {
-            throw new RuntimeException("Product not found with id " + productId);
-        }
-    }
+//    public ImageProduct saveImage(Long productId, MultipartFile file) throws IOException {
+//        Optional<Product> product = productService.getById(productId);
+//        if (product.isPresent()) {
+//            profu.setImage(file.getBytes());
+//            return imageProductRepository.save(imageProduct);
+//        } else {
+//            throw new RuntimeException("Product not found with id " + productId);
+//        }
+//    }
 
 
 }

@@ -1,6 +1,7 @@
 package TFG_Ezyshop_Backend.services;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -23,6 +24,15 @@ public class ProductService {
 		return products.stream()
 				.map(ProductDto::new)
 				.collect(Collectors.toList());
+	}
+	
+	public ProductDto getById(Long productId) {
+	    Optional<Product> product = productRepository.findById(productId);
+	    if (product.isPresent()) {
+			return new ProductDto(product.get());
+		} else {
+			throw new RuntimeException("Producto con Id : (" + productId + ") no encontrado");
+		}
 	}
 	
 	

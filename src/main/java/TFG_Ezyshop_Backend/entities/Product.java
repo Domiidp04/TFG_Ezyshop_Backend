@@ -36,8 +36,11 @@ public class Product {
 	
 	private Boolean disabled;
 	
-	@OneToMany( mappedBy = "productImageProduct" )  //Nombre del atributo de @ManyToOne
-	private List<ImageProduct>imageProducts;
+	@Column( name = "category_id" )
+	private Long categoryId;
+	
+//	@OneToMany( mappedBy = "productImageProduct" )  //Nombre del atributo de @ManyToOne
+//	private List<ImageProduct>imageProducts;
 	
 	@OneToMany( mappedBy = "productAssessment" )  //Nombre del atributo de @ManyToOne
 	private List<Assessment>assessments;
@@ -46,7 +49,7 @@ public class Product {
 	private List<OrderProduct>orderProducts;
 	
 	@ManyToOne(fetch = FetchType.EAGER) //nombre en BD de la FK
-	@JoinColumn( name = "category_id" )
+	@JoinColumn( name = "category_id",insertable=false, updatable=false )
 	private Category categoryProduct;
 	
 	

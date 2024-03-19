@@ -22,14 +22,14 @@ public class ImageProductController {
     public ImageProductController(ImageProductService imageProductService) {
     }
 
-    @PostMapping("/upload")
-    public ResponseEntity<ImageProduct> uploadImage(@RequestParam("productId") Long productId, @RequestParam("image") MultipartFile file) {
-    	try {
-    	    ImageProduct imageProduct = imageProductService.saveImage(productId, file);
-            return new ResponseEntity<>(imageProduct, HttpStatus.OK);
-    	} catch (IOException e) {
-    	    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-    	}
-    }
+//    @PostMapping("/upload")
+//    public ResponseEntity<ImageProduct> uploadImage(@RequestParam("productId") Long productId, @RequestParam("image") MultipartFile file) {
+//    	try {
+//    	    ImageProduct imageProduct = imageProductService.saveImage(productId, file);
+//            return new ResponseEntity<>(imageProduct, HttpStatus.OK);
+//    	} catch (IOException e) {
+//    	    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//    	}
+//    }
 
 }
