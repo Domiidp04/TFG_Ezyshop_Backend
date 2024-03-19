@@ -30,7 +30,7 @@ public class AdminProductDto {
 		this.discount_price = product.getDiscountPrice();
 		this.stock = product.getStock();
 		this.disabled = product.getDisabled();
-		this.category = new AdminCategoryDto(product.getCategoryProduct());
+//		this.category = new AdminCategoryDto(product.getCategoryProduct());
 		
 	}
 	

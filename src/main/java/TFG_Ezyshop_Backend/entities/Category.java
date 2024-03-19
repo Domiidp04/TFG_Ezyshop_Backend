@@ -27,7 +27,7 @@ public class Category {
 	
 	private Boolean disabled;
 	
-	@OneToMany( mappedBy = "categoryProduct" )
+	@OneToMany( mappedBy = "categoryProduct" ) //Nombre del atributo de @ManyToOne
 	private List<Product> products;
 	
 	/*Metodo de control de categorias.

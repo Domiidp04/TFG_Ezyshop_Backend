@@ -11,20 +11,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.PostLoad;
-import jakarta.persistence.PostUpdate;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Table( name = "Products" )
+@Table ( name = "Products" )
 public class Product {
-
+	
 	@Id
 	@GeneratedValue( strategy = GenerationType.IDENTITY )
 	private Long id;
@@ -42,28 +36,18 @@ public class Product {
 	
 	private Boolean disabled;
 	
-	@Column(name = "category_id")
-	private Long categoryId;
+	@OneToMany( mappedBy = "productImageProduct" )  //Nombre del atributo de @ManyToOne
+	private List<ImageProduct>imageProducts;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn( name = "category_id", insertable = false, updatable = false )
+	@OneToMany( mappedBy = "productAssessment" )  //Nombre del atributo de @ManyToOne
+	private List<Assessment>assessments;
+	
+	@OneToMany( mappedBy = "productOrderProduct" )  //Nombre del atributo de @ManyToOne
+	private List<OrderProduct>orderProducts;
+	
+	@ManyToOne(fetch = FetchType.EAGER) //nombre en BD de la FK
+	@JoinColumn( name = "category_id" )
 	private Category categoryProduct;
 	
-//	@OneToMany( mappedBy = "productImageProduct" )
-//	private List<ImageProduct> images;
 	
-	@OneToMany( mappedBy = "productOrderProduct" )
-	private List<OrderProduct> ordersProducts;
-	
-	@OneToMany(mappedBy = "productAssessment")
-	private List<Assessment> assessments;
-	
-	//Metodo de control de stock
-	@PostLoad
-    @PostUpdate
-    public void checkStock() {
-        if (this.stock == 0) {
-            this.disabled = true;
-        }
-    }
 }

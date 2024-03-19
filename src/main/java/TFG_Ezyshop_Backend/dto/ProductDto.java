@@ -1,10 +1,16 @@
 package TFG_Ezyshop_Backend.dto;
 
+import java.util.List;
+
+import TFG_Ezyshop_Backend.entities.Category;
+import TFG_Ezyshop_Backend.entities.ImageProduct;
 import TFG_Ezyshop_Backend.entities.Product;
 import lombok.Data;
 
 @Data
 public class ProductDto {
+
+private Long id;
 	
 	private String title;
 	
@@ -12,25 +18,28 @@ public class ProductDto {
 	
 	private Double price;
 	
-	private Double discount_price;
+	private Double discountPrice;
 	
 	private Integer stock;
 	
-	private CategoryDto category;
+	private Boolean disabled;
+	
+	private List<ImageProduct> imageProduct;
+	
+	private Category category;
+	
 	
 	public ProductDto(Product product) {
+		this.id = product.getId();
 		this.title = product.getTitle();
 		this.description = product.getDescription();
 		this.price = product.getPrice();
-		//Validamos que si el precio de descuento es null o no | NullPointException
-		if (product.getDiscountPrice() == null) {
-			this.discount_price = null;
-		} else {
-			this.discount_price = product.getDiscountPrice();
-		}
+		this.discountPrice = product.getDiscountPrice();
 		this.stock = product.getStock();
-		this.category = new CategoryDto(product.getCategoryProduct());
-		
+		this.disabled = product.getDisabled();
+		this.imageProduct = product.getImageProducts();
+		this.category = product.getCategoryProduct();
 	}
-
+	
+	
 }
