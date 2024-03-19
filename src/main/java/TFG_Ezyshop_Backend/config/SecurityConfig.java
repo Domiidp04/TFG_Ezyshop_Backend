@@ -1,6 +1,5 @@
 package TFG_Ezyshop_Backend.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -16,9 +15,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 public class SecurityConfig {
 	
-	@Autowired
-	private JwtFilter jwtFilter;
 	
+	private final JwtFilter jwtFilter;
+	
+	public SecurityConfig(JwtFilter jwtFilter) {
+		this.jwtFilter = jwtFilter;
+	}
+
 	@SuppressWarnings(value = "all")
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
@@ -30,7 +33,9 @@ public class SecurityConfig {
 			.and()
 			.authorizeHttpRequests() //Para las perticiones HTTP
 			//Permitimos todos para hacer el login.
-			.requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+			.requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
+			.requestMatchers(HttpMethod.GET, "/users").hasAnyRole("ADMIN")
+			.requestMatchers(HttpMethod.GET, "/users/*").hasAnyRole("ADMIN", "USER")
 			.anyRequest()			// Para cualquiera peticion
 			.authenticated()		//Necesitamos estar autenticados
 			.and()

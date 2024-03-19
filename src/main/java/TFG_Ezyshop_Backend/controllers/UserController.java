@@ -1,6 +1,7 @@
 package TFG_Ezyshop_Backend.controllers;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import TFG_Ezyshop_Backend.dto.AdminUserDto;
 import TFG_Ezyshop_Backend.entities.UserEntity;
 import TFG_Ezyshop_Backend.services.UserService;
 
@@ -28,18 +28,23 @@ public class UserController {
 	}
 	
 
-	@GetMapping
-	public ResponseEntity<List<AdminUserDto>> getAll(){
-		return new ResponseEntity<List<AdminUserDto>>(userService.getAll(), HttpStatus.OK);
-	}
+	 @GetMapping
+	    public ResponseEntity<?> getAllUsers() {
+	        List<?> users = userService.getAll();
+	        return ResponseEntity.ok(users);
+	    }
 	
-	@GetMapping("/{userId}")
-	public ResponseEntity<UserEntity> getById(@PathVariable("userId") long userId){
-		
-		return userService.getUser(userId)
-				.map(user -> new ResponseEntity<>(user, HttpStatus.OK))
-				.orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
-	}
+	 @GetMapping("/{userId}")
+	 public ResponseEntity<?> getById(@PathVariable("userId") long userId) {
+	     Optional<?> user = userService.getUser(userId);
+
+	     if (user.isPresent()) {
+	         return new ResponseEntity<>(user.get(), HttpStatus.OK);
+	     } else {
+	         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	     }
+	 }
+
 	
 	@PostMapping
 	public ResponseEntity<UserEntity> create (@RequestBody UserEntity user){

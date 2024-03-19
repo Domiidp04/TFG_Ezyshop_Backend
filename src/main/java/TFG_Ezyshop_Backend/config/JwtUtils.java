@@ -12,7 +12,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 @Component
 public class JwtUtils {
 
-	private static String SECRET_KEY = "ezyshop";
+	private static String SECRET_KEY = "superdaw";
 	private static Algorithm ALGORITHM = Algorithm.HMAC256(SECRET_KEY);
 	
 	public String create(String username) {

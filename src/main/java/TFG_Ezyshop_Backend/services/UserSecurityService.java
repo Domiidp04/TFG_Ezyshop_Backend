@@ -1,14 +1,13 @@
 package TFG_Ezyshop_Backend.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import TFG_Ezyshop_Backend.repositories.UserRepository;
 import TFG_Ezyshop_Backend.entities.UserEntity;
-import org.springframework.security.core.userdetails.User;
+import TFG_Ezyshop_Backend.repositories.UserRepository;
 
 
 @Service
@@ -35,8 +34,8 @@ public class UserSecurityService implements UserDetailsService{
 	            .username(user.getUsername())
 	            .password(user.getPassword())
 	            .roles(new String[]{role})  // Aquí pasamos el rol como un array de un solo elemento
-	            .disabled(user.isDisabled())
-	            .accountLocked(user.isLocked())
+	            .disabled(user.getDisabled())
+	            .accountLocked(user.getLocked())
 	            .build();
 	}
 
