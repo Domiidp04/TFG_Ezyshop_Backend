@@ -1,5 +1,8 @@
 package TFG_Ezyshop_Backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,7 +15,7 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table( name = "Image_Product" )
+@Table( name = "Images_Product" )
 public class ImageProduct {
 	
 	@Id
@@ -22,6 +25,10 @@ public class ImageProduct {
 	@Lob
 	private byte[] image;
 	
+	@Column( name = "product_id" )
+	private Long productId;
+	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn( name = "product_id", insertable = false, updatable = false )
 	private Product productImageProduct;

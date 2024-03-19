@@ -29,45 +29,46 @@ public class ProductService {
 	 * User: Ver los que estan activos.
 	 * Si un producto tiene stock 0, automaticamente se desactiva
 	 * */
-//	public List<ProductDto> getAll(){
-//		System.out.println("Obteniendo");
-//		List<Product>products = productRepository.findAll();
-//		System.out.println(products);
-//		return products.stream()
-//				.map(ProductDto::new)
-//				.collect(Collectors.toList());
-//	}
-	
+
 	public List<ProductDto> getAll(){
-        logger.info("Inicio del método getAll");
-        List<Product> products = null;
-        try {
-            logger.info("Intentando obtener todos los productos del repositorio");
-            products = productRepository.findAll();
-            logger.info("Productos obtenidos del repositorio: {}", products);
-        } catch (Exception e) {
-            logger.error("Error al obtener los productos del repositorio", e);
-        }
-
-        if (products == null) {
-            logger.warn("La lista de productos es null");
-            return Collections.emptyList();
-        }
-
-        List<ProductDto> productDtos = null;
-        try {
-            logger.info("Intentando convertir los productos a ProductDto");
-            productDtos = products.stream()
-                .map(ProductDto::new)
-                .collect(Collectors.toList());
-            logger.info("Productos convertidos a ProductDto: {}", productDtos);
-        } catch (Exception e) {
-            logger.error("Error al convertir los productos a ProductDto", e);
-        }
-
-        logger.info("Fin del método getAll");
-        return productDtos;
-    }
+		System.out.println("Obteniendo");
+		List<Product>products = productRepository.findAll();
+		System.out.println(products);
+		return products.stream()
+				.map(ProductDto::new)
+				.collect(Collectors.toList());
+	}
+	
+//	public List<ProductDto> getAll(){
+//        logger.info("Inicio del método getAll");
+//        List<Product> products = null;
+//        try {
+//            logger.info("Intentando obtener todos los productos del repositorio");
+//            products = productRepository.findAll();
+//            logger.info("Productos obtenidos del repositorio: {}", products);
+//        } catch (Exception e) {
+//            logger.error("Error al obtener los productos del repositorio", e);
+//        }
+//
+//        if (products == null) {
+//            logger.warn("La lista de productos es null");
+//            return Collections.emptyList();
+//        }
+//
+//        List<ProductDto> productDtos = null;
+//        try {
+//            logger.info("Intentando convertir los productos a ProductDto");
+//            productDtos = products.stream()
+//                .map(ProductDto::new)
+//                .collect(Collectors.toList());
+//            logger.info("Productos convertidos a ProductDto: {}", productDtos);
+//        } catch (Exception e) {
+//            logger.error("Error al convertir los productos a ProductDto", e);
+//        }
+//
+//        logger.info("Fin del método getAll");
+//        return productDtos;
+//    }
 	
 	public Optional<Product> getById(Long id) {
 		return productRepository.findById(id);

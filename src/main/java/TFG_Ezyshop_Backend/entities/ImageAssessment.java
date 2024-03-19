@@ -1,5 +1,6 @@
 package TFG_Ezyshop_Backend.entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,7 +13,7 @@ import lombok.Data;
 
 @Entity
 @Data
-@Table( name = "Image_Assessment" )
+@Table( name = "Images_Assessment" )
 public class ImageAssessment {
 	
 	@Id
@@ -21,6 +22,9 @@ public class ImageAssessment {
 	
 	@Lob
 	private byte[] image;
+	
+	@Column( name = "assessment_id" )
+	private Long assessmentId;
 	
 	@ManyToOne
 	@JoinColumn( name = "assessment_id", insertable = false, updatable = false )

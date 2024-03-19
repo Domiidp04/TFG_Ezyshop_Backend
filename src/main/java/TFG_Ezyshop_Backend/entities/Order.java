@@ -41,6 +41,12 @@ public class Order {
 	@Column( name = "payment_amount" )
 	private Double paymentAmount;
 	
+	@Column( name = "discount_id" )
+	private Long discountId;
+	
+	@Column( name = "user_id" )
+	private Long userId;
+	
 	@ManyToOne
 	@JoinColumn( name = "discount_id", updatable = false, insertable = false )
 	private Discount discountOrder;

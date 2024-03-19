@@ -3,6 +3,7 @@ package TFG_Ezyshop_Backend.entities;
 import java.util.Date;
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -29,6 +30,12 @@ public class Assessment {
 	private Date date;
 	
 	private Boolean disabled;
+	
+	@Column( name = "user_id" )
+	private Long userId;
+	
+	@Column( name = "product_id" )
+	private Long productId;
 	
 	@ManyToOne
 	@JoinColumn( name = "user_id", insertable = false, updatable = false )

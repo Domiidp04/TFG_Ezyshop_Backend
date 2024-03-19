@@ -14,10 +14,14 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.PostLoad;
 import jakarta.persistence.PostUpdate;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Table( name = "Products" )
 public class Product {
 
@@ -38,12 +42,15 @@ public class Product {
 	
 	private Boolean disabled;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@Column(name = "category_id")
+	private Long categoryId;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn( name = "category_id", insertable = false, updatable = false )
 	private Category categoryProduct;
 	
-	@OneToMany( mappedBy = "productImageProduct" )
-	private List<ImageProduct> images;
+//	@OneToMany( mappedBy = "productImageProduct" )
+//	private List<ImageProduct> images;
 	
 	@OneToMany( mappedBy = "productOrderProduct" )
 	private List<OrderProduct> ordersProducts;

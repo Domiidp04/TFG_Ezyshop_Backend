@@ -3,6 +3,7 @@ package TFG_Ezyshop_Backend.entities;
 import java.util.Date;
 import java.util.List;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -45,6 +46,9 @@ public class User {
 	private String description;
 	
 	private Date date;
+	
+	@Column( name = "role_id" )
+	private Long roleId;
 	
 	@ManyToOne //nombre en BD de la FK
 	@JoinColumn( name = "role_id", insertable = false, updatable = false )
