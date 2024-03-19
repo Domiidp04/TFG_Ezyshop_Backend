@@ -1,0 +1,103 @@
+CREATE TABLE Roles (
+    id SERIAL PRIMARY KEY,
+    role VARCHAR UNIQUE NOT NULL,
+    granted_date DATE DEFAULT CURRENT_DATE NOT NULL
+);
+
+CREATE TABLE Users (
+	id SERIAL PRIMARY KEY,
+    username VARCHAR UNIQUE NOT NULL,
+	password VARCHAR NOT NULL,
+	email VARCHAR UNIQUE NOT NULL,
+	locked BOOLEAN DEFAULT false NOT NULL,
+	disabled BOOLEAN DEFAULT false NOT NULL,
+	name VARCHAR NOT NULL,
+	lastname VARCHAR NOT NULL,
+	zip VARCHAR NOT NULL,
+	street VARCHAR NOT NULL,
+	number VARCHAR NOT NULL,
+	description VARCHAR,
+	role_id BIGINT NOT NULL,
+	FOREIGN KEY (role_id) REFERENCES Roles(id),
+    date DATE DEFAULT CURRENT_DATE NOT NULL
+);
+
+CREATE TABLE Discounts(
+	id SERIAL PRIMARY KEY,
+	title VARCHAR NOT NULL UNIQUE,
+	code VARCHAR NOT NULL UNIQUE,
+	start_date DATE NOT NULL DEFAULT CURRENT_DATE,
+	final_date DATE,
+	expired BOOLEAN NOT NULL,
+	use INT
+);
+
+CREATE TABLE Orders (
+    id SERIAL PRIMARY KEY,
+    total_amount DOUBLE PRECISION NOT NULL,
+	shipping_amount DOUBLE PRECISION,
+	saved_amount DOUBLE PRECISION,
+	payment_amount DOUBLE PRECISION NOT NULL,
+    order_date DATE DEFAULT CURRENT_DATE NOT NULL,
+	shipping_date DATE,
+	discount_id BIGINT,
+	user_id BIGINT NOT NULL,
+	FOREIGN KEY (discount_id) REFERENCES Discounts(id),
+	FOREIGN KEY (user_id) REFERENCES Users(id)
+);
+
+CREATE TABLE Categories(
+	id SERIAL PRIMARY KEY,
+	title VARCHAR UNIQUE NOT NULL,
+	description VARCHAR NOT NULL,
+	disabled BOOLEAN DEFAULT true NOT NULL
+);
+
+
+CREATE TABLE Products(
+	id SERIAL PRIMARY KEY,
+	title VARCHAR NOT NULL,
+	description VARCHAR NOT NULL,
+	price DOUBLE PRECISION NOT NULL,
+	discount_price DOUBLE PRECISION,
+	stock INT NOT NULL,
+	disabled BOOLEAN NOT NULL DEFAULT false,
+	category_id BIGINT NOT NULL,
+	FOREIGN KEY (category_id) REFERENCES Categories(id)
+);
+
+CREATE TABLE Assessments(
+	id SERIAL PRIMARY KEY,
+	title VARCHAR NOT NULL,
+	description VARCHAR NOT NULL,
+	date DATE NOT NULL DEFAULT CURRENT_DATE,
+	disabled BOOLEAN NOT NULL DEFAULT true,
+	product_id BIGINT NOT NULL,
+	FOREIGN KEY (product_id) REFERENCES Products(id),
+	user_id BIGINT NOT NULL,
+	FOREIGN KEY (user_id) REFERENCES Users(id)
+);
+
+CREATE TABLE Orders_Products (
+    id SERIAL PRIMARY KEY,
+    amount DOUBLE PRECISION NOT NULL,
+    price DOUBLE PRECISION NOT NULL,
+    order_id BIGINT NOT NULL,
+    product_id BIGINT NOT NULL,
+    FOREIGN KEY (order_id) REFERENCES Orders(id),
+    FOREIGN KEY (product_id) REFERENCES Products(id)
+);
+
+CREATE TABLE Images_Products(
+	id SERIAL PRIMARY KEY,
+	image BYTEA NOT NULL,
+	product_id BIGINT NOT NULL,
+	FOREIGN KEY (product_id) REFERENCES Products(id)
+);
+
+CREATE TABLE Images_Assessments(
+	id SERIAL PRIMARY KEY,
+	image BYTEA NOT NULL,
+	assessment_id BIGINT NOT NULL,
+	FOREIGN KEY (assessment_id) REFERENCES Assessments(id)
+);
