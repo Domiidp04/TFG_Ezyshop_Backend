@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 
 import TFG_Ezyshop_Backend.entities.UserEntity;
 import TFG_Ezyshop_Backend.repositories.UserRepository;
+import jakarta.transaction.Transactional;
 
 
 @Service
+@Transactional
 public class UserSecurityService implements UserDetailsService{
 
 	private final UserRepository userRepository;	

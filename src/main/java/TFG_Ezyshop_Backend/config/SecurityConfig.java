@@ -48,6 +48,18 @@ public class SecurityConfig {
 			.requestMatchers(HttpMethod.POST, "/products").hasRole("ADMIN")
 			.requestMatchers(HttpMethod.PUT, "/products/*").hasRole("ADMIN")
 			.requestMatchers(HttpMethod.DELETE, "/products/*").hasRole("ADMIN")
+			
+			//Rutas para Category
+			.requestMatchers(HttpMethod.GET, "/categories").permitAll()
+			.requestMatchers(HttpMethod.GET, "/categories/*").permitAll()
+			.requestMatchers(HttpMethod.POST, "/categories").hasRole("ADMIN")
+			.requestMatchers(HttpMethod.PUT, "/categories/*").hasRole("ADMIN")
+			.requestMatchers(HttpMethod.DELETE, "/categories/*").hasRole("ADMIN")
+			
+			//Rutas para Order
+			.requestMatchers(HttpMethod.GET, "/orders").hasRole("ADMIN")
+			.requestMatchers(HttpMethod.POST, "/orders").hasRole("USER")
+			.requestMatchers(HttpMethod.GET, "/orders/*").hasAnyRole("ADMIN", "USER")
 			.anyRequest()			// Para cualquiera peticion
 			.authenticated()		//Necesitamos estar autenticados
 			.and()

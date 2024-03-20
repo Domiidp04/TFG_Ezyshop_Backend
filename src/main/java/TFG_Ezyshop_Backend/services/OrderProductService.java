@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 import TFG_Ezyshop_Backend.dto.OrderProductDto;
 import TFG_Ezyshop_Backend.entities.OrderProduct;
 import TFG_Ezyshop_Backend.repositories.OrderProductRepository;
+import jakarta.transaction.Transactional;
 
 @Service
+@Transactional
 public class OrderProductService {
 
 	private final OrderProductRepository orderProductRepository;

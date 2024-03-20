@@ -12,16 +12,26 @@ import org.springframework.stereotype.Service;
 
 import TFG_Ezyshop_Backend.dto.AdminProductDto;
 import TFG_Ezyshop_Backend.dto.ProductDto;
+import TFG_Ezyshop_Backend.entities.Category;
 import TFG_Ezyshop_Backend.entities.Product;
+import TFG_Ezyshop_Backend.repositories.CategoryRepository;
 import TFG_Ezyshop_Backend.repositories.ProductRepository;
+import jakarta.transaction.Transactional;
 
 @Service
+@Transactional
 public class ProductService {
 
 	private final ProductRepository productRepository;
+	
+	private final CategoryRepository categoryRepository;
+	
+	private final CategoryService categoryService;
 
-	public ProductService(ProductRepository productRepository) {
+	public ProductService(ProductRepository productRepository, CategoryRepository categoryRepository, CategoryService categoryService) {
 		this.productRepository = productRepository;
+		this.categoryRepository = categoryRepository;
+		this.categoryService = categoryService;
 	}
 	
 	//Metodo obtencion del rol, para no repetir
@@ -31,7 +41,6 @@ public class ProductService {
 		}
 		
 		
-	
 		public List<?> getAll(){
 		    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		    Collection<? extends GrantedAuthority> authorities = getAuthorities();
@@ -78,20 +87,52 @@ public class ProductService {
 		}
 		
 		
-		
+		@Transactional
 		public Product save(Product product) {
+		    Category category = product.getCategoryProduct();
+		    if (category != null) {
+		        category.getProducts().add(product);
+		        if (category.getProducts().stream().allMatch(Product::getDisabled)) {
+		            category.setDisabled(true);
+		        }
+		        categoryService.save(category);
+		    }
 		    return productRepository.save(product);
 		}
-		
 
+
+		
+		@Transactional
 		public Optional<Product> update(Long id, Product product) {
 		    if (!id.equals(product.getId())) {
 		        return Optional.empty(); // Retorna un Optional vacío si los IDs no coinciden
 		    }
 
 		    return productRepository.findById(id)
-		            .map(productUpdate -> productRepository.save(product));
+		            .map(productUpdate -> {
+		                // Si el stock del producto es 0, desactiva el producto
+		                if (product.getStock() == 0) {
+		                    product.setDisabled(true);
+		                }
+		                
+		                productUpdate = productRepository.save(product);
+		                //Forzar la transaccion
+		                productRepository.flush();
+
+		                // Si el producto está deshabilitado, verifica si todos los productos en la categoría están deshabilitados
+		                if (product.getDisabled()) {
+		                    Category category = product.getCategoryProduct();
+		                    if (category != null && category.getProducts().stream().allMatch(Product::getDisabled)) {
+		                        category.setDisabled(true);
+		                        categoryService.save(category);
+		                    }
+		                }
+
+		                return productUpdate;
+		            });
 		}
+
+
 
 
 		public Boolean delete(Long id) {

@@ -21,8 +21,10 @@ import TFG_Ezyshop_Backend.exceptions.EmailAlreadyExistsException;
 import TFG_Ezyshop_Backend.exceptions.UserNotFoundException;
 import TFG_Ezyshop_Backend.exceptions.UsernameAlreadyExistsException;
 import TFG_Ezyshop_Backend.repositories.UserRepository;
+import jakarta.transaction.Transactional;
 
 @Service
+@Transactional
 public class UserService {
 
 	private final UserRepository userRepository;
@@ -47,7 +49,7 @@ public class UserService {
 	}
 
 
-	public List<?> getAll() {
+	public List<AdminUserDto> getAll() {
 	    List<UserEntity> users = userRepository.findAll();
 
 	        return users.stream()
@@ -79,8 +81,6 @@ public class UserService {
 	        return Optional.empty();
 	    }
 	}
-
-
 
 
 	

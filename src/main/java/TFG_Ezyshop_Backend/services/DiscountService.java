@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 import TFG_Ezyshop_Backend.dto.DiscountDto;
 import TFG_Ezyshop_Backend.entities.Discount;
 import TFG_Ezyshop_Backend.repositories.DiscountRepository;
+import jakarta.transaction.Transactional;
 
 @Service
+@Transactional
 public class DiscountService {
 
 	private final DiscountRepository discountRepository;
