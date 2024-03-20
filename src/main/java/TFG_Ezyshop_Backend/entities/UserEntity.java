@@ -36,8 +36,7 @@ public class UserEntity {
 	private Boolean disabled;
 	
 	private String name;
-	@NotNull(message = "El apellido es obligatorio")
-    @Size(min = 1, message = "El apellido debe tener al menos 1 caracter")
+
 	private String lastname;
 	
 	private String zip;

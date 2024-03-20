@@ -1,1 +1,39 @@
+-------------------------------BODY REGISTER USER------------------------------------------------------
+{
+    "username":"domi",
+    "password":"domi",
+    "email":"domi@domi.com",
+    "name":"Domingo",
+    "lastname":"Dominguez Peinado",
+    "zip":"41520",
+    "street":"Cristo de la misericordia",
+    "number":15
+}
+
 -------------------------------BODY CREAR USER------------------------------------------------------
+{
+    "username":"FER33",
+    "password":"ale",
+    "email":"FE3R3@domi.com",
+    "roleId":2,
+    "name":"Alejandro",
+    "disabled":false,
+    "locked":true,
+    "lastname":"Dominguez Peinado",
+    "zip":"41520",
+    "street":"Cristo de la misericordia",
+    "number":15
+}
+
+-------------------------------BODY UPDATE USER------------------------------------------------------
+{
+    "id":2,
+    "username":"user",
+    "password":"user",
+    "email":"user@user.com",
+    "name":"Usuario",
+    "lastname":"Usuario",
+    "zip":"41520",
+    "street":"Cristo de la misericordia",
+    "number":15
+}

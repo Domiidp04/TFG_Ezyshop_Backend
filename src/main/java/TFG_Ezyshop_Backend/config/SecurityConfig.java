@@ -32,10 +32,12 @@ public class SecurityConfig {
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 			.and()
 			.authorizeHttpRequests() //Para las perticiones HTTP
-			//Permitimos todos para hacer el login.
+			//Todas las rutas de USER
 			.requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
 			.requestMatchers(HttpMethod.GET, "/users").hasAnyRole("ADMIN")
 			.requestMatchers(HttpMethod.GET, "/users/*").hasAnyRole("ADMIN", "USER")
+			.requestMatchers(HttpMethod.PUT, "/users/*").hasAnyRole("ADMIN","USER")
+			.requestMatchers(HttpMethod.DELETE, "/users/*").hasAnyRole("ADMIN", "USER")
 			.anyRequest()			// Para cualquiera peticion
 			.authenticated()		//Necesitamos estar autenticados
 			.and()
