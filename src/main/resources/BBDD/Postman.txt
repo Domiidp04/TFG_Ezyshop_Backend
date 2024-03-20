@@ -37,3 +37,15 @@
     "street":"Cristo de la misericordia",
     "number":15
 }
+
+-------------------------------BODY CEATE PRODUCT------------------------------------------------------
+{
+    "title": "ProductNew",
+    "description": "Description Product New",
+    "price": 10.0,
+    "discountPrice": null,
+    "disabled":false,
+    "stock": 100,
+    "categoryId":2
+}
+
