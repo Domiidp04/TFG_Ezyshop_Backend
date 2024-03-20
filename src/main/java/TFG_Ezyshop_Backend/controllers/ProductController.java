@@ -23,19 +23,20 @@ public class ProductController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<ProductDto>> getAll(){
-		return new ResponseEntity<List<ProductDto>>(productService.getAll(), HttpStatus.OK);
-	}
+    public ResponseEntity<?> getAllProducts() {
+        List<?> products = productService.getAll();
+        return new ResponseEntity<>(products, HttpStatus.OK);
+    }
 	
-	@GetMapping("/{id}")
-	 public ResponseEntity<ProductDto> getProductById(@PathVariable Long id) {
-		try {
-            ProductDto product = productService.getById(id);
-            return ResponseEntity.ok(product);
-        } catch (RuntimeException e) {
-            // Manejar la situación donde el producto no existe.
-            // Podrías devolver un estado HTTP 404 (Not Found), por ejemplo.
-            return ResponseEntity.notFound().build();
-        }
-	    }
+//	@GetMapping("/{id}")
+//	 public ResponseEntity<ProductDto> getProductById(@PathVariable Long id) {
+//		try {
+//            ProductDto product = productService.getById(id);
+//            return ResponseEntity.ok(product);
+//        } catch (RuntimeException e) {
+//            // Manejar la situación donde el producto no existe.
+//            // Podrías devolver un estado HTTP 404 (Not Found), por ejemplo.
+//            return ResponseEntity.notFound().build();
+//        }
+//	    }
 }

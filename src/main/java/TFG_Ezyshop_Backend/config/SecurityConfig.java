@@ -38,6 +38,7 @@ public class SecurityConfig {
 			.requestMatchers(HttpMethod.GET, "/users/*").hasAnyRole("ADMIN", "USER")
 			.requestMatchers(HttpMethod.PUT, "/users/*").hasAnyRole("ADMIN","USER")
 			.requestMatchers(HttpMethod.DELETE, "/users/*").hasAnyRole("ADMIN", "USER")
+			.requestMatchers(HttpMethod.GET, "/products").permitAll()
 			.anyRequest()			// Para cualquiera peticion
 			.authenticated()		//Necesitamos estar autenticados
 			.and()
