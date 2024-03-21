@@ -1,10 +1,8 @@
 package TFG_Ezyshop_Backend.dto;
 
 import java.util.Date;
-import java.util.List;
 
 import TFG_Ezyshop_Backend.entities.Discount;
-import TFG_Ezyshop_Backend.entities.Order;
 import lombok.Data;
 
 @Data
@@ -26,7 +24,9 @@ public class AdminDiscountDto {
 	
 	private Double amount;
 	
-	private List<Order> orders;
+	 public AdminDiscountDto() {
+	        // Constructor vacío necesario para la deserialización de JSON
+	    }
 
 	public AdminDiscountDto(Discount discount) {
 		this.id = discount.getId();
@@ -36,7 +36,6 @@ public class AdminDiscountDto {
 		this.finalDate = discount.getFinalDate();
 		this.expired = discount.getExpired();
 		this.use = discount.getUse();
-		this.orders = discount.getOrders();
 		this.amount = discount.getAmount();
 	}
 	

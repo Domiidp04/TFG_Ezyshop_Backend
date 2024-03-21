@@ -30,7 +30,7 @@ CREATE TABLE Discounts(
 	final_date DATE,
 	expired BOOLEAN NOT NULL,
 	use INT,
-	amount DOUBLE
+	amount DOUBLE NOT NULL DEFAULT 0
 );
 
 CREATE TABLE Orders (

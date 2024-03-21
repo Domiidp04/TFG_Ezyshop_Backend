@@ -89,7 +89,7 @@ public class OrderService {
         }
     } 
     
-    
+    @Transactional
     public Order createOrderWithOrderProducts(OrderRequestDto orderRequestDto) throws Exception {
         
     	// Obtén la lista de productos del pedido y el código de descuento del DTO
@@ -136,7 +136,10 @@ public class OrderService {
             // Asignar el pedido y el producto al producto del pedido
             orderProduct.setOrderId(order.getId());
             orderProduct.setProductId(product.getId());
-            orderProduct.setPrice(product.getPrice());
+            
+         // Si el discountPrice no es null, usarlo. Si no, usar el price normal.
+            double price = (product.getDiscountPrice() != null) ? product.getDiscountPrice() : product.getPrice();
+            orderProduct.setPrice(price);
             
          // Actualizar el stock del producto
             int newStock = product.getStock() - orderProduct.getAmount();
@@ -151,7 +154,7 @@ public class OrderService {
             orderProduct = orderProductRepository.save(orderProduct);
 
             // Sumar el precio del producto del pedido al total del pedido
-            totalAmount += product.getPrice() * orderProduct.getAmount();
+            totalAmount += orderProduct.getPrice() * orderProduct.getAmount();
         }
 
      // Establecer el total del pedido
@@ -161,11 +164,13 @@ public class OrderService {
      // Si se proporcionó un código de descuento, intenta aplicarlo
         if (discountCode != null && !discountCode.isEmpty()) {
             Optional<Discount> optionalDiscount = discountRepository.findByCode(discountCode);
+            discountRepository.flush();
+            
+            
             if (optionalDiscount.isPresent()) {
                 Discount discount = optionalDiscount.get();
                 // Comprobar si el descuento es válido, está habilitado y no está expirado
-                if (!discount.getExpired() && discount.getUse() > 0 && (discount.getStartDate().before(new Date()) && discount.getFinalDate().after(new Date()) || discount.getStartDate().before(new Date()) && discount.getFinalDate() == null)) {
-                    // Aplicar el descuento
+                if (!discount.getExpired() && discount.getUse() > 0 && (discount.getStartDate().before(new Date()) && (discount.getFinalDate() == null || discount.getFinalDate().after(new Date())))) {                    // Aplicar el descuento
                     double discountAmount = discount.getAmount();
                     order.setSavedAmount(discountAmount);
                     order.setDiscountId(discount.getId());
