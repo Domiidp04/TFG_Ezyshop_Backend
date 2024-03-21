@@ -76,8 +76,17 @@
     "disabled": true
 }
 
-Ahora quiero empezar con la logica del servicio de order.
-Quiero que el getAll muestre el AdminOrderProduct, ya que solo va a poder acceder a esa ruta el admin.
-El getById quiero que muestre en funcion si el rol es Admin, adminProductDto y si es user ProductDto. Pero solo el usuario logueado puede acceder a su propio pedido. El admin puede acceder a todos los productos por id.
-Crear un pedido solo puede hacerlo un usuario, el id del usuario no se tiene que poner ya que se pone automatico el id con el que esta logueado y cuando se crea un producto, el totalAmount es la suma del ordersProduct, el paymentAmount es la resta del totalAmount - savedAmount, Si es savedAmount es null, el paymentAmount = totalAmount. el orderDate es la fecha actual en la que se crea el pedido.
-ShippingDate es null, ya que se hace el pedido y cuando se entregue se actualiza ese campo
+-------------------------------BODY CREATE ORDER------------------------------------------------------
+{
+    "orderProducts": [
+        {
+            "productId": 1,
+            "amount": 10
+        },
+        {
+            "productId": 2,
+            "amount": 5
+        }
+    ],
+    "discountCode": "CODE1"
+}

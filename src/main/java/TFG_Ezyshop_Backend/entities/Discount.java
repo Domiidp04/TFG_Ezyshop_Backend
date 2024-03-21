@@ -38,6 +38,8 @@ public class Discount {
 	
 	private Integer use;
 	
+	private Double amount;
+	
 	@OneToMany( mappedBy = "discountOrder" )
 	private List<Order> orders;
 	

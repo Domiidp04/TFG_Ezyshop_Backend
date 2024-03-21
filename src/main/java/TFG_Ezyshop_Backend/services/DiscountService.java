@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
-import TFG_Ezyshop_Backend.dto.DiscountDto;
+import TFG_Ezyshop_Backend.dto.AdminDiscountDto;
 import TFG_Ezyshop_Backend.entities.Discount;
 import TFG_Ezyshop_Backend.repositories.DiscountRepository;
 import jakarta.transaction.Transactional;
@@ -22,10 +22,10 @@ public class DiscountService {
 	}
 	
 	
-	public List<DiscountDto> getAll(){
+	public List<AdminDiscountDto> getAll(){
 		List<Discount> discounts = discountRepository.findAll();
 		return discounts.stream()
-				.map(DiscountDto::new)
+				.map(AdminDiscountDto::new)
 				.collect(Collectors.toList());
 	}
 	

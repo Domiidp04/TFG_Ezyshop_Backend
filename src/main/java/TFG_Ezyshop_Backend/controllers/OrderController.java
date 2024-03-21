@@ -12,8 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import TFG_Ezyshop_Backend.dto.OrderDto;
+import TFG_Ezyshop_Backend.dto.OrderRequestDto;
 import TFG_Ezyshop_Backend.entities.Order;
+import TFG_Ezyshop_Backend.exceptions.StockException;
 import TFG_Ezyshop_Backend.services.OrderService;
 
 @RestController
@@ -46,9 +47,19 @@ public class OrderController {
 	 
 	 
 	 @PostMapping
-	    public ResponseEntity<Order> createOrder(@RequestBody OrderDto orderDto) {
-	        Order order = orderService.save(orderDto);
-	        return ResponseEntity.ok(order);
-	    }
+	 public ResponseEntity<Order> createOrderWithOrderProducts(@RequestBody OrderRequestDto orderRequestDto) {
+	     try {
+	         Order order = orderService.createOrderWithOrderProducts(orderRequestDto);
+	         return new ResponseEntity<>(order, HttpStatus.CREATED);
+	     }catch(StockException s){
+	    	 return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+	     } catch (Exception e) {
+//	         // Registra la excepción para obtener más detalles sobre el error
+//	         System.out.println("Se produjo un error: " + e.getMessage());
+//	         e.printStackTrace();
+	         return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+	     }
+	 }
+
 
 }

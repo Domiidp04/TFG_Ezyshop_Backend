@@ -1,10 +1,8 @@
 package TFG_Ezyshop_Backend.dto;
 
 import java.util.Date;
-import java.util.List;
 
 import TFG_Ezyshop_Backend.entities.Order;
-import TFG_Ezyshop_Backend.entities.OrderProduct;
 import lombok.Data;
 
 @Data
@@ -26,7 +24,6 @@ public class OrderDto {
 	
 	private UserDto user;
 	
-	private List<OrderProduct>orderProducts;
 	
 	public OrderDto(Order order) {
 		this.totalAmount = order.getTotalAmount();

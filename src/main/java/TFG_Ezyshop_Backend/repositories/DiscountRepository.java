@@ -9,6 +9,8 @@ import TFG_Ezyshop_Backend.entities.Discount;
 
 public interface DiscountRepository extends JpaRepository<Discount, Long>{
 	
+	Optional<Discount>findByCode(String discountCode);
+	
 //	public List<Discount> getAll();
 //	public Optional<Discount> getDiscount(Long discountId);
 //	public Discount create(Discount discount); 

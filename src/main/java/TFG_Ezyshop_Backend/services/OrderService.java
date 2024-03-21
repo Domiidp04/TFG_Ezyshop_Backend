@@ -1,6 +1,7 @@
 package TFG_Ezyshop_Backend.services;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -12,14 +13,21 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import TFG_Ezyshop_Backend.UsernameNotFoundException;
-import TFG_Ezyshop_Backend.config.SecurityConfig;
 import TFG_Ezyshop_Backend.dto.AdminOrderDto;
 import TFG_Ezyshop_Backend.dto.OrderDto;
+import TFG_Ezyshop_Backend.dto.OrderRequestDto;
+import TFG_Ezyshop_Backend.entities.Discount;
 import TFG_Ezyshop_Backend.entities.Order;
 import TFG_Ezyshop_Backend.entities.OrderProduct;
+import TFG_Ezyshop_Backend.entities.Product;
 import TFG_Ezyshop_Backend.entities.UserEntity;
+import TFG_Ezyshop_Backend.exceptions.StockException;
+import TFG_Ezyshop_Backend.exceptions.UsernameNotFoundException;
+import TFG_Ezyshop_Backend.repositories.DiscountRepository;
+import TFG_Ezyshop_Backend.repositories.OrderProductRepository;
 import TFG_Ezyshop_Backend.repositories.OrderRepository;
+import TFG_Ezyshop_Backend.repositories.ProductRepository;
+import TFG_Ezyshop_Backend.repositories.UserRepository;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -28,14 +36,20 @@ public class OrderService {
 
 	private final OrderRepository orderRepository;
 	
-	private final SecurityConfig securityConfig;
+	private final UserRepository userRepository;
 	
-	private final UserService userService;
+	private final ProductRepository productRepository;
 	
-	public OrderService(OrderRepository orderRepository, SecurityConfig securityConfig, UserService userService) {
+	private final OrderProductRepository orderProductRepository;
+	
+	private final DiscountRepository discountRepository;
+	
+	public OrderService(OrderRepository orderRepository, UserRepository userRepository, ProductRepository productRepository, OrderProductRepository orderProductRepository, DiscountRepository discountRepository) {
 		this.orderRepository = orderRepository;
-		this.securityConfig = securityConfig;
-		this.userService = userService;
+		this.userRepository = userRepository;
+		this.productRepository = productRepository;
+		this.orderProductRepository = orderProductRepository;
+		this.discountRepository = discountRepository;
 	}
 	
 	//Metodo obtencion del rol, para no repetir
@@ -73,66 +87,123 @@ public class OrderService {
         } else {
             return Optional.empty();
         }
-    }
+    } 
     
-    public Order save(OrderDto orderDto) {
+    
+    public Order createOrderWithOrderProducts(OrderRequestDto orderRequestDto) throws Exception {
+        
+    	// Obtén la lista de productos del pedido y el código de descuento del DTO
+        List<OrderProduct> orderProducts = orderRequestDto.getOrderProducts();
+        String discountCode = orderRequestDto.getDiscountCode();
+    	
+    	// Obtén el nombre del usuario autenticado
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String authenticatedUsername = authentication.getName();
+        // Busca al usuario en la base de datos
+        Optional<UserEntity> optionalUser = userRepository.getByUsername(authenticatedUsername);
 
-        // Aquí asumimos que tienes un método para obtener el usuario actual
-        Optional<UserEntity> optionalUser = userService.getByUsername(authenticatedUsername);
-
+        // Si el usuario no existe, lanza una excepción
         if (!optionalUser.isPresent()) {
-            // Manejar el caso en que 'getByUsername' no devuelve un usuario
             throw new UsernameNotFoundException("User not found");
         }
 
         UserEntity user = optionalUser.get();
 
+        // Crear un nuevo pedido
         Order order = new Order();
-        order.setUserOrder(user);
-        order.setOrderDate(null); // La fecha del pedido se establece en null por defecto
+        order.setUserId(user.getId());
+        order.setOrderDate(new Date());
+        order.setShippingAmount(1.99);
+        order.setDiscountOrder(null);
+        order.setSavedAmount(null);
+        order.setTotalAmount(0.0);
+        order.setPaymentAmount(0.0);
 
-        // Aquí asumimos que tienes un método para calcular el totalAmount
-        double totalAmount = calculateTotalAmount(orderDto.getOrderProducts());
-        order.setTotalAmount(totalAmount);
+        // Guardar el pedido en la base de datos
+        order = orderRepository.save(order);
 
-        double shippingAmount = 1.99; // El shippingAmount siempre es 1.99
-        order.setShippingAmount(shippingAmount);
+        double totalAmount = 0;
 
-        // double savedAmount = orderDto.getDiscount() != null ? orderDto.getDiscount() : 0;
-        // order.setSavedAmount(savedAmount);
+        // Para cada producto del pedido en la lista
+        for (OrderProduct orderProduct : orderProducts) {
+            // Buscar el producto en la base de datos
+            Optional<Product> optionalProduct = productRepository.findById(orderProduct.getProductId());
+            if (!optionalProduct.isPresent()) {
+                throw new Exception("Product not found");
+            }
+            Product product = optionalProduct.get();
 
-        double paymentAmount = totalAmount + shippingAmount;
+            // Asignar el pedido y el producto al producto del pedido
+            orderProduct.setOrderId(order.getId());
+            orderProduct.setProductId(product.getId());
+            orderProduct.setPrice(product.getPrice());
+            
+         // Actualizar el stock del producto
+            int newStock = product.getStock() - orderProduct.getAmount();
+            if (newStock < 0) {
+                throw new StockException("Insufficient stock for product " + product.getId());
+            }
+            product.setStock(newStock);
+            productRepository.save(product);
+            productRepository.flush();
+
+            // Guardar el producto del pedido en la base de datos
+            orderProduct = orderProductRepository.save(orderProduct);
+
+            // Sumar el precio del producto del pedido al total del pedido
+            totalAmount += product.getPrice() * orderProduct.getAmount();
+        }
+
+     // Establecer el total del pedido
+        order.setTotalAmount(totalAmount + order.getShippingAmount());
+        double paymentAmount = order.getTotalAmount();
+
+     // Si se proporcionó un código de descuento, intenta aplicarlo
+        if (discountCode != null && !discountCode.isEmpty()) {
+            Optional<Discount> optionalDiscount = discountRepository.findByCode(discountCode);
+            if (optionalDiscount.isPresent()) {
+                Discount discount = optionalDiscount.get();
+                // Comprobar si el descuento es válido, está habilitado y no está expirado
+                if (!discount.getExpired() && discount.getUse() > 0 && (discount.getStartDate().before(new Date()) && discount.getFinalDate().after(new Date()) || discount.getStartDate().before(new Date()) && discount.getFinalDate() == null)) {
+                    // Aplicar el descuento
+                    double discountAmount = discount.getAmount();
+                    order.setSavedAmount(discountAmount);
+                    order.setDiscountId(discount.getId());
+                    paymentAmount -= discountAmount;
+
+                    // Actualizar los usos del descuento
+                    discount.setUse(discount.getUse() - 1);
+                    discountRepository.save(discount);
+                } else {
+                    // El descuento no es válido, está deshabilitado o está expirado, establecer el descuento y la cantidad guardada en null
+                    order.setDiscountId(null);
+                    order.setSavedAmount(null);
+                }
+            } else {
+                // El descuento no existe, establecer el descuento y la cantidad guardada en null
+                order.setDiscountId(null);
+                order.setSavedAmount(null);
+            }
+        } else {
+            // No se proporcionó un código de descuento, establecer el descuento y la cantidad guardada en null
+            order.setDiscountId(null);
+            order.setSavedAmount(null);
+        }
+
+        // Establecer la cantidad de pago
         order.setPaymentAmount(paymentAmount);
 
-        return orderRepository.save(order);
+        // Guardar el pedido en la base de datos
+        order = orderRepository.save(order);
+
+        return order;
+
+
     }
 
-    
-    public double calculateTotalAmount(List<OrderProduct> list) {
-        double totalAmount = 0.0;
-        for (OrderProduct orderProduct : list) {
-            totalAmount += orderProduct.getProductOrderProduct().getPrice() * orderProduct.getAmount();
-        }
-        return totalAmount;
-    }
+	
 
 
 
-	
-//	public Order save(Order order) {
-//		return orderRepository.save(order);
-//	}
-	
-//	public Boolean delete(Long orderId) {
-//		return getOrder(orderId).map(order -> {
-//			orderRepository.deleteById(orderId);
-//		return true;
-//		}).orElse(false);
-//	}
-	
-//	public Optional<Order> getOrder(Long orderId){
-//		return orderRepository.findById(orderId);
-//	}
+
 }

@@ -24,6 +24,8 @@ public class AdminDiscountDto {
 	
 	private Integer use;
 	
+	private Double amount;
+	
 	private List<Order> orders;
 
 	public AdminDiscountDto(Discount discount) {
@@ -35,6 +37,7 @@ public class AdminDiscountDto {
 		this.expired = discount.getExpired();
 		this.use = discount.getUse();
 		this.orders = discount.getOrders();
+		this.amount = discount.getAmount();
 	}
 	
 	

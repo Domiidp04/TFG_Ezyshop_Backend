@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import TFG_Ezyshop_Backend.dto.DiscountDto;
+import TFG_Ezyshop_Backend.dto.AdminDiscountDto;
 import TFG_Ezyshop_Backend.services.DiscountService;
 
 @RestController
@@ -22,7 +22,7 @@ public class DiscountController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<DiscountDto>> getAll(){
-		return new ResponseEntity<List<DiscountDto>>(discountService.getAll(), HttpStatus.OK);
+	public ResponseEntity<List<AdminDiscountDto>> getAll(){
+		return new ResponseEntity<List<AdminDiscountDto>>(discountService.getAll(), HttpStatus.OK);
 	}
 }

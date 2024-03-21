@@ -1,4 +1,4 @@
-package TFG_Ezyshop_Backend;
+package TFG_Ezyshop_Backend.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
