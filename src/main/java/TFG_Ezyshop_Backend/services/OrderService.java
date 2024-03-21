@@ -118,6 +118,8 @@ public class OrderService {
         order.setSavedAmount(null);
         order.setTotalAmount(0.0);
         order.setPaymentAmount(0.0);
+        
+        
 
         // Guardar el pedido en la base de datos
         order = orderRepository.save(order);

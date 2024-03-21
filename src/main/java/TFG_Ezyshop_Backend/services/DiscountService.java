@@ -52,39 +52,67 @@ public class DiscountService {
 
 	    // Si los usos son 0, establecer expired a true
 	    if (discount.getUse() <= 0) {
+	    	System.out.println("USOS : " + discount.getUse());
 	        discount.setExpired(true);
 	    }else {
+	    	System.out.println("USOS : " + discount.getUse());
 	    	discount.setExpired(false);
 	    }
 
 	    discount = discountRepository.save(discount);
+	    discountRepository.flush();
 	    return new AdminDiscountDto(discount);
 	}
 	
 	public AdminDiscountDto updateDiscount(Long id, AdminDiscountDto adminDiscountDto) {
-	    // Comprobar si el ID en la ruta coincide con el ID en el DTO
 	    if (!id.equals(adminDiscountDto.getId())) {
-	        throw new IllegalArgumentException("Mismatched discount ID");
+	        throw new IllegalArgumentException("Mismatched discount ID"); // Lanza una excepción si los IDs no coinciden
 	    }
 
-	    Optional<Discount> optionalDiscount = discountRepository.findById(id);
-	    if (!optionalDiscount.isPresent()) {
-	        throw new IllegalArgumentException("Invalid discount ID");
-	    }
-	    Discount discount = optionalDiscount.get();
-	    
-	    
+	    return discountRepository.findById(id)
+	            .map(discount -> {
+	                // Actualizar el objeto Discount con los datos del DTO
+	                discount.setId(adminDiscountDto.getId());
+	                discount.setTitle(adminDiscountDto.getTitle());
+	                discount.setCode(adminDiscountDto.getCode());
+	                discount.setStartDate(adminDiscountDto.getStartDate());
+	                discount.setFinalDate(adminDiscountDto.getFinalDate());
+	                discount.setExpired(adminDiscountDto.getExpired());
+	                discount.setUse(adminDiscountDto.getUse());
+	                discount.setAmount(adminDiscountDto.getAmount());
 
-	    // Si los usos son 0, establecer expired a true
-	    if (discount.getUse() <= 0) {
-	        discount.setExpired(true);
-	    }else {
-	        discount.setExpired(false);
-	    }
+	                // Si los usos son 0, establecer expired a true
+	        	    if (discount.getUse() <= 0) {
+	        	    	System.out.println("USOS : " + discount.getUse());
+	        	        discount.setExpired(true);
+	        	    }else {
+	        	    	System.out.println("USOS : " + discount.getUse());
+	        	    	discount.setExpired(false);
+	        	    }
+	        	    
+	                discount = discountRepository.save(discount);
 
-	    discount = discountRepository.save(discount);
-	    return new AdminDiscountDto(discount);
+	                // Convertir el Discount a AdminDiscountDto antes de devolverlo
+	                return new AdminDiscountDto(discount);
+	            })
+	            .orElseThrow(() -> new IllegalArgumentException("Invalid discount ID")); // Lanza una excepción si el ID no es válido
 	}
+
+	public Boolean deleteDiscount(Long id) {
+	    return discountRepository.findById(id)
+	            .map(discount -> {
+	                discount.setExpired(true);
+	                discountRepository.save(discount);
+	                return true; // Devuelve true si el descuento se encuentra y se actualiza
+	            })
+	            .orElse(false); // Devuelve false si el descuento no se encuentra
+	}
+
+
+	
+	
+	
+	
 
 
 	
