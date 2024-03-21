@@ -39,7 +39,7 @@ public class Assessment {
 	
 	@ManyToOne
 	@JoinColumn( name = "user_id", insertable = false, updatable = false )
-	private User userAssessment;
+	private UserEntity userAssessment;
 	
 	@ManyToOne
 	@JoinColumn( name = "product_id", insertable = false, updatable = false )

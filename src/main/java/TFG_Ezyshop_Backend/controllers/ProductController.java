@@ -1,15 +1,20 @@
 package TFG_Ezyshop_Backend.controllers;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import TFG_Ezyshop_Backend.dto.ProductDto;
+import TFG_Ezyshop_Backend.entities.Product;
 import TFG_Ezyshop_Backend.services.ProductService;
 
 @RestController
@@ -23,19 +28,48 @@ public class ProductController {
 	}
 	
 	@GetMapping
-	public ResponseEntity<List<ProductDto>> getAll(){
-		return new ResponseEntity<List<ProductDto>>(productService.getAll(), HttpStatus.OK);
-	}
+    public ResponseEntity<?> getAllProducts() {
+        List<?> products = productService.getAll();
+        return new ResponseEntity<>(products, HttpStatus.OK);
+    }
 	
 	@GetMapping("/{id}")
-	 public ResponseEntity<ProductDto> getProductById(@PathVariable Long id) {
-		try {
-            ProductDto product = productService.getById(id);
-            return ResponseEntity.ok(product);
-        } catch (RuntimeException e) {
-            // Manejar la situación donde el producto no existe.
-            // Podrías devolver un estado HTTP 404 (Not Found), por ejemplo.
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<?> getProductById(@PathVariable Long id) {
+        Optional<?> product = productService.getById(id);
+        if (product.isPresent()) {
+            return new ResponseEntity<>(product, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+    }
+	
+	@PostMapping
+	public ResponseEntity<?> createProduct(@RequestBody Product product) {
+	    Product savedProduct = productService.save(product);
+	    return new ResponseEntity<>(savedProduct, HttpStatus.CREATED);
+	}
+
+	@PutMapping("/{id}")
+	public ResponseEntity<?> updateProduct(@PathVariable Long id, @RequestBody Product newProduct) {
+	    Optional<Product> updatedProduct = productService.update(id, newProduct);
+	    if (updatedProduct.isPresent()) {
+	        return new ResponseEntity<>(updatedProduct.get(), HttpStatus.OK);
+	    } else {
+	        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	    }
+	}
+	
+	
+	@DeleteMapping("/{id}")
+	public ResponseEntity<?> deleteProduct(@PathVariable Long id) {
+	    Boolean isDeleted = productService.delete(id);
+	    if (isDeleted) {
+	        return new ResponseEntity<>(HttpStatus.OK);
+	    } else {
+	        return new ResponseEntity<>("Producto con Id : (" + id + ") no encontrado", HttpStatus.NOT_FOUND);
+	    }
+	}
+
+
+
 }

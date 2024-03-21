@@ -38,27 +38,11 @@ public class Discount {
 	
 	private Integer use;
 	
+	private Double amount;
+	
 	@OneToMany( mappedBy = "discountOrder" )
 	private List<Order> orders;
 	
-	@PostLoad
-    @PostUpdate
-    public void checkDiscount() {
-        Date now = new Date();
-        if ((this.startDate == null || !now.before(this.startDate)) &&
-            (this.finalDate == null || !now.after(this.finalDate)) &&
-            (this.use == null || this.use > 0)) {
-            this.expired = false;
-        } else {
-            this.expired = true;
-        }
-    }
-
-    public void use() {
-        if (this.use != null && this.use > 0) {
-            this.use--;
-            checkDiscount();
-        }
-    }
+	
 	
 }

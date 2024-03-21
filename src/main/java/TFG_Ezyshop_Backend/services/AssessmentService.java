@@ -7,8 +7,10 @@ import org.springframework.stereotype.Service;
 
 import TFG_Ezyshop_Backend.entities.Assessment;
 import TFG_Ezyshop_Backend.repositories.AssessmentRepository;
+import jakarta.transaction.Transactional;
 
 @Service
+@Transactional
 public class AssessmentService {
 
 	private final AssessmentRepository assessmentRepository;

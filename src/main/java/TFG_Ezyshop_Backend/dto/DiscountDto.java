@@ -14,9 +14,12 @@ public class DiscountDto {
 	
 	private Date finalDate;
 	
+	private Double amount;
+	
 	public DiscountDto(Discount discount) {
 		this.title = discount.getTitle();
 		this.startDate = discount.getStartDate();
 		this.finalDate = discount.getFinalDate();
+		this.amount = discount.getAmount();
 	}
 }

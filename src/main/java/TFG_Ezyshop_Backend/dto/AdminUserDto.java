@@ -1,6 +1,6 @@
 package TFG_Ezyshop_Backend.dto;
 
-import TFG_Ezyshop_Backend.entities.User;
+import TFG_Ezyshop_Backend.entities.UserEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -16,7 +16,7 @@ public class AdminUserDto extends UserDto{
 	private String role;
 	
 
-	public AdminUserDto(User user) {
+	public AdminUserDto(UserEntity user) {
 		super(user);
 		this.id = user.getId();
         this.locked = user.getLocked();

@@ -12,12 +12,14 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 @Entity
 @Data
 @Table( name = "Users" )
-public class User {
+public class UserEntity {
 
 	@Id
 	@GeneratedValue( strategy = GenerationType.IDENTITY )
@@ -34,7 +36,7 @@ public class User {
 	private Boolean disabled;
 	
 	private String name;
-	
+
 	private String lastname;
 	
 	private String zip;

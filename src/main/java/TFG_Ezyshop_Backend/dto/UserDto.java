@@ -2,7 +2,7 @@ package TFG_Ezyshop_Backend.dto;
 
 import java.util.Date;
 
-import TFG_Ezyshop_Backend.entities.User;
+import TFG_Ezyshop_Backend.entities.UserEntity;
 import lombok.Data;
 
 @Data
@@ -27,7 +27,7 @@ public class UserDto {
 	private Date date;
 	
 
-	public UserDto(User user) {
+	public UserDto(UserEntity user) {
         this.username = user.getUsername();
         this.email = user.getEmail();
         this.name = user.getName();

@@ -9,8 +9,10 @@ import org.springframework.web.multipart.MultipartFile;
 import TFG_Ezyshop_Backend.entities.ImageProduct;
 import TFG_Ezyshop_Backend.entities.Product;
 import TFG_Ezyshop_Backend.repositories.ImageProductRepository;
+import jakarta.transaction.Transactional;
 
 @Service
+@Transactional
 public class ImageProductService {
 	
     private final ImageProductRepository imageProductRepository;

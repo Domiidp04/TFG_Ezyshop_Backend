@@ -24,6 +24,7 @@ public class OrderDto {
 	
 	private UserDto user;
 	
+	
 	public OrderDto(Order order) {
 		this.totalAmount = order.getTotalAmount();
 		this.shippingAmount = order.getShippingAmount();
