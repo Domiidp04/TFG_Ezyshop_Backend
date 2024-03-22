@@ -43,6 +43,10 @@ CREATE TABLE Orders (
 	shipping_date DATE,
 	discount_id BIGINT,
 	user_id BIGINT NOT NULL,
+	intent VARCHAR NOT NULL DEFAULT sale,
+	method VARCHAR NOT NULL DEFAULT paypal,
+	currency VARCHAR NOT NULL DEFAULT EUR,
+	payment BOOLEAN NOT NULL DEFAULT false,
 	FOREIGN KEY (discount_id) REFERENCES Discounts(id),
 	FOREIGN KEY (user_id) REFERENCES Users(id)
 );

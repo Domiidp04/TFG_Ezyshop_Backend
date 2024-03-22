@@ -13,6 +13,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import com.paypal.api.payments.Payment;
+import com.paypal.base.rest.PayPalRESTException;
+
 import TFG_Ezyshop_Backend.dto.AdminOrderDto;
 import TFG_Ezyshop_Backend.dto.OrderDto;
 import TFG_Ezyshop_Backend.dto.OrderRequestDto;
@@ -44,7 +47,12 @@ public class OrderService {
 	
 	private final DiscountRepository discountRepository;
 	
-	public OrderService(OrderRepository orderRepository, UserRepository userRepository, ProductRepository productRepository, OrderProductRepository orderProductRepository, DiscountRepository discountRepository) {
+	
+	public OrderService(OrderRepository orderRepository, 
+						UserRepository userRepository, 
+						ProductRepository productRepository, 
+						OrderProductRepository orderProductRepository, 
+						DiscountRepository discountRepository) {
 		this.orderRepository = orderRepository;
 		this.userRepository = userRepository;
 		this.productRepository = productRepository;
@@ -207,10 +215,27 @@ public class OrderService {
 
 
     }
+    
+    @Transactional
+    public Order updatePaymentStatus(Long orderId, boolean paymentStatus) {
+        Optional<Order> optionalOrder = orderRepository.findById(orderId);
+
+        if (!optionalOrder.isPresent()) {
+            // Lanza una excepción o maneja el caso en que el pedido no se encuentra
+            throw new RuntimeException("Order not found with id: " + orderId);
+        }
+
+        Order order = optionalOrder.get();
+        order.setPayment(paymentStatus);
+        System.out.println(order.getPayment());
+        // Guarda el pedido actualizado en la base de datos
+        orderRepository.save(order);
+        orderRepository.flush();
+        return order;
+        
+    }
+
 
 	
-
-
-
 
 }
