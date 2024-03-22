@@ -31,6 +31,7 @@ public class SecurityConfig {
 				.authorizeHttpRequests() // Para las perticiones HTTP
 				// Ruta auth
 				.requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
+//				.requestMatchers(HttpMethod.POST, "/payment").permitAll()
 
 				// Todas las rutas de USER
 				.requestMatchers(HttpMethod.GET, "/users").hasRole("ADMIN").requestMatchers(HttpMethod.POST, "/users")

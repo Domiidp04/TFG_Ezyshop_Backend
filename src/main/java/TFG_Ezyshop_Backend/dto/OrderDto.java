@@ -22,6 +22,8 @@ public class OrderDto {
 	
 	private String discount;
 	
+	private Boolean payment;
+	
 	private UserDto user;
 	
 	
@@ -39,6 +41,8 @@ public class OrderDto {
 		} else {
 			this.discount = order.getDiscountOrder().getCode();
 		}
+		
+		this.payment = order.getPayment();
 		
 		this.user = new UserDto(order.getUserOrder());
 	}

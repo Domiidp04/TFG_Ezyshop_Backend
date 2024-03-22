@@ -41,6 +41,18 @@ public class Order {
 	@Column( name = "payment_amount" )
 	private Double paymentAmount;
 	
+	@Column( name = "currency", updatable = false, nullable = false )
+    private String currency = "EUR";
+
+    @Column( name = "method", updatable = false, nullable = false )
+    private String method = "paypal";
+
+    @Column( name = "intent", updatable = false, nullable = false )
+    private String intent = "sale";
+    
+    @Column( name = "payment", updatable = false, nullable = false )
+    private Boolean payment;
+	
 	@Column( name = "discount_id" )
 	private Long discountId;
 	
