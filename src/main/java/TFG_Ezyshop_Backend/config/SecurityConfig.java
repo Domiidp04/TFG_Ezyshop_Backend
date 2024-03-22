@@ -69,6 +69,11 @@ public class SecurityConfig {
 				.requestMatchers(HttpMethod.POST, "/discounts").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.PUT, "/discounts/*").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.DELETE, "/discounts/*").hasRole("ADMIN")
+				
+				// Rutas para pago
+				.requestMatchers(HttpMethod.POST, "/payment/*").hasRole("USER")
+				.requestMatchers(HttpMethod.GET, "/pay/success/*").hasRole("USER")
+				.requestMatchers(HttpMethod.GET, "/pay/success").hasRole("USER")
 
 				.anyRequest() // Para cualquiera peticion
 				.authenticated() // Necesitamos estar autenticados
