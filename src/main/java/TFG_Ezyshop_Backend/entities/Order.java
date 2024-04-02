@@ -52,6 +52,9 @@ public class Order {
     
     @Column( name = "payment", updatable = false, nullable = false )
     private Boolean payment;
+    
+    @Column( name = "payment_id", updatable = false, nullable = false )
+    private String paymentId;
 	
 	@Column( name = "discount_id" )
 	private Long discountId;

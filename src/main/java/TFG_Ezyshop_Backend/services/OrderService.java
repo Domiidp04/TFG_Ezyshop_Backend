@@ -13,9 +13,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import com.paypal.api.payments.Payment;
-import com.paypal.base.rest.PayPalRESTException;
-
 import TFG_Ezyshop_Backend.dto.AdminOrderDto;
 import TFG_Ezyshop_Backend.dto.OrderDto;
 import TFG_Ezyshop_Backend.dto.OrderRequestDto;

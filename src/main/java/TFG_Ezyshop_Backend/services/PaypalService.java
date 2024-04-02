@@ -22,6 +22,10 @@ import com.paypal.base.rest.PayPalRESTException;
 
 import TFG_Ezyshop_Backend.entities.Order;
 import TFG_Ezyshop_Backend.entities.UserEntity;
+import TFG_Ezyshop_Backend.exceptions.OrderNotFoundException;
+import TFG_Ezyshop_Backend.exceptions.PaymentAlreadyMadeException;
+import TFG_Ezyshop_Backend.exceptions.PaymentIdAlreadyUsedException;
+import TFG_Ezyshop_Backend.exceptions.UnauthorizedPaymentException;
 import TFG_Ezyshop_Backend.exceptions.UsernameNotFoundException;
 import TFG_Ezyshop_Backend.repositories.OrderRepository;
 import TFG_Ezyshop_Backend.repositories.UserRepository;
@@ -37,14 +41,11 @@ public class PaypalService {
 
 	private final OrderRepository orderRepository;
 
-	private final OrderService orderService;
-
 	private final UserRepository userRepository;
 
 	public PaypalService(APIContext apiContext, OrderRepository orderRepository, OrderService orderService,
 			UserRepository userRepository) {
 		this.orderRepository = orderRepository;
-		this.orderService = orderService;
 		this.apiContext = apiContext;
 		this.userRepository = userRepository;
 	}
@@ -81,48 +82,49 @@ public class PaypalService {
 		return payment.create(apiContext);
 	}
 
-	public Payment createPayment(Long orderId) throws PayPalRESTException {
-		// Obtén el nombre del usuario autenticado
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String authenticatedUsername = authentication.getName();
+	public Payment createPayment(Long orderId) throws PayPalRESTException, OrderNotFoundException, PaymentAlreadyMadeException, UnauthorizedPaymentException {
+	    // Obtén el nombre del usuario autenticado
+	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	    String authenticatedUsername = authentication.getName();
 
-		// Busca al usuario en la base de datos
-		Optional<UserEntity> optionalUser = userRepository.getByUsername(authenticatedUsername);
+	    // Busca al usuario en la base de datos
+	    Optional<UserEntity> optionalUser = userRepository.getByUsername(authenticatedUsername);
 
-		// Si el usuario no existe, lanza una excepción
-		if (!optionalUser.isPresent()) {
-			throw new UsernameNotFoundException("User not found");
-		}
+	    // Si el usuario no existe, lanza una excepción
+	    if (!optionalUser.isPresent()) {
+	        throw new UsernameNotFoundException("User not found");
+	    }
 
-		UserEntity user = optionalUser.get();
+	    UserEntity user = optionalUser.get();
 
-		// Buscar el pedido por su ID
-		Optional<Order> optionalOrder = orderRepository.findById(orderId);
+	    // Buscar el pedido por su ID
+	    Optional<Order> optionalOrder = orderRepository.findById(orderId);
 
-		// Si el pedido no existe, lanza una excepción
-		if (!optionalOrder.isPresent()) {
-			throw new RuntimeException("Order not found with id: " + orderId);
-		}
+	    // Si el pedido no existe, lanza una excepción
+	    if (!optionalOrder.isPresent()) {
+	        throw new OrderNotFoundException("Order not found with id: " + orderId);
+	    }
 
-		// Si el pedido ya esta pagado, lanza una excepción
-		if (optionalOrder.get().getPayment()) {
-			throw new RuntimeException("Order paymented: " + orderId);
-		}
+	    // Si el pedido ya esta pagado, lanza una excepción
+	    if (optionalOrder.get().getPayment()) {
+	        throw new PaymentAlreadyMadeException("Order paymented: " + orderId);
+	    }
 
-		Order order = optionalOrder.get();
+	    Order order = optionalOrder.get();
 
-		// Comprueba si el pedido pertenece al usuario autenticado
-		if (!order.getUserId().equals(user.getId())) {
-			throw new RuntimeException("User not authorized to make this payment");
-		}
+	    // Comprueba si el pedido pertenece al usuario autenticado
+	    if (!order.getUserId().equals(user.getId())) {
+	        throw new UnauthorizedPaymentException("User not authorized to make this payment");
+	    }
 
-		// Crear el pago con los detalles del pedido
-		Payment payment = createPayment(order.getPaymentAmount(), order.getCurrency(), order.getMethod(),
-				order.getIntent(), "http://localhost:8081/ezyshop/api" + CANCEL_URL,
-				"http://localhost:8081/ezyshop/api/" + SUCCESS_URL, orderId);
+	    // Crear el pago con los detalles del pedido
+	    Payment payment = createPayment(order.getPaymentAmount(), order.getCurrency(), order.getMethod(),
+	            order.getIntent(), "http://localhost:8081/ezyshop/api" + CANCEL_URL,
+	            "http://localhost:8081/ezyshop/api/" + SUCCESS_URL, orderId);
 
-		return payment;
+	    return payment;
 	}
+
 
 	public Payment executePayment(String paymentId, String payerId) throws PayPalRESTException {
 		Payment payment = new Payment();
@@ -133,18 +135,32 @@ public class PaypalService {
 	}
 
 	@Transactional
-	public void updatePaymentStatus(Long orderId, boolean paymentStatus) {
+	public void updatePaymentStatus(Long orderId, String paymentId, boolean paymentStatus) {
 	    // Busca el pedido por su ID
 	    Optional<Order> optionalOrder = orderRepository.findById(orderId);
 
 	    // Si el pedido no existe, lanza una excepción
 	    if (!optionalOrder.isPresent()) {
-	        throw new RuntimeException("Order not found with id: " + orderId);
+	        throw new OrderNotFoundException("Order not found");
 	    }
-	    optionalOrder.get().setPayment(true);
+
+	    Order order = optionalOrder.get();
+
+	    // Comprueba si el paymentId ya ha sido utilizado en cualquier pedido
+	    Optional<Order> optionalOrderWithPaymentId = orderRepository.findByPaymentId(paymentId);
+	    if (optionalOrderWithPaymentId.isPresent()) {
+	        throw new PaymentIdAlreadyUsedException("PaymentId already used: " + paymentId);
+	    }
+
+	    // Establece el paymentId en el pedido
+	    order.setPaymentId(paymentId);
 
 	    // Actualiza el estado de pago del pedido
-	    orderRepository.updatePaymentStatus(orderId, paymentStatus);
+	    order.setPayment(paymentStatus);
+
+	    // Guarda el pedido actualizado en la base de datos
+	    orderRepository.updatePaymentId(orderId, paymentId);
+        orderRepository.updatePaymentStatus(orderId, paymentStatus);
 	}
 
 
