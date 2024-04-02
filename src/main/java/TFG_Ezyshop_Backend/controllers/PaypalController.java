@@ -1,7 +1,6 @@
 package TFG_Ezyshop_Backend.controllers;
 
-import java.util.Optional;
-
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,7 +12,8 @@ import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payment;
 import com.paypal.base.rest.PayPalRESTException;
 
-import TFG_Ezyshop_Backend.entities.Order;
+import TFG_Ezyshop_Backend.dto.OrderDto;
+import TFG_Ezyshop_Backend.exceptions.OrderNotFoundException;
 import TFG_Ezyshop_Backend.repositories.OrderRepository;
 import TFG_Ezyshop_Backend.services.OrderService;
 import TFG_Ezyshop_Backend.services.PaypalService;
@@ -22,22 +22,16 @@ import TFG_Ezyshop_Backend.services.PaypalService;
 public class PaypalController {
 
 	private final PaypalService service;
-	
-	private final OrderRepository orderRepository;
-	
-	private final OrderService orderService;
 
-	public PaypalController(PaypalService service, OrderRepository orderRepository , OrderService orderService) {
+	public PaypalController(PaypalService service) {
 		this.service = service;
-		this.orderRepository = orderRepository;
-		this.orderService = orderService;
 	}
 
 	public static final String SUCCESS_URL = "pay/success";
 	public static final String CANCEL_URL = "pay/cancel";
 
 	@PostMapping("/payment/{orderId}")
-	public ResponseEntity<?> payment(@PathVariable Long orderId) {
+	public ResponseEntity<?> payment(@PathVariable Long orderId){
 	    try {
 	        // Crear el pago con los detalles del pedido
 	        Payment payment = service.createPayment(orderId);
@@ -56,7 +50,7 @@ public class PaypalController {
 	}
 
 	@GetMapping(value = SUCCESS_URL)
-	public String successPay(@RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String payerId, @RequestParam("orderId") Long orderId) {
+	public ResponseEntity<OrderDto> successPay(@RequestParam("paymentId") String paymentId, @RequestParam("PayerID") String payerId, @RequestParam("orderId") Long orderId) {
 	    try {
 	        // Ejecuta el pago
 	        Payment payment = service.executePayment(paymentId, payerId);
@@ -64,18 +58,13 @@ public class PaypalController {
 	        // Confirma el pago
 	        if (payment.getState().equals("approved")) {
 	            // Actualiza el estado de pago en la base de datos
-	            service.updatePaymentStatus(orderId, true);
-	            Optional<Order> order = orderRepository.findById(orderId);
-	            if (order.isPresent()) {
-					System.out.println("PAGO EN : " + order.get().getPayment());
-				}
-	            System.out.println();
-	            return "success";
+	            service.updatePaymentStatus(orderId, paymentId, true);
+	            return new ResponseEntity<>(HttpStatus.OK);
 	        }
 	    } catch (PayPalRESTException e) {
 	        System.out.println(e.getMessage());
 	    }
-	    return "redirect:/";
+	    return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	}
 
 

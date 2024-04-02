@@ -1,6 +1,7 @@
 package TFG_Ezyshop_Backend.repositories;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -17,6 +18,11 @@ public interface OrderRepository extends JpaRepository<Order, Long>{
 	@Query("UPDATE Order o SET o.payment = :paymentStatus WHERE o.id = :orderId")
 	void updatePaymentStatus(@Param("orderId") Long orderId, @Param("paymentStatus") boolean paymentStatus);
 
+	@Modifying
+	@Query("UPDATE Order o SET o.paymentId = :paymentId WHERE o.id = :orderId")
+	void updatePaymentId(@Param("orderId") Long orderId, @Param("paymentId") String paymentId);
+
+	 Optional<Order> findByPaymentId(String paymentId);
 
 	
 //	public List<Order> getAll();

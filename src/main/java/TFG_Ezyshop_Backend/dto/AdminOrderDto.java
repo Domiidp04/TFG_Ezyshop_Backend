@@ -31,6 +31,8 @@ public class AdminOrderDto {
 	private String method;
 	
 	private Boolean payment;
+	
+	private String paymentId;
 
 	private AdminUserDto user;
 
@@ -54,6 +56,8 @@ public class AdminOrderDto {
 		this.method = order.getMethod();
 		this.intent = order.getIntent();
 		this.payment = order.getPayment();
+		this.paymentId = order.getPaymentId();
 		this.user = new AdminUserDto(order.getUserOrder());
+		
 	}
 }
