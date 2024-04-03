@@ -1,37 +1,50 @@
 package TFG_Ezyshop_Backend.services;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.Optional;
+import java.util.List;
+import java.util.Map;
+
+import javax.imageio.ImageIO;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import TFG_Ezyshop_Backend.entities.ImageProduct;
-import TFG_Ezyshop_Backend.entities.Product;
 import TFG_Ezyshop_Backend.repositories.ImageProductRepository;
 import jakarta.transaction.Transactional;
 
 @Service
 @Transactional
 public class ImageProductService {
-	
+    
     private final ImageProductRepository imageProductRepository;
-    
-    private ProductService productService;
-    
-    public ImageProductService(ImageProductRepository imageProductRepository) {
-    	this.imageProductRepository = imageProductRepository;
+    private final CloudinaryService cloudinaryService;
+
+    public ImageProductService(ImageProductRepository imageProductRepository, 
+                               CloudinaryService cloudinaryService) {
+        this.imageProductRepository = imageProductRepository;
+        this.cloudinaryService = cloudinaryService;
     }
 
-//    public ImageProduct saveImage(Long productId, MultipartFile file) throws IOException {
-//        Optional<Product> product = productService.getById(productId);
-//        if (product.isPresent()) {
-//            profu.setImage(file.getBytes());
-//            return imageProductRepository.save(imageProduct);
-//        } else {
-//            throw new RuntimeException("Product not found with id " + productId);
-//        }
-//    }
+    public ImageProduct saveImage(MultipartFile imageFile, Long productId) throws IOException {
+        BufferedImage bi = ImageIO.read(imageFile.getInputStream());
+        if (bi == null) {
+            throw new IllegalArgumentException("Imagen no válida!");
+        }
+        Map result = cloudinaryService.upload(imageFile);
+        ImageProduct imageProduct = new ImageProduct();
+        imageProduct.setImageUrl((String) result.get("url"));
+        imageProduct.setProductId(productId);
+        return imageProductRepository.save(imageProduct);
+    }
+    
+    public List<ImageProduct> getImagesByProductId(Long productId) {
+        return imageProductRepository.findByProductId(productId);
+    }
 
-
+    public void deleteImage(Long imageId) {
+        imageProductRepository.deleteById(imageId);
+    }
 }
+
