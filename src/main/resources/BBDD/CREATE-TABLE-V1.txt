@@ -30,7 +30,7 @@ CREATE TABLE Discounts(
 	final_date DATE,
 	expired BOOLEAN NOT NULL,
 	use INT,
-	amount DOUBLE NOT NULL DEFAULT 0
+	amount DOUBLE PRECISION NOT NULL DEFAULT 0
 );
 
 CREATE TABLE Orders (
@@ -96,14 +96,14 @@ CREATE TABLE Orders_Products (
 
 CREATE TABLE Images_Products(
 	id SERIAL PRIMARY KEY,
-	image BYTEA NOT NULL,
+	image_url VARCHAR not null,
 	product_id BIGINT NOT NULL,
 	FOREIGN KEY (product_id) REFERENCES Products(id)
 );
 
 CREATE TABLE Images_Assessments(
 	id SERIAL PRIMARY KEY,
-	image BYTEA NOT NULL,
+	image_url VARCHAR not null,
 	assessment_id BIGINT NOT NULL,
 	FOREIGN KEY (assessment_id) REFERENCES Assessments(id)
 );
