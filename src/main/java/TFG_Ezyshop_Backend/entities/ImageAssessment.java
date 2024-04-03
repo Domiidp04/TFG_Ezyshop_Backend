@@ -6,7 +6,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
@@ -20,8 +19,8 @@ public class ImageAssessment {
 	@GeneratedValue( strategy = GenerationType.IDENTITY )
 	private Long id;
 	
-	@Lob
-	private byte[] image;
+	@Column( name = "image_url" )
+	private String imageUrl;
 	
 	@Column( name = "assessment_id" )
 	private Long assessmentId;
