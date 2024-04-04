@@ -98,12 +98,14 @@ CREATE TABLE Images_Products(
 	id SERIAL PRIMARY KEY,
 	image_url VARCHAR not null,
 	product_id BIGINT NOT NULL,
+	image_id VARCHAR not null,
 	FOREIGN KEY (product_id) REFERENCES Products(id)
 );
 
 CREATE TABLE Images_Assessments(
 	id SERIAL PRIMARY KEY,
 	image_url VARCHAR not null,
+	image_id VARCHAR not null,
 	assessment_id BIGINT NOT NULL,
 	FOREIGN KEY (assessment_id) REFERENCES Assessments(id)
 );
