@@ -31,6 +31,10 @@ public class SecurityConfig {
 				.authorizeHttpRequests() // Para las perticiones HTTP
 				// Ruta auth
 				.requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
+				.requestMatchers(HttpMethod.POST, "/imageProduct/**").permitAll()
+				.requestMatchers(HttpMethod.GET, "/imageProduct/**").permitAll()
+				.requestMatchers(HttpMethod.DELETE, "/imageProduct/**").permitAll()
+
 //				.requestMatchers(HttpMethod.POST, "/payment").permitAll()
 
 				// Todas las rutas de USER
