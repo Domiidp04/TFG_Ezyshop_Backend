@@ -1,5 +1,8 @@
 package TFG_Ezyshop_Backend.dto;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import TFG_Ezyshop_Backend.entities.Product;
 import lombok.Data;
 
@@ -22,6 +25,8 @@ public class AdminProductDto {
 	
 	private AdminCategoryDto category;
 	
+	private List<AdminImageProductDto> imageProduct;
+	
 	public AdminProductDto(Product product) {
 		this.id = product.getId();
 		this.title = product.getTitle();
@@ -31,6 +36,9 @@ public class AdminProductDto {
 		this.stock = product.getStock();
 		this.disabled = product.getDisabled();
 		this.category = new AdminCategoryDto(product.getCategoryProduct());
+		this.imageProduct = product.getImageProducts().stream()
+		        .map(AdminImageProductDto::new)
+		        .collect(Collectors.toList());
 		
 	}
 	
