@@ -15,6 +15,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 
+import jakarta.annotation.PostConstruct;
+
 @Service
 public class CloudinaryService {
     Cloudinary cloudinary;
@@ -28,7 +30,8 @@ public class CloudinaryService {
     @Value("${api.secret}")
     String apiSecret;
 
-    public CloudinaryService() {
+    @PostConstruct
+    public void init() {
         Map<String, String> valuesMap = new HashMap<>();
         valuesMap.put("cloud_name", this.cloudName);
         valuesMap.put("api_key", this.apiKey);

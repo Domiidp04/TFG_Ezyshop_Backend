@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import TFG_Ezyshop_Backend.entities.ImageProduct;
+import TFG_Ezyshop_Backend.exceptions.ResourceNotFoundException;
 import TFG_Ezyshop_Backend.repositories.ImageProductRepository;
 import jakarta.transaction.Transactional;
 
@@ -35,16 +36,33 @@ public class ImageProductService {
         Map result = cloudinaryService.upload(imageFile);
         ImageProduct imageProduct = new ImageProduct();
         imageProduct.setImageUrl((String) result.get("url"));
+        imageProduct.setImageId((String) result.get("public_id")); // Guarda el imageId
         imageProduct.setProductId(productId);
         return imageProductRepository.save(imageProduct);
     }
+
     
-    public List<ImageProduct> getImagesByProductId(Long productId) {
-        return imageProductRepository.findByProductId(productId);
-    }
+//    public List<ImageProduct> getImagesByProductId(Long productId) {
+//        return imageProductRepository.findByProductId(productId);
+//    }
 
     public void deleteImage(Long imageId) {
+        // Obtén la imagen de la base de datos
+        ImageProduct imageProduct = imageProductRepository.findById(imageId).orElseThrow(() -> new ResourceNotFoundException("Image not found"));
+
+        // Obtén el ID público de la imagen de Cloudinary
+        String publicId = imageProduct.getImageId();
+
+        // Elimina la imagen de Cloudinary
+        try {
+            cloudinaryService.delete(publicId);
+        } catch (IOException e) {
+            throw new RuntimeException("Error deleting image from Cloudinary", e);
+        }
+
+        // Elimina la imagen de la base de datos
         imageProductRepository.deleteById(imageId);
     }
+
 }
 
