@@ -18,7 +18,7 @@ import TFG_Ezyshop_Backend.entities.ImageProduct;
 import TFG_Ezyshop_Backend.services.ImageProductService;
 
 @RestController
-@RequestMapping("/imageProduct")
+@RequestMapping("/imageProducts")
 public class ImageProductController {
 	
     private ImageProductService imageProductService;
@@ -28,7 +28,7 @@ public class ImageProductController {
     }
 
 
-    @PostMapping("/upload/{productId}")
+    @PostMapping("/{productId}")
     public ResponseEntity<ImageProduct> uploadImage(@PathVariable Long productId, @RequestParam("imageFile") MultipartFile imageFile) {
         try {
             ImageProduct imageProduct = imageProductService.saveImage(imageFile, productId);
@@ -38,13 +38,13 @@ public class ImageProductController {
         }
     }
 
-//    @GetMapping("/product/{productId}")
+//    @GetMapping("//{productId}")
 //    public ResponseEntity<List<ImageProduct>> getImagesByProductId(@PathVariable Long productId) {
 //        List<ImageProduct> images = imageProductService.getImagesByProductId(productId);
 //        return new ResponseEntity<>(images, HttpStatus.OK);
 //    }
 
-    @DeleteMapping("/delete/{imageId}")
+    @DeleteMapping("/{imageId}")
     public ResponseEntity<Void> deleteImage(@PathVariable Long imageId) {
         imageProductService.deleteImage(imageId);
         return new ResponseEntity<>(HttpStatus.OK);

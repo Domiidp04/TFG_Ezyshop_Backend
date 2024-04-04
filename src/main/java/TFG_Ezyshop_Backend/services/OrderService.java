@@ -58,10 +58,10 @@ public class OrderService {
 	}
 	
 	//Metodo obtencion del rol, para no repetir
-		public Collection<? extends GrantedAuthority> getAuthorities() {
-		    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		    return authentication.getAuthorities();
-		}
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		return authentication.getAuthorities();
+	}
 	
 	public List<?> getAll() {
         List<Order> orders = orderRepository.findAll();

@@ -29,23 +29,21 @@ public class SecurityConfig {
 				.cors().and() // Anadimos el Cors
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 				.authorizeHttpRequests() // Para las perticiones HTTP
+				
 				// Ruta auth
 				.requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
-				.requestMatchers(HttpMethod.POST, "/imageProduct/**").permitAll()
-				.requestMatchers(HttpMethod.GET, "/imageProduct/**").permitAll()
-				.requestMatchers(HttpMethod.DELETE, "/imageProduct/**").permitAll()
-
-//				.requestMatchers(HttpMethod.POST, "/payment").permitAll()
 
 				// Todas las rutas de USER
-				.requestMatchers(HttpMethod.GET, "/users").hasRole("ADMIN").requestMatchers(HttpMethod.POST, "/users")
-				.hasRole("ADMIN").requestMatchers(HttpMethod.GET, "/users/*").hasAnyRole("ADMIN", "USER")
+				.requestMatchers(HttpMethod.GET, "/users").hasRole("ADMIN")
+				.requestMatchers(HttpMethod.POST, "/users").hasRole("ADMIN")
+				.requestMatchers(HttpMethod.GET, "/users/*").hasAnyRole("ADMIN", "USER")
 				.requestMatchers(HttpMethod.PUT, "/users/*").hasAnyRole("ADMIN", "USER")
 				.requestMatchers(HttpMethod.DELETE, "/users/*").hasAnyRole("ADMIN", "USER")
 
 				// Rutas para products
-				.requestMatchers(HttpMethod.GET, "/products").permitAll().requestMatchers(HttpMethod.GET, "/products/*")
-				.permitAll().requestMatchers(HttpMethod.POST, "/products").hasRole("ADMIN")
+				.requestMatchers(HttpMethod.GET, "/products").permitAll()
+				.requestMatchers(HttpMethod.GET, "/products/*").permitAll()
+				.requestMatchers(HttpMethod.POST, "/products").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.PUT, "/products/*").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.DELETE, "/products/*").hasRole("ADMIN")
 
@@ -57,8 +55,9 @@ public class SecurityConfig {
 				.requestMatchers(HttpMethod.DELETE, "/categories/*").hasRole("ADMIN")
 
 				// Rutas para Order
-				.requestMatchers(HttpMethod.GET, "/orders").hasRole("ADMIN").requestMatchers(HttpMethod.POST, "/orders")
-				.hasRole("USER").requestMatchers(HttpMethod.GET, "/orders/*").hasAnyRole("ADMIN", "USER")
+				.requestMatchers(HttpMethod.GET, "/orders").hasRole("ADMIN")
+				.requestMatchers(HttpMethod.POST, "/orders").hasRole("USER")
+				.requestMatchers(HttpMethod.GET, "/orders/*").hasAnyRole("ADMIN", "USER")
 
 				// Rutas para Assessment
 				.requestMatchers(HttpMethod.GET, "/assessments").permitAll()
@@ -74,11 +73,26 @@ public class SecurityConfig {
 				.requestMatchers(HttpMethod.PUT, "/discounts/*").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.DELETE, "/discounts/*").hasRole("ADMIN")
 				
-				// Rutas para pago
+				// Rutas para Pago
 				.requestMatchers(HttpMethod.POST, "/payment/*").hasRole("USER")
 				.requestMatchers(HttpMethod.GET, "/pay/success/*").hasRole("USER")
 				.requestMatchers(HttpMethod.GET, "/pay/success").hasRole("USER")
-
+				
+				//Rutas para Assessment
+				.requestMatchers(HttpMethod.GET, "/assessments").hasRole("ADMIN")
+				.requestMatchers(HttpMethod.GET, "/assessments/*").hasAnyRole("ADMIN", "USER")
+				.requestMatchers(HttpMethod.POST, "/assessments/*").hasRole("USER")
+				.requestMatchers(HttpMethod.DELETE, "/assessments/*").hasAnyRole("ADMIN", "USER")
+				.requestMatchers(HttpMethod.PUT, "/assessments/*").hasAnyRole("ADMIN", "USER")
+				
+				//Rutas para ImageProducts
+				.requestMatchers(HttpMethod.POST, "/imageProducts/*").hasRole("ADMIN")
+				.requestMatchers(HttpMethod.DELETE, "/imageProducts/*").hasRole("ADMIN")
+				
+				//Rutas para ImageAssessment
+				.requestMatchers(HttpMethod.POST, "/imageAssessments/*").hasRole("USER")
+				.requestMatchers(HttpMethod.DELETE, "/imageAssessments/*").hasAnyRole("ADMIN","USER")
+				
 				.anyRequest() // Para cualquiera peticion
 				.authenticated() // Necesitamos estar autenticados
 				.and().addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);

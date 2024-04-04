@@ -1,6 +1,8 @@
 package TFG_Ezyshop_Backend.dto;
 
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import TFG_Ezyshop_Backend.entities.Assessment;
 import lombok.Data;
@@ -20,7 +22,7 @@ public class AdminAssessmentDto {
 	
 	private AdminUserDto user;
 	
-	private AdminProductDto product;
+	private List<AdminImageAssessmentDto>imagesAssessment;
 
 	public AdminAssessmentDto(Assessment assessment) {
 		this.id = assessment.getId();
@@ -29,7 +31,9 @@ public class AdminAssessmentDto {
 		this.date = assessment.getDate();
 		this.disabled = assessment.getDisabled();
 		this.user = new AdminUserDto(assessment.getUserAssessment());
-		this.product = new AdminProductDto(assessment.getProductAssessment());
+		this.imagesAssessment = assessment.getImages().stream()
+		        .map(AdminImageAssessmentDto::new)
+		        .collect(Collectors.toList());
 	}
 	
 	

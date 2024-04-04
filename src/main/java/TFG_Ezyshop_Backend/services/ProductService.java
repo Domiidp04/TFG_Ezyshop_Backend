@@ -145,10 +145,4 @@ public class ProductService {
 		            .orElse(false); // Devuelve false si el producto no se encuentra
 		}
 
-
-
-
-
-	
-	
 }
