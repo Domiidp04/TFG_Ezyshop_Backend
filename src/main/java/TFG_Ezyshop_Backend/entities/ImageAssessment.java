@@ -25,6 +25,9 @@ public class ImageAssessment {
 	@Column( name = "assessment_id" )
 	private Long assessmentId;
 	
+	@Column( name = "image_id" )
+	private String imageId;
+	
 	@ManyToOne
 	@JoinColumn( name = "assessment_id", insertable = false, updatable = false )
 	private Assessment assessmentImageAssessment;

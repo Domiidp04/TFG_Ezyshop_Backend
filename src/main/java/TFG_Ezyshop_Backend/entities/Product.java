@@ -39,8 +39,8 @@ public class Product {
 	@Column( name = "category_id" )
 	private Long categoryId;
 	
-//	@OneToMany( mappedBy = "productImageProduct" )  //Nombre del atributo de @ManyToOne
-//	private List<ImageProduct>imageProducts;
+	@OneToMany( mappedBy = "productImageProduct" )  //Nombre del atributo de @ManyToOne
+	private List<ImageProduct>imageProducts;
 	
 	@OneToMany( mappedBy = "productAssessment" )  //Nombre del atributo de @ManyToOne
 	private List<Assessment>assessments;
