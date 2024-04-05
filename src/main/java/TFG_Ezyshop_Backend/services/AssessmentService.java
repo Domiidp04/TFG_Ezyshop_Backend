@@ -72,11 +72,9 @@ public class AssessmentService {
 	    if (authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
 	        AdminAssessmentDto adminAssessmentDto = new AdminAssessmentDto(assessment);
 	        return Optional.of(adminAssessmentDto);
-	    } else if(authorities.contains(new SimpleGrantedAuthority("ROLE_USER"))){
+	    } else {
 	        AssessmentDto assessmentDto = new AssessmentDto(assessment);
 	        return Optional.of(assessmentDto);
-	    }else {
-	    	return Optional.empty();
 	    }
 	}
 

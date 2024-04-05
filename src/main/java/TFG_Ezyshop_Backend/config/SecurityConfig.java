@@ -59,13 +59,6 @@ public class SecurityConfig {
 				.requestMatchers(HttpMethod.POST, "/orders").hasRole("USER")
 				.requestMatchers(HttpMethod.GET, "/orders/*").hasAnyRole("ADMIN", "USER")
 
-				// Rutas para Assessment
-				.requestMatchers(HttpMethod.GET, "/assessments").permitAll()
-				.requestMatchers(HttpMethod.GET, "/assessments/*").permitAll()
-				.requestMatchers(HttpMethod.POST, "/assessments").hasRole("USER")
-				.requestMatchers(HttpMethod.PUT, "/assessments/*").hasAnyRole("ADMIN", "USER")
-				.requestMatchers(HttpMethod.DELETE, "/assessments/*").hasAnyRole("ADMIN", "USER")
-
 				// Rutas para Discount
 				.requestMatchers(HttpMethod.GET, "/discounts").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.GET, "/discounts/*").hasRole("ADMIN")
@@ -80,7 +73,7 @@ public class SecurityConfig {
 				
 				//Rutas para Assessment
 				.requestMatchers(HttpMethod.GET, "/assessments").hasRole("ADMIN")
-				.requestMatchers(HttpMethod.GET, "/assessments/*").hasAnyRole("ADMIN", "USER")
+				.requestMatchers(HttpMethod.GET, "/assessments/*").permitAll()
 				.requestMatchers(HttpMethod.POST, "/assessments/*").hasRole("USER")
 				.requestMatchers(HttpMethod.DELETE, "/assessments/*").hasAnyRole("ADMIN", "USER")
 				.requestMatchers(HttpMethod.PUT, "/assessments/*").hasAnyRole("ADMIN", "USER")

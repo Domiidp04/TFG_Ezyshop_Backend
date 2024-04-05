@@ -23,6 +23,8 @@ public class ProductDto {
 	
 	private List<ImageProductDto> imageProduct;
 	
+	private List<AssessmentDto>assessments;
+	
 	
 	public ProductDto(Product product) {
 		this.title = product.getTitle();
@@ -33,6 +35,9 @@ public class ProductDto {
 		this.category = new CategoryDto(product.getCategoryProduct());
 		this.imageProduct = product.getImageProducts().stream()
 		        .map(ImageProductDto::new)
+		        .collect(Collectors.toList());
+		this.assessments = product.getAssessments().stream()
+		        .map(AssessmentDto::new)
 		        .collect(Collectors.toList());
 	}
 	
