@@ -18,6 +18,7 @@ import TFG_Ezyshop_Backend.dto.AssessmentDto;
 import TFG_Ezyshop_Backend.entities.Assessment;
 import TFG_Ezyshop_Backend.entities.Product;
 import TFG_Ezyshop_Backend.entities.UserEntity;
+import TFG_Ezyshop_Backend.exceptions.AssessmentNotFoundException;
 import TFG_Ezyshop_Backend.exceptions.ResourceNotFoundException;
 import TFG_Ezyshop_Backend.exceptions.UsernameNotFoundException;
 import TFG_Ezyshop_Backend.repositories.AssessmentRepository;
@@ -49,6 +50,7 @@ public class AssessmentService {
 		return authentication.getAuthorities();
 	}
 
+	//Todas las valoraciones para el ADMIN
 	public List<AdminAssessmentDto> getAll() {
 		return assessmentRepository.findAll()
 				.stream()
@@ -114,11 +116,41 @@ public class AssessmentService {
 
 
 	public Boolean delete(Long assessmentId) {
-		return getAssessment(assessmentId).map(assessment -> {
-			assessmentRepository.deleteById(assessmentId);
-			return true;
-		}).orElse(false);
+	    // Obtiene el nombre de usuario del usuario autenticado
+	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	    Collection<? extends GrantedAuthority> authorities = getAuthorities();
+	    String authenticatedUsername = authentication.getName();
+
+	 // Obtiene el ID del usuario autenticado
+	    Optional<UserEntity> optionalAuthenticatedUser = userRepository.getByUsername(authenticatedUsername);
+	    if (!optionalAuthenticatedUser.isPresent()) {
+	        throw new UsernameNotFoundException("Usuario autenticado no encontrado");
+	    }
+	    UserEntity authenticatedUser = optionalAuthenticatedUser.get();
+	    Long authenticatedUserId = authenticatedUser.getId();
+	    // Obtiene el assessment que se está intentando desactivar
+	    Optional<Assessment> optionalAssessment = assessmentRepository.findById(assessmentId);
+	    if (!optionalAssessment.isPresent()) {
+	        throw new AssessmentNotFoundException("Assessment no encontrado");
+	    }
+	    Assessment assessment = optionalAssessment.get();
+
+	    // Comprueba si el usuario autenticado es el mismo que el usuario del assessment que se está intentando desactivar o si es un administrador
+	    if (!assessment.getUserId().equals(authenticatedUserId) && !authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+	        throw new AccessDeniedException("No tienes autorización para desactivar el assessment de otros usuarios.");
+	    }
+
+	    // Marca el atributo disabled como true
+	    assessment.setDisabled(true);
+
+	    // Guarda el assessment actualizado en la base de datos
+	    assessmentRepository.save(assessment);
+
+	    return true;
 	}
+
+
+
 
 	
 }
