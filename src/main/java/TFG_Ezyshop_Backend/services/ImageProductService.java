@@ -2,6 +2,7 @@ package TFG_Ezyshop_Backend.services;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -28,18 +29,25 @@ public class ImageProductService {
         this.cloudinaryService = cloudinaryService;
     }
 
-    public ImageProduct saveImage(MultipartFile imageFile, Long productId) throws IOException {
-        BufferedImage bi = ImageIO.read(imageFile.getInputStream());
-        if (bi == null) {
-            throw new IllegalArgumentException("Imagen no válida!");
+    public List<ImageProduct> saveImages(List<MultipartFile> imageFiles, Long productId) throws IOException {
+        List<ImageProduct> imageProducts = new ArrayList<>();
+
+        for (MultipartFile imageFile : imageFiles) {
+            BufferedImage bi = ImageIO.read(imageFile.getInputStream());
+            if (bi == null) {
+                throw new IllegalArgumentException("Imagen no válida!");
+            }
+            Map result = cloudinaryService.upload(imageFile);
+            ImageProduct imageProduct = new ImageProduct();
+            imageProduct.setImageUrl((String) result.get("url"));
+            imageProduct.setImageId((String) result.get("public_id")); // Guarda el imageId
+            imageProduct.setProductId(productId);
+            imageProducts.add(imageProductRepository.save(imageProduct));
         }
-        Map result = cloudinaryService.upload(imageFile);
-        ImageProduct imageProduct = new ImageProduct();
-        imageProduct.setImageUrl((String) result.get("url"));
-        imageProduct.setImageId((String) result.get("public_id")); // Guarda el imageId
-        imageProduct.setProductId(productId);
-        return imageProductRepository.save(imageProduct);
+
+        return imageProducts;
     }
+
 
     
 //    public List<ImageProduct> getImagesByProductId(Long productId) {

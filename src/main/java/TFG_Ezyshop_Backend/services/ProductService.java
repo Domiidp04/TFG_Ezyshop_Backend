@@ -86,6 +86,32 @@ public class ProductService {
 		    }
 		}
 		
+		public Optional<?> getByProductTitle(String productTitle) {
+		    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		    Collection<? extends GrantedAuthority> authorities = getAuthorities();
+		    String authenticatedUsername = authentication.getName();
+		    System.out.println("Antes");
+		    Optional<Product> product = productRepository.findByTitle(productTitle);
+		    System.out.println("Product " + product);
+
+		    if (product.isPresent()) {
+		        String role = authorities.stream()
+		                                .map(GrantedAuthority::getAuthority)
+		                                .findFirst()
+		                                .orElse("USER"); // Default to "USER" if no role is found
+		        if(role.equals("ROLE_ADMIN")) {
+		            return Optional.of(new AdminProductDto(product.get()));
+		        } else {
+		            if(product.get().getDisabled()) {
+		                return Optional.empty();
+		            }
+		            return Optional.of(new ProductDto(product.get()));
+		        }
+		    } else {
+		        return Optional.empty();
+		    }
+		}
+
 		
 		@Transactional
 		public Product save(Product product) {

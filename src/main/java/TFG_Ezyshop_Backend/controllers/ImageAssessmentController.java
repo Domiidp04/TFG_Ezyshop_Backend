@@ -1,6 +1,7 @@
 package TFG_Ezyshop_Backend.controllers;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,14 +27,15 @@ public class ImageAssessmentController {
     }
 
     @PostMapping("/{assessmentId}")
-    public ResponseEntity<ImageAssessment> uploadImage(@PathVariable Long assessmentId, @RequestParam("imageFile") MultipartFile imageFile) {
+    public ResponseEntity<List<ImageAssessment>> uploadImages(@PathVariable Long assessmentId, @RequestParam("imageFiles") List<MultipartFile> imageFiles) {
         try {
-            ImageAssessment imageAssessment = imageAssessmentService.saveImage(imageFile, assessmentId);
-            return new ResponseEntity<>(imageAssessment, HttpStatus.CREATED);
+            List<ImageAssessment> imageAssessments = imageAssessmentService.saveImages(imageFiles, assessmentId);
+            return new ResponseEntity<>(imageAssessments, HttpStatus.CREATED);
         } catch (IOException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 
 //    @GetMapping("/assessment/{assessmentId}")
 //    public ResponseEntity<List<ImageAssessment>> getImagesByAssessmentId(@PathVariable Long assessmentId) {

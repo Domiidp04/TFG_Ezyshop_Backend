@@ -4,8 +4,8 @@ INSERT INTO Roles (role) VALUES ('USER');
 INSERT INTO Roles (role) VALUES ('MANAGEMENT');
 
 -- Insert statements for Users
-INSERT INTO Users (username, password, email, name, lastname, zip, street, number, role_id) VALUES ('admin', 'admin', 'admin@example.com', 'Admin', 'Admin', '12345', 'Admin Street', '1', 1);
-INSERT INTO Users (username, password, email, name, lastname, zip, street, number, role_id) VALUES ('user', 'user', 'user@example.com', 'User', 'User', '12345', 'User Street', '1', 2);
+INSERT INTO Users (username, password, email, name, lastname, zip, street, number, role_id) VALUES ('admin', '$2y$10$Vj6id1mfNgFOSnVQRvt1V.0RouACN11yJMXB3uWqgxUgdbJ9/MNr2', 'admin@example.com', 'Admin', 'Admin', '12345', 'Admin Street', '1', 1);
+INSERT INTO Users (username, password, email, name, lastname, zip, street, number, role_id) VALUES ('user', '$2a$10$TMS3py5dJ5NLPuiM6gJKROdPXjJmxycLM.nmJc8exH3IkkMlznGZu', 'user@example.com', 'User', 'User', '12345', 'User Street', '1', 2);
 
 -- Insert statements for Discounts
 INSERT INTO Discounts (title, code, expired, use) VALUES ('Discount1', 'CODE1', false, 0);
@@ -49,16 +49,3 @@ INSERT INTO Orders_Products (amount, price, order_id, product_id) VALUES (1.0, 1
 INSERT INTO Orders_Products (amount, price, order_id, product_id) VALUES (1.0, 10.0, 1, 1);
 INSERT INTO Orders_Products (amount, price, order_id, product_id) VALUES (1.0, 10.0, 1, 1);
 
--- Insert statements for Images_Products
-INSERT INTO Images_Products (image, product_id) VALUES (E'\\\\x1', 1);
-INSERT INTO Images_Products (image, product_id) VALUES (E'\\\\x2', 1);
-INSERT INTO Images_Products (image, product_id) VALUES (E'\\\\x3', 1);
-INSERT INTO Images_Products (image, product_id) VALUES (E'\\\\x4', 1);
-INSERT INTO Images_Products (image, product_id) VALUES (E'\\\\x5', 1);
-
--- Insert statements for Images_Assessments
-INSERT INTO Images_Assessments (image, assessment_id) VALUES (E'\\\\x1', 1);
-INSERT INTO Images_Assessments (image, assessment_id) VALUES (E'\\\\x2', 1);
-INSERT INTO Images_Assessments (image, assessment_id) VALUES (E'\\\\x3', 1);
-INSERT INTO Images_Assessments (image, assessment_id) VALUES (E'\\\\x4', 1);
-INSERT INTO Images_Assessments (image, assessment_id) VALUES (E'\\\\x5', 1);

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import TFG_Ezyshop_Backend.entities.Product;
@@ -42,6 +43,15 @@ public class ProductController {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
     }
+	
+	
+	 @GetMapping("/title")
+	    public ResponseEntity<?> getProductByTitle(@RequestParam String title) {
+	        Optional<?> product = productService.getByProductTitle(title);
+	        return product.map(ResponseEntity::ok)
+	                      .orElseGet(() -> ResponseEntity.notFound().build());
+	    }
+	
 	
 	@PostMapping
 	public ResponseEntity<?> createProduct(@RequestBody Product product) {

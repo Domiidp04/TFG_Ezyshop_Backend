@@ -6,7 +6,6 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,14 +28,15 @@ public class ImageProductController {
 
 
     @PostMapping("/{productId}")
-    public ResponseEntity<ImageProduct> uploadImage(@PathVariable Long productId, @RequestParam("imageFile") MultipartFile imageFile) {
+    public ResponseEntity<List<ImageProduct>> uploadImages(@PathVariable Long productId, @RequestParam("imageFiles") List<MultipartFile> imageFiles) {
         try {
-            ImageProduct imageProduct = imageProductService.saveImage(imageFile, productId);
-            return new ResponseEntity<>(imageProduct, HttpStatus.CREATED);
+            List<ImageProduct> imageProducts = imageProductService.saveImages(imageFiles, productId);
+            return new ResponseEntity<>(imageProducts, HttpStatus.CREATED);
         } catch (IOException e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 
 //    @GetMapping("//{productId}")
 //    public ResponseEntity<List<ImageProduct>> getImagesByProductId(@PathVariable Long productId) {

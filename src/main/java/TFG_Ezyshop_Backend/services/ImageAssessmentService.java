@@ -2,7 +2,9 @@ package TFG_Ezyshop_Backend.services;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
@@ -45,18 +47,25 @@ public class ImageAssessmentService {
 		return authentication.getAuthorities();
 	}
 
-    public ImageAssessment saveImage(MultipartFile imageFile, Long assessmentId) throws IOException {
-        BufferedImage bi = ImageIO.read(imageFile.getInputStream());
-        if (bi == null) {
-            throw new IllegalArgumentException("Imagen no válida!");
-        }
-        Map result = cloudinaryService.upload(imageFile);
-        ImageAssessment imageAssessment = new ImageAssessment();
-        imageAssessment.setImageUrl((String) result.get("url"));
-        imageAssessment.setImageId((String) result.get("public_id")); // Guarda el imageId
-        imageAssessment.setAssessmentId(assessmentId);
-        return imageAssessmentRepository.save(imageAssessment);
-    }
+	public List<ImageAssessment> saveImages(List<MultipartFile> imageFiles, Long assessmentId) throws IOException {
+	    List<ImageAssessment> imageAssessments = new ArrayList<>();
+
+	    for (MultipartFile imageFile : imageFiles) {
+	        BufferedImage bi = ImageIO.read(imageFile.getInputStream());
+	        if (bi == null) {
+	            throw new IllegalArgumentException("Imagen no válida!");
+	        }
+	        Map result = cloudinaryService.upload(imageFile);
+	        ImageAssessment imageAssessment = new ImageAssessment();
+	        imageAssessment.setImageUrl((String) result.get("url"));
+	        imageAssessment.setImageId((String) result.get("public_id")); // Guarda el imageId
+	        imageAssessment.setAssessmentId(assessmentId);
+	        imageAssessments.add(imageAssessmentRepository.save(imageAssessment));
+	    }
+
+	    return imageAssessments;
+	}
+
 
     public void deleteImage(Long imageId) {
         // Obtén la imagen de la base de datos
