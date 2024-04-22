@@ -45,12 +45,12 @@ public class ProductController {
     }
 	
 	
-	 @GetMapping("/title")
-	    public ResponseEntity<?> getProductByTitle(@RequestParam String title) {
-	        Optional<?> product = productService.getByProductTitle(title);
-	        return product.map(ResponseEntity::ok)
-	                      .orElseGet(() -> ResponseEntity.notFound().build());
-	    }
+//	 @GetMapping("/title")
+//	    public ResponseEntity<?> getProductByTitle(@RequestParam String title) {
+//	        Optional<?> product = productService.getByProductTitle(title);
+//	        return product.map(ResponseEntity::ok)
+//	                      .orElseGet(() -> ResponseEntity.notFound().build());
+//	    }
 	
 	
 	@PostMapping

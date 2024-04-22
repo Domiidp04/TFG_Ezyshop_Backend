@@ -8,6 +8,8 @@ import lombok.Data;
 
 @Data
 public class ProductDto {
+	
+	private Long id;
 
 	private String title;
 	
@@ -27,6 +29,7 @@ public class ProductDto {
 	
 	
 	public ProductDto(Product product) {
+		this.setId(product.getId());
 		this.title = product.getTitle();
 		this.description = product.getDescription();
 		this.price = product.getPrice();
