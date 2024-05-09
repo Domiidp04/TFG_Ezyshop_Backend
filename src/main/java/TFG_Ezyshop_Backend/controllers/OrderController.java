@@ -48,15 +48,16 @@ public class OrderController {
 	 
 	 @PostMapping
 	 public ResponseEntity<Order> createOrderWithOrderProducts(@RequestBody OrderRequestDto orderRequestDto) {
+		 System.out.println(orderRequestDto);
 	     try {
 	         Order order = orderService.createOrderWithOrderProducts(orderRequestDto);
 	         return new ResponseEntity<>(order, HttpStatus.CREATED);
 	     }catch(StockException s){
 	    	 return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
 	     } catch (Exception e) {
-//	         // Registra la excepción para obtener más detalles sobre el error
-//	         System.out.println("Se produjo un error: " + e.getMessage());
-//	         e.printStackTrace();
+	         // Registra la excepción para obtener más detalles sobre el error
+	         System.out.println("Se produjo un error: " + e.getMessage());
+	         e.printStackTrace();
 	         return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 	     }
 	 }

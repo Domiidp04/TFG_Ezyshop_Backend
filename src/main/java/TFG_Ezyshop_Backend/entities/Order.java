@@ -50,10 +50,10 @@ public class Order {
     @Column( name = "intent", updatable = false, nullable = false )
     private String intent = "sale";
     
-    @Column( name = "payment", updatable = false, nullable = false )
+    @Column( name = "payment", updatable = false )
     private Boolean payment;
     
-    @Column( name = "payment_id", updatable = false, nullable = false )
+    @Column( name = "payment_id", updatable = false )
     private String paymentId;
 	
 	@Column( name = "discount_id" )

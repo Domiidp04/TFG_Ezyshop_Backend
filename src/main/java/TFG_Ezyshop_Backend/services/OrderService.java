@@ -123,6 +123,8 @@ public class OrderService {
         order.setSavedAmount(null);
         order.setTotalAmount(0.0);
         order.setPaymentAmount(0.0);
+        order.setPayment(false);
+        order.setPaymentId(null);
         
         
 
