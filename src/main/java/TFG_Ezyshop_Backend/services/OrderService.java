@@ -146,6 +146,10 @@ public class OrderService {
             orderProduct.setOrderId(order.getId());
             orderProduct.setProductId(product.getId());
             
+            if(orderProduct.getAmount() == null) {
+            	orderProduct.setAmount(1);
+            }
+            
          // Si el discountPrice no es null, usarlo. Si no, usar el price normal.
             double price = (product.getDiscountPrice() != null) ? product.getDiscountPrice() : product.getPrice();
             orderProduct.setPrice(price);

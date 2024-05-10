@@ -119,8 +119,8 @@ public class PaypalService {
 
 	    // Crear el pago con los detalles del pedido
 	    Payment payment = createPayment(order.getPaymentAmount(), order.getCurrency(), order.getMethod(),
-	            order.getIntent(), "http://localhost:8081/ezyshop/api" + CANCEL_URL,
-	            "http://localhost:8081/ezyshop/api/" + SUCCESS_URL, orderId);
+	            order.getIntent(), "http://localhost:4200/pay/" + CANCEL_URL,
+	            "http://localhost:4200/pay/" + SUCCESS_URL, orderId);
 
 	    return payment;
 	}
