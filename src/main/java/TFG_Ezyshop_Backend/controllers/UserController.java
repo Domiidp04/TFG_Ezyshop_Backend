@@ -48,6 +48,17 @@ public class UserController {
 	         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 	     }
 	 }
+	 
+	 @GetMapping("/name/{username}")
+	 public ResponseEntity<?> getByUsernameProfile(@PathVariable("username") String username) {
+	     Optional<?> user = userService.getByUsernameProfile(username);
+
+	     if (user.isPresent()) {
+	         return new ResponseEntity<>(user.get(), HttpStatus.OK);
+	     } else {
+	         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+	     }
+	 }
 
 	
 	 @PostMapping

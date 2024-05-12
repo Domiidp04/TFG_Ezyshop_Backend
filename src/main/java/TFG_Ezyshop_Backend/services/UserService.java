@@ -189,6 +189,29 @@ public class UserService {
 
 	    return true;
 	}
+	
+	public Optional<?> getByUsernameProfile(String username){
+	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	    Collection<? extends GrantedAuthority> authorities = getAuthorities();
+	    String authenticatedUsername = authentication.getName();
+
+	    Optional<UserEntity> user = userRepository.getByUsername(username);
+
+	    if (user.isPresent()) {
+	        // Comprueba si el usuario autenticado es el mismo que el usuario que se está intentando obtener
+	        if (!user.get().getUsername().equals(authenticatedUsername) && !authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+	            throw new AccessDeniedException("No tienes autorización para acceder a la información de otros usuarios.");
+	        }
+
+	        if (authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
+	            return Optional.of(new AdminUserDto(user.get()));
+	        } else {
+	            return Optional.of(new UserDto(user.get()));
+	        }
+	    } else {
+	        return Optional.empty();
+	    }
+	}
 
 	
 	
