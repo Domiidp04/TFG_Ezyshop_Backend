@@ -35,13 +35,13 @@ public class Category {
 	 * Si un producto esta desactivado de esa categoria, 
 	 * se desactiva hasta que haya stock
 	 */
-	@PostLoad
-    @PostUpdate
-    public void checkProducts() {
-        if (this.products.stream().allMatch(Product::getDisabled)) {
-            this.disabled = true;
-        } else {
-            this.disabled = false;
-        }
-    }
+//	@PostLoad
+//    @PostUpdate
+//    public void checkProducts() {
+//        if (this.products.stream().allMatch(Product::getDisabled)) {
+//            this.disabled = true;
+//        } else {
+//            this.disabled = false;
+//        }
+//    }
 }
