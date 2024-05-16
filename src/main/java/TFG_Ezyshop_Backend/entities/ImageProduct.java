@@ -1,5 +1,7 @@
 package TFG_Ezyshop_Backend.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -28,6 +30,7 @@ public class ImageProduct {
 	@Column( name = "image_id" )
 	private String imageId;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn( name = "product_id", insertable = false, updatable = false )
 	private Product productImageProduct;

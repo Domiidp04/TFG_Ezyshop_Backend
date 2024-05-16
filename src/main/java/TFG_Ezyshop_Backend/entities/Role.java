@@ -3,6 +3,8 @@ package TFG_Ezyshop_Backend.entities;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,6 +26,7 @@ public class Role {
 	
 	private Date granted_date;
 	
+	@JsonIgnore
 	@OneToMany( mappedBy = "roleUser" ) //Nombre del atributo de @ManyToOne
 	private List<UserEntity> users;
 	

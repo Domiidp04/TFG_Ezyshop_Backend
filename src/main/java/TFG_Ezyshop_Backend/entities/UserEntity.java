@@ -3,6 +3,8 @@ package TFG_Ezyshop_Backend.entities;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -56,6 +58,7 @@ public class UserEntity {
 	@JoinColumn( name = "role_id", insertable = false, updatable = false )
 	private Role roleUser;
 	
+	@JsonIgnore
 	@OneToMany( mappedBy = "userOrder" )  //Nombre del atributo de @ManyToOne
 	private List<Order> orders;
 	

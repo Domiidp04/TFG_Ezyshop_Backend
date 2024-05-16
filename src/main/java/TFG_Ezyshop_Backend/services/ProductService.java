@@ -166,13 +166,13 @@ public class ProductService {
 	
 	public List<Product> getProductsBytitle(String title) {
 	    List<Product> products = productRepository.findByTitle(title);
+//	    products = products.stream().map(ProductDto::new).collect(Collectors.toList());
 	    if (products == null) {
 	        System.out.println("La lista de productos es nula.");
 	    } else if (products.isEmpty()) {
 	        System.out.println("La lista de productos está vacía.");
 	    } else {
-	        System.out.println("Productos encontrados: " + products.size());
-	        System.out.println(products);
+	        System.out.println("Productos encontrados: ");
 	    }
 	    return products;
 	}

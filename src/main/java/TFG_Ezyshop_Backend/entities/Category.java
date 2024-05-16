@@ -2,6 +2,8 @@ package TFG_Ezyshop_Backend.entities;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -27,6 +29,7 @@ public class Category {
 	
 	private Boolean disabled;
 	
+	@JsonIgnore
 	@OneToMany( mappedBy = "categoryProduct" ) //Nombre del atributo de @ManyToOne
 	private List<Product> products;
 	

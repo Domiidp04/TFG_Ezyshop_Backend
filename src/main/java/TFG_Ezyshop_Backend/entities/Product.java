@@ -2,6 +2,8 @@ package TFG_Ezyshop_Backend.entities;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -42,9 +44,11 @@ public class Product {
 	@OneToMany( mappedBy = "productImageProduct" )  //Nombre del atributo de @ManyToOne
 	private List<ImageProduct>imageProducts;
 	
+	@JsonIgnore
 	@OneToMany( mappedBy = "productAssessment" )  //Nombre del atributo de @ManyToOne
 	private List<Assessment>assessments;
 	
+	@JsonIgnore
 	@OneToMany( mappedBy = "productOrderProduct" )  //Nombre del atributo de @ManyToOne
 	private List<OrderProduct>orderProducts;
 	

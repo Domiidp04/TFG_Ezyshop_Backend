@@ -43,10 +43,10 @@ public class SecurityConfig {
 				// Rutas para products
 				.requestMatchers(HttpMethod.GET, "/products").permitAll()
 				.requestMatchers(HttpMethod.GET, "/products/**").permitAll()
+				.requestMatchers(HttpMethod.GET, "/products/**").permitAll()
 				.requestMatchers(HttpMethod.POST, "/products").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.PUT, "/products/*").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.DELETE, "/products/*").hasRole("ADMIN")
-				.requestMatchers(HttpMethod.GET, "/products/**").hasAnyRole("ADMIN", "USER")
 
 				// Rutas para Category
 				.requestMatchers(HttpMethod.GET, "/categories").permitAll()
