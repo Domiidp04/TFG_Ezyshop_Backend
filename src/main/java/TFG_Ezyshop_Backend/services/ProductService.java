@@ -67,12 +67,7 @@ public class ProductService {
 
 		if (product.isPresent()) {
 			String role = authorities.stream().map(GrantedAuthority::getAuthority).findFirst().orElse("USER"); // Default
-																												// to
-																												// "USER"
-																												// if no
-																												// role
-																												// is
-																												// found
+																											// found
 			if (role.equals("ROLE_ADMIN")) {
 				return Optional.of(new AdminProductDto(product.get()));
 			} else {

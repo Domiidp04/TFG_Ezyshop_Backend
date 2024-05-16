@@ -23,7 +23,7 @@ public class ProductDto {
 	
 	private CategoryDto category;
 	
-	private List<ImageProductDto> imageProduct;
+	private List<ImageProductDto> imageProducts;
 	
 	private List<AssessmentDto>assessments;
 	
@@ -36,7 +36,7 @@ public class ProductDto {
 		this.discountPrice = product.getDiscountPrice();
 		this.stock = product.getStock();
 		this.category = new CategoryDto(product.getCategoryProduct());
-		this.imageProduct = product.getImageProducts().stream()
+		this.imageProducts = product.getImageProducts().stream()
 		        .map(ImageProductDto::new)
 		        .collect(Collectors.toList());
 		this.assessments = product.getAssessments().stream()

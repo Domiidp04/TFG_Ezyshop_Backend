@@ -25,7 +25,7 @@ public class AdminProductDto {
 	
 	private AdminCategoryDto category;
 	
-	private List<AdminImageProductDto> imageProduct;
+	private List<AdminImageProductDto> imageProducts;
 	
 	private List<AdminAssessmentDto> assessments;
 	
@@ -38,7 +38,7 @@ public class AdminProductDto {
 		this.stock = product.getStock();
 		this.disabled = product.getDisabled();
 		this.category = new AdminCategoryDto(product.getCategoryProduct());
-		this.imageProduct = product.getImageProducts().stream()
+		this.imageProducts = product.getImageProducts().stream()
 		        .map(AdminImageProductDto::new)
 		        .collect(Collectors.toList());
 		this.assessments = product.getAssessments().stream()
