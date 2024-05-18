@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -46,7 +47,7 @@ public class ProductService {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		Collection<? extends GrantedAuthority> authorities = getAuthorities();
 		String authenticatedUsername = authentication.getName();
-		List<Product> products = productRepository.findAll();
+		List<Product> products = productRepository.findAll(Sort.by("id"));
 		String role = authorities.stream().map(GrantedAuthority::getAuthority).findFirst().orElse("USER"); // Default to
 																											// "USER" if
 																											// no role
@@ -171,6 +172,24 @@ public class ProductService {
 	    }
 	    return products;
 	}
+	
+	public List<?> getAllDesc() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		Collection<? extends GrantedAuthority> authorities = getAuthorities();
+		String authenticatedUsername = authentication.getName();
+		List<Product> products = productRepository.findAll(Sort.by("id").descending());
+		String role = authorities.stream().map(GrantedAuthority::getAuthority).findFirst().orElse("USER"); // Default to
+																											// "USER" if
+																											// no role
+																											// is found
+		if (role.equals("ROLE_ADMIN")) {
+			return products.stream().map(AdminProductDto::new).collect(Collectors.toList());
+		} else {
+			return products.stream().filter(product -> !product.getDisabled()) // Filtrar productos deshabilitados
+					.map(ProductDto::new).collect(Collectors.toList());
+		}
+	}
+	
 
 
 }

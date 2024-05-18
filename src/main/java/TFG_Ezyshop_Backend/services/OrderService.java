@@ -238,6 +238,16 @@ public class OrderService {
         return order;
         
     }
+    
+    public List<OrderDto> getOrdersByUsername(){
+    	Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Collection<? extends GrantedAuthority> authorities = getAuthorities();
+        String authenticatedUsername = authentication.getName();
+        Optional<UserEntity> user = userRepository.getByUsername(authenticatedUsername);
+        System.out.println("Ha entrado");
+    	return orderRepository.findByUserId(user.get().getId()).stream()
+    			.map(OrderDto::new).collect(Collectors.toList());
+    }
 
 
 	

@@ -75,5 +75,11 @@ public class ProductController {
 			return new ResponseEntity<>("Producto con Id : (" + id + ") no encontrado", HttpStatus.NOT_FOUND);
 		}
 	}
+	
+	@GetMapping("/news")
+	public ResponseEntity<?> getAllProductsDesc() {
+		List<?> products = productService.getAllDesc();
+		return new ResponseEntity<>(products, HttpStatus.OK);
+	}
 
 }

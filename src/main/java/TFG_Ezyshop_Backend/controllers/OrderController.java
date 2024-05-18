@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import TFG_Ezyshop_Backend.dto.OrderDto;
 import TFG_Ezyshop_Backend.dto.OrderRequestDto;
 import TFG_Ezyshop_Backend.entities.Order;
 import TFG_Ezyshop_Backend.exceptions.StockException;
@@ -61,6 +62,12 @@ public class OrderController {
 	         return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
 	     }
 	 }
+	 
+	    @GetMapping("/user")
+	    public ResponseEntity<List<OrderDto>> getOrdersForAuthenticatedUser() {
+	        List<OrderDto> orders = orderService.getOrdersByUsername();
+	        return new ResponseEntity<>(orders, HttpStatus.OK);
+	    }
 
 
 }

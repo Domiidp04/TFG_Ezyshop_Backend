@@ -59,6 +59,7 @@ public class SecurityConfig {
 				.requestMatchers(HttpMethod.GET, "/orders").hasRole("ADMIN")
 				.requestMatchers(HttpMethod.POST, "/orders").hasRole("USER")
 				.requestMatchers(HttpMethod.GET, "/orders/*").hasAnyRole("ADMIN", "USER")
+				.requestMatchers(HttpMethod.GET, "/orders/user").permitAll()
 
 				// Rutas para Discount
 				.requestMatchers(HttpMethod.GET, "/discounts").hasRole("ADMIN")
