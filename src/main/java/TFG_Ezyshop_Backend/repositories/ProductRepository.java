@@ -15,9 +15,10 @@ public interface ProductRepository extends JpaRepository<Product, Long>{
 	@Query("SELECT p FROM Product p WHERE LOWER(p.title) LIKE LOWER(CONCAT(:name, '%'))")
 	List<Product> findByTitle(@Param("name") String name);
 
-
-
-
+    @Query(value = "SELECT p.* FROM Products p JOIN Orders_Products op ON p.id = op.product_id GROUP BY p.id ORDER BY SUM(op.amount) DESC", nativeQuery = true)
+    List<Product> findAllWithTotalSold();
+    
+    List<Product> findByCategoryId(Long categoryId);
 
 
 }

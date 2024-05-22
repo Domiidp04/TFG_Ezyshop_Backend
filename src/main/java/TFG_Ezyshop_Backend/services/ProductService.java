@@ -190,6 +190,38 @@ public class ProductService {
 		}
 	}
 	
+	public List<?> getAllProducts() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        String role = authorities.stream().map(GrantedAuthority::getAuthority).findFirst().orElse("USER"); // Default to "USER" if no role is found
+
+        List<Product> products = productRepository.findAllWithTotalSold();
+
+        if (role.equals("ROLE_ADMIN")) {
+            return products.stream().map(AdminProductDto::new).collect(Collectors.toList());
+        } else {
+            return products.stream()
+                    .filter(productProjection -> !productProjection.getDisabled()) // Filtrar productos deshabilitados
+                    .map(ProductDto::new).collect(Collectors.toList());
+        }
+    }
+	
+	public List<?> getProductsByCategoryId(Long categoryId){
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+        String role = authorities.stream().map(GrantedAuthority::getAuthority).findFirst().orElse("USER"); // Default to "USER" if no role is found
+
+        List<Product> products = productRepository.findByCategoryId(categoryId);
+
+        if (role.equals("ROLE_ADMIN")) {
+            return products.stream().map(AdminProductDto::new).collect(Collectors.toList());
+        } else {
+            return products.stream()
+                    .filter(productProjection -> !productProjection.getDisabled()) // Filtrar productos deshabilitados
+                    .map(ProductDto::new).collect(Collectors.toList());
+        }
+	}
+	
 
 
 }

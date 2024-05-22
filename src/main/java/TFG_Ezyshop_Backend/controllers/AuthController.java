@@ -80,7 +80,7 @@ public class AuthController {
 		try {
             UserEntity registeredUser = userService.save(userEntity);
             System.out.println(registeredUser.toString());
-            return new ResponseEntity<>("Usuario registrado con éxito", HttpStatus.CREATED);
+            return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (UsernameAlreadyExistsException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (EmailAlreadyExistsException e) {

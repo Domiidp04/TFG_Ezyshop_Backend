@@ -75,10 +75,22 @@ public class ProductController {
 			return new ResponseEntity<>("Producto con Id : (" + id + ") no encontrado", HttpStatus.NOT_FOUND);
 		}
 	}
-	
+
 	@GetMapping("/news")
 	public ResponseEntity<?> getAllProductsDesc() {
 		List<?> products = productService.getAllDesc();
+		return new ResponseEntity<>(products, HttpStatus.OK);
+	}
+
+	@GetMapping("/shops")
+	public ResponseEntity<List<?>> getAll() {
+		List<?> products = productService.getAllProducts();
+		return new ResponseEntity<>(products, HttpStatus.OK);
+	}
+	
+	@GetMapping("/{categoryId}/categories")
+	public ResponseEntity<List<?>> getProductsByCategoryId(@PathVariable("categoryId") Long categoryId) {
+		List<?> products = productService.getProductsByCategoryId(categoryId);
 		return new ResponseEntity<>(products, HttpStatus.OK);
 	}
 
