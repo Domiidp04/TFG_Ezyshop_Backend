@@ -125,17 +125,7 @@ public class UserService {
 
 	    // Obtiene el usuario que se está intentando actualizar
 	    UserEntity user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("Usuario no encontrado"));
-
-	    // Comprueba si el nombre de usuario ya existe y si es diferente del nombre de usuario actual
-//	    if (!user.getUsername().equals(updatedUser.getUsername()) && userRepository.existsByUsername(updatedUser.getUsername())) {
-//	        throw new UsernameAlreadyExistsException("El nombre de usuario ya existe");	    
-//	    }
-//
-//	    // Comprueba si el email ya existe y si es diferente del email actual
-//	    if (!user.getEmail().equals(updatedUser.getEmail()) && userRepository.existsByEmail(updatedUser.getEmail())) {
-//	        throw new EmailAlreadyExistsException("El email de usuario ya existe");	    
-//	    }
-
+	    
 	    // Comprueba si el usuario autenticado es el mismo que el usuario que se está intentando actualizar o si es un administrador
 	    if (!user.getUsername().equals(authenticatedUsername) && !authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
 	        throw new AccessDeniedException("No tienes autorización para editar la información de otros usuarios.");
@@ -144,22 +134,22 @@ public class UserService {
 	    // Si el usuario autenticado es un administrador, puede actualizar todos los campos
 	    if (authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) { 
 	        updatedUser.setPassword(user.getPassword());
+	        updatedUser.setDate(new Date());
 	        System.out.println("ROLES : " + getUser(id));
 	        System.out.println("ADMN : " + updatedUser);
 	        return userRepository.save(updatedUser);
 	    } else {
 	        // Si el usuario autenticado no es un administrador, solo puede actualizar ciertos campos
-	    	updatedUser.setPassword(user.getPassword());
-	    	updatedUser.setLocked(false);
-	    	updatedUser.setDisabled(false);
-	    	updatedUser.setRoleId((long) 2);
-	    	System.out.println("USER : " + updatedUser);
-	    	return userRepository.save(updatedUser);
+	    	updatedUser.setId(user.getId());
+	        updatedUser.setPassword(user.getPassword());
+	        updatedUser.setLocked(false);
+	        updatedUser.setDisabled(false);
+	        updatedUser.setRoleId((long) 2);
+	        updatedUser.setDate(new Date());
+	        System.out.println("USER : " + updatedUser);
+	        return userRepository.save(updatedUser);
 	    }
-
 	}
-
-
 
 	
 	public Boolean delete(Long userId) {

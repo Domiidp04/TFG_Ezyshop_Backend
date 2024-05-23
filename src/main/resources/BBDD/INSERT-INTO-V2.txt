@@ -1,0 +1,79 @@
+-- Insert statements for Roles
+INSERT INTO Roles (role) VALUES ('ADMIN');
+INSERT INTO Roles (role) VALUES ('USER');
+INSERT INTO Roles (role) VALUES ('MANAGEMENT');
+
+-- Insert statements for Users
+INSERT INTO Users (username, password, email, name, lastname, zip, street, number, role_id) VALUES ('admin', '$2y$10$Vj6id1mfNgFOSnVQRvt1V.0RouACN11yJMXB3uWqgxUgdbJ9/MNr2', 'admin@example.com', 'Admin', 'Admin', '12345', 'Admin Street', '1', 1);
+INSERT INTO Users (username, password, email, name, lastname, zip, street, number, role_id) VALUES ('user', '$2a$10$TMS3py5dJ5NLPuiM6gJKROdPXjJmxycLM.nmJc8exH3IkkMlznGZu', 'user@example.com', 'User', 'User', '12345', 'User Street', '1', 2);
+
+-- Insert statements for Discounts
+INSERT INTO Discounts (title, code, expired, use) VALUES ('Discount1', 'CODE1', false, 0);
+INSERT INTO Discounts (title, code, expired, use) VALUES ('Discount2', 'CODE2', false, 0);
+INSERT INTO Discounts (title, code, expired, use) VALUES ('Discount3', 'CODE3', false, 0);
+INSERT INTO Discounts (title, code, expired, use) VALUES ('Discount4', 'CODE4', false, 0);
+INSERT INTO Discounts (title, code, expired, use) VALUES ('Discount5', 'CODE5', false, 0);
+
+
+
+-- Insertamos las categorías
+INSERT INTO Categories (title, description, disabled) VALUES ('Ratones', 'Categoría para ratones de ordenador', false);
+INSERT INTO Categories (title, description, disabled) VALUES ('Cascos', 'Categoría para cascos de audio', false);
+INSERT INTO Categories (title, description, disabled) VALUES ('Portátiles', 'Categoría para portátiles', false);
+INSERT INTO Categories (title, description, disabled) VALUES ('PCs', 'Categoría para PCs completos', false);
+INSERT INTO Categories (title, description, disabled) VALUES ('Monitores', 'Categoría para monitores de ordenador', false);
+INSERT INTO Categories (title, description, disabled) VALUES ('Móviles', 'Categoría para móviles', false);
+
+-- Insertamos 5 ratones
+INSERT INTO Products (title, description, price, stock, disabled, category_id) 
+VALUES 
+('Ratón Logitech G502', 'Ratón Logitech con sensor óptico de alta precisión', 49.99, 100, false, 1),
+('Ratón Razer DeathAdder V2', 'Ratón Razer con sensor óptico y diseño ergonómico', 69.99, 100, false, 1),
+('Ratón Corsair Harpoon RGB', 'Ratón Corsair con retroiluminación RGB', 29.99, 100, false, 1),
+('Ratón SteelSeries Rival 3', 'Ratón SteelSeries con sensor TrueMove Core', 39.99, 100, false, 1),
+('Ratón HP X900', 'Ratón HP con diseño ambidiestro', 9.99, 100, false, 1);
+
+-- Insertamos 5 cascos
+INSERT INTO Products (title, description, price, stock, disabled, category_id) 
+VALUES 
+('Cascos Sony WH-1000XM4', 'Cascos Sony con cancelación de ruido', 349.99, 50, false, 2),
+('Cascos Bose QuietComfort 35 II', 'Cascos Bose con cancelación de ruido y Alexa integrada', 299.99, 50, false, 2),
+('Cascos JBL Tune 500BT', 'Cascos JBL inalámbricos con Pure Bass Sound', 49.99, 50, false, 2),
+('Cascos Sennheiser HD 450BT', 'Cascos Sennheiser con cancelación de ruido y Bluetooth 5.0', 199.99, 50, false, 2),
+('Cascos Beats Solo3', 'Cascos Beats con acústica de rendimiento y diseño plegable', 199.99, 50, false, 2);
+
+-- Insertamos 5 portátiles
+INSERT INTO Products (title, description, price, stock, disabled, category_id) 
+VALUES 
+('Portátil HP Pavilion', 'Portátil HP con procesador Intel i5 y 8GB de RAM', 599.99, 30, false, 3),
+('Portátil Lenovo ThinkPad', 'Portátil Lenovo con procesador Intel i7 y 16GB de RAM', 899.99, 20, false, 3),
+('Portátil Dell XPS', 'Portátil Dell con procesador Intel i7 y 16GB de RAM', 1199.99, 15, false, 3),
+('Portátil Asus ZenBook', 'Portátil Asus con procesador Intel i5 y 8GB de RAM', 699.99, 25, false, 3),
+('Portátil Apple MacBook Air', 'Portátil Apple con procesador M1 y 8GB de RAM', 999.99, 10, false, 3);
+
+-- Insertamos 5 PCs
+INSERT INTO Products (title, description, price, stock, disabled, category_id) 
+VALUES 
+('PC HP Pavilion', 'PC HP con procesador Intel i5 y 8GB de RAM', 499.99, 20, false, 4),
+('PC Lenovo ThinkCentre', 'PC Lenovo con procesador Intel i7 y 16GB de RAM', 799.99, 15, false, 4),
+('PC Dell OptiPlex', 'PC Dell con procesador Intel i7 y 16GB de RAM', 899.99, 10, false, 4),
+('PC Asus ROG', 'PC Asus con procesador AMD Ryzen 7 y 16GB de RAM', 1199.99, 5, false, 4),
+('PC Apple Mac Mini', 'PC Apple con procesador M1 y 8GB de RAM', 699.99, 10, false, 4);
+
+-- Insertamos 5 monitores
+INSERT INTO Products (title, description, price, stock, disabled, category_id) 
+VALUES 
+('Monitor HP 24mh', 'Monitor HP de 24 pulgadas Full HD', 149.99, 30, false, 5),
+('Monitor Dell Ultrasharp', 'Monitor Dell de 27 pulgadas 4K', 449.99, 20, false, 5),
+('Monitor Asus TUF Gaming', 'Monitor Asus de 27 pulgadas Full HD con 144Hz', 249.99, 15, false, 5),
+('Monitor LG UltraGear', 'Monitor LG de 27 pulgadas 4K con 144Hz', 499.99, 10, false, 5),
+('Monitor Samsung Odyssey', 'Monitor Samsung de 32 pulgadas QHD con 240Hz', 599.99, 5, false, 5);
+
+-- Insertamos 5 móviles
+INSERT INTO Products (title, description, price, stock, disabled, category_id) 
+VALUES 
+('Móvil iPhone 13', 'iPhone 13 con 128GB de almacenamiento', 799.99, 15, false, 6),
+('Móvil Samsung Galaxy S21', 'Samsung Galaxy S21 con 128GB de almacenamiento', 699.99, 20, false, 6),
+('Móvil Google Pixel 6', 'Google Pixel 6 con 128GB de almacenamiento', 599.99, 25, false, 6),
+('Móvil Xiaomi Mi 11', 'Xiaomi Mi 11 con 128GB de almacenamiento', 499.99, 30, false, 6),
+('Móvil OnePlus 9', 'OnePlus 9 con 128GB de almacenamiento', 599.99, 25, false, 6);

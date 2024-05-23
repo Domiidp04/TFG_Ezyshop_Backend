@@ -8,6 +8,8 @@ import lombok.Data;
 @Data
 public class UserDto {
 
+	private Long id;
+	
 	private String username;
 
 	private String email;
@@ -28,6 +30,7 @@ public class UserDto {
 	
 
 	public UserDto(UserEntity user) {
+		this.id = user.getId();
         this.username = user.getUsername();
         this.email = user.getEmail();
         this.name = user.getName();

@@ -33,10 +33,10 @@ public class ImageProductService {
         List<ImageProduct> imageProducts = new ArrayList<>();
 
         for (MultipartFile imageFile : imageFiles) {
-            BufferedImage bi = ImageIO.read(imageFile.getInputStream());
-            if (bi == null) {
-                throw new IllegalArgumentException("Imagen no válida!");
-            }
+//            BufferedImage bi = ImageIO.read(imageFile.getInputStream());
+//            if (bi == null) {
+//                throw new IllegalArgumentException("Imagen no válida!");
+//            }
             Map result = cloudinaryService.upload(imageFile);
             ImageProduct imageProduct = new ImageProduct();
             imageProduct.setImageUrl((String) result.get("url"));
