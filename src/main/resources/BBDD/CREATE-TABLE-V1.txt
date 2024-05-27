@@ -47,7 +47,7 @@ CREATE TABLE Orders (
 	method VARCHAR NOT NULL DEFAULT 'paypal',
 	currency VARCHAR NOT NULL DEFAULT 'EUR',
 	payment BOOLEAN NOT NULL DEFAULT 'false',
-	paymentId VARCHAR DEFAULT null,
+	payment_id VARCHAR DEFAULT null,
 	FOREIGN KEY (discount_id) REFERENCES Discounts(id),
 	FOREIGN KEY (user_id) REFERENCES Users(id)
 );

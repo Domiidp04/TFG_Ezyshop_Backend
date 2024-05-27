@@ -10,15 +10,12 @@ public class OrderProductDto {
 	
 	private Double price;
 	
-	private OrderDto order;
-	
 	private ProductDto product;
 	
 	
 	public OrderProductDto(OrderProduct orderProduct) {
 		this.amount = orderProduct.getAmount();
 		this.price = orderProduct.getPrice();
-		this.order = new OrderDto(orderProduct.getOrderOrderProduct());
 		this.product = new ProductDto(orderProduct.getProductOrderProduct());
 	}
 

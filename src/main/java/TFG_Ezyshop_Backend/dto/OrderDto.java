@@ -1,12 +1,15 @@
 package TFG_Ezyshop_Backend.dto;
 
 import java.util.Date;
+import java.util.List;
 
 import TFG_Ezyshop_Backend.entities.Order;
 import lombok.Data;
 
 @Data
 public class OrderDto {
+	
+	private Long id;
 
 	private Double totalAmount;
 	
@@ -25,9 +28,12 @@ public class OrderDto {
 	private Boolean payment;
 	
 	private UserDto user;
+
+	private List<OrderProductDto> lineas;
 	
 	
 	public OrderDto(Order order) {
+		this.id = order.getId();
 		this.totalAmount = order.getTotalAmount();
 		this.shippingAmount = order.getShippingAmount();
 		this.savedAmount = order.getSavedAmount();
@@ -45,6 +51,7 @@ public class OrderDto {
 		this.payment = order.getPayment();
 		
 		this.user = new UserDto(order.getUserOrder());
+		this.lineas = order.getOrders().stream().map(OrderProductDto::new).toList();
 	}
 	
 }
