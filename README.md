@@ -2,7 +2,7 @@
 
 ## Descripción
 
-Breve descripción del backend de tu proyecto.
+El backend de TFG_EZYSHOP es el núcleo de nuestra tienda online. Construido con Spring Boot y Java 17, gestiona todas las operaciones de la tienda, desde el manejo de los productos hasta el procesamiento de las transacciones. Con una base de datos en Docker, el backend asegura que todos los datos estén seguros y accesibles. Es la columna vertebral de nuestra tienda, permitiendo una experiencia de compra fluida y eficiente para nuestros usuarios.
 
 ## Requisitos previos
 
