@@ -10,10 +10,10 @@ import org.springframework.data.repository.query.Param;
 
 import TFG_Ezyshop_Backend.entities.Order;
 
-public interface OrderRepository extends JpaRepository<Order, Long>{
-	
+public interface OrderRepository extends JpaRepository<Order, Long> {
+
 	List<Order> findByUserId(Long userId);
-	
+
 	@Modifying
 	@Query("UPDATE Order o SET o.payment = :paymentStatus WHERE o.id = :orderId")
 	void updatePaymentStatus(@Param("orderId") Long orderId, @Param("paymentStatus") boolean paymentStatus);
@@ -22,13 +22,12 @@ public interface OrderRepository extends JpaRepository<Order, Long>{
 	@Query("UPDATE Order o SET o.paymentId = :paymentId WHERE o.id = :orderId")
 	void updatePaymentId(@Param("orderId") Long orderId, @Param("paymentId") String paymentId);
 
-	 Optional<Order> findByPaymentId(String paymentId);
+	Optional<Order> findByPaymentId(String paymentId);
 
+	@Query("SELECT COUNT(o) FROM Order o")
+	Long countOrders();
 
-	
-//	public List<Order> getAll();
-//	public Optional<Order> getOrder(Long orderId);
-//	public Order create(Order order); 
-//	public void delete(Long orderId);
+	@Query("SELECT SUM(o.paymentAmount) FROM Order o")
+	Double sumPaymentAmount();
 
 }

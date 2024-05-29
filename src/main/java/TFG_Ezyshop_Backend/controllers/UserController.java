@@ -24,86 +24,86 @@ import TFG_Ezyshop_Backend.services.UserService;
 @RestController
 @RequestMapping("/users")
 public class UserController {
-	
+
 	private final UserService userService;
-	
+
 	public UserController(UserService userService) {
 		this.userService = userService;
 	}
-	
 
-	 @GetMapping
-	    public ResponseEntity<?> getAllUsers() {
-	        List<?> users = userService.getAll();
-	        return ResponseEntity.ok(users);
-	    }
-	
-	 @GetMapping("/{userId}")
-	 public ResponseEntity<?> getById(@PathVariable("userId") long userId) {
-	     Optional<?> user = userService.getUser(userId);
+	@GetMapping
+	public ResponseEntity<?> getAllUsers() {
+		List<?> users = userService.getAll();
+		return ResponseEntity.ok(users);
+	}
 
-	     if (user.isPresent()) {
-	         return new ResponseEntity<>(user.get(), HttpStatus.OK);
-	     } else {
-	         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	     }
-	 }
-	 
-	 @GetMapping("/name/{username}")
-	 public ResponseEntity<?> getByUsernameProfile(@PathVariable("username") String username) {
-	     Optional<?> user = userService.getByUsernameProfile(username);
+	@GetMapping("/{userId}")
+	public ResponseEntity<?> getById(@PathVariable("userId") long userId) {
+		Optional<?> user = userService.getUser(userId);
 
-	     if (user.isPresent()) {
-	         return new ResponseEntity<>(user.get(), HttpStatus.OK);
-	     } else {
-	         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	     }
-	 }
+		if (user.isPresent()) {
+			return new ResponseEntity<>(user.get(), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
 
-	
-	 @PostMapping
-	 public ResponseEntity<?> createUser(@RequestBody UserEntity userEntity) {
-	     try {
-	         UserEntity createdUser = userService.save(userEntity);
-	         System.out.println(createdUser.toString());
-	         return new ResponseEntity<>("Usuario creado con éxito", HttpStatus.CREATED);
-	     } catch (UsernameAlreadyExistsException e) {
-	         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-	     } catch (EmailAlreadyExistsException e) {
-	         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-	     }
-	 }
-	 
-	 
-	 @PutMapping("/{id}")
-	    public ResponseEntity<UserEntity> update(@PathVariable Long id, @RequestBody UserEntity updatedUser) {
-	        try {
-	            UserEntity user = userService.update(id, updatedUser);
-	            return ResponseEntity.ok(user);
-	        } catch (UserNotFoundException e) {
-	            return ResponseEntity.notFound().build();
-	        } catch (UsernameAlreadyExistsException | EmailAlreadyExistsException e) {
-	            return ResponseEntity.badRequest().body(null);
-	        } catch (AccessDeniedException e) {
-	            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
-	        }
-	    }
+	@GetMapping("/name/{username}")
+	public ResponseEntity<?> getByUsernameProfile(@PathVariable("username") String username) {
+		Optional<?> user = userService.getByUsernameProfile(username);
 
+		if (user.isPresent()) {
+			return new ResponseEntity<>(user.get(), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
 
+	@PostMapping
+	public ResponseEntity<?> createUser(@RequestBody UserEntity userEntity) {
+		try {
+			UserEntity createdUser = userService.save(userEntity);
+			System.out.println(createdUser.toString());
+			return new ResponseEntity<>("Usuario creado con éxito", HttpStatus.CREATED);
+		} catch (UsernameAlreadyExistsException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		} catch (EmailAlreadyExistsException e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+	}
 
-	
-	 @DeleteMapping("/{id}")
-	    public ResponseEntity<?> deleteUser(@PathVariable Long id) {
-	        try {
-	            Boolean deleted = userService.delete(id);
-	            if (deleted) {
-	                return ResponseEntity.ok("Usuario eliminado correctamente");
-	            } else {
-	                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado");
-	            }
-	        } catch (AccessDeniedException e) {
-	            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("No tienes autorización para eliminar este usuario");
-	        }
-	    }
+	@PutMapping("/{id}")
+	public ResponseEntity<UserEntity> update(@PathVariable Long id, @RequestBody UserEntity updatedUser) {
+		try {
+			UserEntity user = userService.update(id, updatedUser);
+			return ResponseEntity.ok(user);
+		} catch (UserNotFoundException e) {
+			return ResponseEntity.notFound().build();
+		} catch (UsernameAlreadyExistsException | EmailAlreadyExistsException e) {
+			return ResponseEntity.badRequest().body(null);
+		} catch (AccessDeniedException e) {
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+		}
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<?> deleteUser(@PathVariable Long id) {
+		try {
+			Boolean deleted = userService.delete(id);
+			if (deleted) {
+				return ResponseEntity.ok().build();
+			} else {
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuario no encontrado");
+			}
+		} catch (AccessDeniedException e) {
+			return ResponseEntity.status(HttpStatus.FORBIDDEN)
+					.body("No tienes autorización para eliminar este usuario");
+		}
+	}
+
+	@GetMapping("/count")
+	public Long countUsers() {
+		return userService.getNumberOfUsers();
+	}
 
 }

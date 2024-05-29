@@ -21,53 +21,60 @@ import TFG_Ezyshop_Backend.services.OrderService;
 @RestController
 @RequestMapping("/orders")
 public class OrderController {
-	
+
 	private final OrderService orderService;
 
 	public OrderController(OrderService orderService) {
 		this.orderService = orderService;
 	}
-	
+
 	@GetMapping
-    public ResponseEntity<?> getAll() {
-        List<?> users = orderService.getAll();
-        return ResponseEntity.ok(users);
-    }
-	
-	
-	 @GetMapping("/{orderId}")
-	 public ResponseEntity<?> getById(@PathVariable("orderId") long orderId) {
-	     Optional<?> order = orderService.getOrderById(orderId);
+	public ResponseEntity<?> getAll() {
+		List<?> users = orderService.getAll();
+		return ResponseEntity.ok(users);
+	}
 
-	     if (order.isPresent()) {
-	         return new ResponseEntity<>(order.get(), HttpStatus.OK);
-	     } else {
-	         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	     }
-	 }
-	 
-	 
-	 @PostMapping
-	 public ResponseEntity<Order> createOrderWithOrderProducts(@RequestBody OrderRequestDto orderRequestDto) {
-		 System.out.println(orderRequestDto);
-	     try {
-	         Order order = orderService.createOrderWithOrderProducts(orderRequestDto);
-	         return new ResponseEntity<>(order, HttpStatus.CREATED);
-	     }catch(StockException s){
-	    	 return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
-	     } catch (Exception e) {
-	         // Registra la excepción para obtener más detalles sobre el error
-	         System.out.println("Se produjo un error: " + e.getMessage());
-	         e.printStackTrace();
-	         return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-	     }
-	 }
-	 
-	    @GetMapping("/user")
-	    public ResponseEntity<List<OrderDto>> getOrdersForAuthenticatedUser() {
-	        List<OrderDto> orders = orderService.getOrdersByUsername();
-	        return new ResponseEntity<>(orders, HttpStatus.OK);
-	    }
+	@GetMapping("/{orderId}")
+	public ResponseEntity<?> getById(@PathVariable("orderId") long orderId) {
+		Optional<?> order = orderService.getOrderById(orderId);
 
+		if (order.isPresent()) {
+			return new ResponseEntity<>(order.get(), HttpStatus.OK);
+		} else {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+
+	@PostMapping
+	public ResponseEntity<Order> createOrderWithOrderProducts(@RequestBody OrderRequestDto orderRequestDto) {
+		System.out.println(orderRequestDto);
+		try {
+			Order order = orderService.createOrderWithOrderProducts(orderRequestDto);
+			return new ResponseEntity<>(order, HttpStatus.CREATED);
+		} catch (StockException s) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		} catch (Exception e) {
+			// Registra la excepción para obtener más detalles sobre el error
+			System.out.println("Se produjo un error: " + e.getMessage());
+			e.printStackTrace();
+			return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
+	@GetMapping("/user")
+	public ResponseEntity<List<OrderDto>> getOrdersForAuthenticatedUser() {
+		List<OrderDto> orders = orderService.getOrdersByUsername();
+		return new ResponseEntity<>(orders, HttpStatus.OK);
+	}
+
+	@GetMapping("/count")
+	public Long countOrders() {
+		return orderService.getNumberOfOrders();
+	}
+	
+	@GetMapping("/money")
+	public Double totalBilled() {
+	    return orderService.getTotalBilledAmount();
+	}
 
 }

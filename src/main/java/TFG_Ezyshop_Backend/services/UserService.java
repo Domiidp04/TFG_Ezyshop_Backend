@@ -105,6 +105,9 @@ public class UserService {
 	    if (authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
 	        userEntity.setPassword(this.securityConfig.passwordEncoder().encode(userEntity.getPassword()));
 	        userEntity.setDate(new Date());
+	        userEntity.setLocked(false);
+	        userEntity.setDisabled(false);
+	        userEntity.setRoleId((long) 2);
 	    } else {
 	        // Valores predeterminados
 	        userEntity.setPassword(this.securityConfig.passwordEncoder().encode(userEntity.getPassword()));
@@ -133,10 +136,12 @@ public class UserService {
 
 	    // Si el usuario autenticado es un administrador, puede actualizar todos los campos
 	    if (authorities.contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) { 
+	    	updatedUser.setId(user.getId());
 	        updatedUser.setPassword(user.getPassword());
+	        updatedUser.setLocked(false);
+	        updatedUser.setDisabled(false);
+	        updatedUser.setRoleId((long) 2);
 	        updatedUser.setDate(new Date());
-	        System.out.println("ROLES : " + getUser(id));
-	        System.out.println("ADMN : " + updatedUser);
 	        return userRepository.save(updatedUser);
 	    } else {
 	        // Si el usuario autenticado no es un administrador, solo puede actualizar ciertos campos
@@ -204,6 +209,9 @@ public class UserService {
 	}
 
 	
+	public Long getNumberOfUsers() {
+	    return userRepository.countUsers();
+	}
 	
 	
 	

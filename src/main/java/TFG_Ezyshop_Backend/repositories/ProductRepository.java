@@ -19,6 +19,9 @@ public interface ProductRepository extends JpaRepository<Product, Long>{
     List<Product> findAllWithTotalSold();
     
     List<Product> findByCategoryId(Long categoryId);
+    
+    @Query("SELECT SUM(p.stock) FROM Product p")
+    Long sumProductStock();
 
 
 }

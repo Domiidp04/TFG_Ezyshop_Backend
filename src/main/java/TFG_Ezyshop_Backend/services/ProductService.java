@@ -2,7 +2,6 @@ package TFG_Ezyshop_Backend.services;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -16,7 +15,6 @@ import TFG_Ezyshop_Backend.dto.AdminProductDto;
 import TFG_Ezyshop_Backend.dto.ProductDto;
 import TFG_Ezyshop_Backend.entities.Category;
 import TFG_Ezyshop_Backend.entities.Product;
-import TFG_Ezyshop_Backend.repositories.CategoryRepository;
 import TFG_Ezyshop_Backend.repositories.ProductRepository;
 import jakarta.transaction.Transactional;
 
@@ -26,14 +24,10 @@ public class ProductService {
 
 	private final ProductRepository productRepository;
 
-	private final CategoryRepository categoryRepository;
-
 	private final CategoryService categoryService;
 
-	public ProductService(ProductRepository productRepository, CategoryRepository categoryRepository,
-			CategoryService categoryService) {
+	public ProductService(ProductRepository productRepository, CategoryService categoryService) {
 		this.productRepository = productRepository;
-		this.categoryRepository = categoryRepository;
 		this.categoryService = categoryService;
 	}
 
@@ -68,7 +62,7 @@ public class ProductService {
 
 		if (product.isPresent()) {
 			String role = authorities.stream().map(GrantedAuthority::getAuthority).findFirst().orElse("USER"); // Default
-																											// found
+																												// found
 			if (role.equals("ROLE_ADMIN")) {
 				return Optional.of(new AdminProductDto(product.get()));
 			} else {
@@ -81,33 +75,6 @@ public class ProductService {
 			return Optional.empty();
 		}
 	}
-
-//	@Transactional
-//	public List<?> getByProductTitle(String productTitle) {
-//	    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//	    Collection<? extends GrantedAuthority> authorities = getAuthorities();
-//	    String authenticatedUsername = authentication.getName();
-//	    System.out.println("Antes");
-//	    List<Product> products = productRepository.findByTitle("%" + productTitle + "%");
-//	    
-//	    if (products.isEmpty()) {
-//
-//		    System.out.println("Productos " + products);
-//	    	return products;
-//	    }
-//
-//	    return products.stream()
-//	        .filter(product -> !product.getDisabled())  // Filtrar productos deshabilitados
-//	        .map(product -> {
-//	            String role = authorities.stream().map(GrantedAuthority::getAuthority).findFirst().orElse("USER");
-//	            if (role.equals("ROLE_ADMIN")) {
-//	                return new AdminProductDto(product);
-//	            } else {
-//	                return new ProductDto(product);
-//	            }
-//	        }).collect(Collectors.toList());
-//	}
-
 
 	@Transactional
 	public Product save(Product product) {
@@ -159,20 +126,19 @@ public class ProductService {
 			return true; // Devuelve true si el producto se encuentra y se actualiza
 		}).orElse(false); // Devuelve false si el producto no se encuentra
 	}
-	
+
 	public List<Product> getProductsBytitle(String title) {
-	    List<Product> products = productRepository.findByTitle(title);
-//	    products = products.stream().map(ProductDto::new).collect(Collectors.toList());
-	    if (products == null) {
-	        System.out.println("La lista de productos es nula.");
-	    } else if (products.isEmpty()) {
-	        System.out.println("La lista de productos está vacía.");
-	    } else {
-	        System.out.println("Productos encontrados: ");
-	    }
-	    return products;
+		List<Product> products = productRepository.findByTitle(title);
+		if (products == null) {
+			System.out.println("La lista de productos es nula.");
+		} else if (products.isEmpty()) {
+			System.out.println("La lista de productos está vacía.");
+		} else {
+			System.out.println("Productos encontrados: ");
+		}
+		return products;
 	}
-	
+
 	public List<?> getAllDesc() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		Collection<? extends GrantedAuthority> authorities = getAuthorities();
@@ -189,39 +155,47 @@ public class ProductService {
 					.map(ProductDto::new).collect(Collectors.toList());
 		}
 	}
-	
+
 	public List<?> getAllProducts() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-        String role = authorities.stream().map(GrantedAuthority::getAuthority).findFirst().orElse("USER"); // Default to "USER" if no role is found
-
-        List<Product> products = productRepository.findAllWithTotalSold();
-
-        if (role.equals("ROLE_ADMIN")) {
-            return products.stream().map(AdminProductDto::new).collect(Collectors.toList());
-        } else {
-            return products.stream()
-                    .filter(productProjection -> !productProjection.getDisabled()) // Filtrar productos deshabilitados
-                    .map(ProductDto::new).collect(Collectors.toList());
-        }
-    }
-	
-	public List<?> getProductsByCategoryId(Long categoryId){
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
-        String role = authorities.stream().map(GrantedAuthority::getAuthority).findFirst().orElse("USER"); // Default to "USER" if no role is found
+		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+		String role = authorities.stream().map(GrantedAuthority::getAuthority).findFirst().orElse("USER"); // Default to
+																											// "USER" if
+																											// no role
+																											// is found
 
-        List<Product> products = productRepository.findByCategoryId(categoryId);
+		List<Product> products = productRepository.findAllWithTotalSold();
 
-        if (role.equals("ROLE_ADMIN")) {
-            return products.stream().map(AdminProductDto::new).collect(Collectors.toList());
-        } else {
-            return products.stream()
-                    .filter(productProjection -> !productProjection.getDisabled()) // Filtrar productos deshabilitados
-                    .map(ProductDto::new).collect(Collectors.toList());
-        }
+		if (role.equals("ROLE_ADMIN")) {
+			return products.stream().map(AdminProductDto::new).collect(Collectors.toList());
+		} else {
+			return products.stream().filter(productProjection -> !productProjection.getDisabled()) // Filtrar productos
+																									// deshabilitados
+					.map(ProductDto::new).collect(Collectors.toList());
+		}
 	}
-	
 
+	public List<?> getProductsByCategoryId(Long categoryId) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
+		String role = authorities.stream().map(GrantedAuthority::getAuthority).findFirst().orElse("USER"); // Default to
+																											// "USER" if
+																											// no role
+																											// is found
+
+		List<Product> products = productRepository.findByCategoryId(categoryId);
+
+		if (role.equals("ROLE_ADMIN")) {
+			return products.stream().map(AdminProductDto::new).collect(Collectors.toList());
+		} else {
+			return products.stream().filter(productProjection -> !productProjection.getDisabled()) // Filtrar productos
+																									// deshabilitados
+					.map(ProductDto::new).collect(Collectors.toList());
+		}
+	}
+
+	public Long getTotalStock() {
+		return productRepository.sumProductStock();
+	}
 
 }

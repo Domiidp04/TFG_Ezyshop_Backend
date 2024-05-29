@@ -77,3 +77,35 @@ VALUES
 ('Móvil Google Pixel 6', 'Google Pixel 6 con 128GB de almacenamiento', 599.99, 25, false, 6),
 ('Móvil Xiaomi Mi 11', 'Xiaomi Mi 11 con 128GB de almacenamiento', 499.99, 30, false, 6),
 ('Móvil OnePlus 9', 'OnePlus 9 con 128GB de almacenamiento', 599.99, 25, false, 6);
+
+--Insertamos las imagenes de los productos.
+INSERT INTO images_products (image_url, product_id, image_id) VALUES ('http://res.cloudinary.com/dpfmihznr/image/upload/v1716473804/hsa2ayzcxsuggt9erqtl.png', 6, 'hsa2ayzcxsuggt9erqtl');
+INSERT INTO images_products (image_url, product_id, image_id) VALUES ('http://res.cloudinary.com/dpfmihznr/image/upload/v1716473878/y1ve2kjqhdld10faah3b.png', 7, 'y1ve2kjqhdld10faah3b');
+INSERT INTO images_products (image_url, product_id, image_id) VALUES ('http://res.cloudinary.com/dpfmihznr/image/upload/v1716475017/ybu0jho7fsgfum0b4u2n.png', 19, 'ybu0jho7fsgfum0b4u2n');
+INSERT INTO images_products (image_url, product_id, image_id) VALUES ('http://res.cloudinary.com/dpfmihznr/image/upload/v1716475044/ulrtr2davbo0mfvekc0p.png', 20, 'ulrtr2davbo0mfvekc0p');
+INSERT INTO images_products (image_url, product_id, image_id) VALUES ('http://res.cloudinary.com/dpfmihznr/image/upload/v1716475157/woohtu3lfd39jmtjunwv.png', 23, 'woohtu3lfd39jmtjunwv');
+INSERT INTO images_products (image_url, product_id, image_id) VALUES ('http://res.cloudinary.com/dpfmihznr/image/upload/v1716542629/ur8wseyjjjarh8gnltzw.png', 1, 'ur8wseyjjjarh8gnltzw');
+INSERT INTO images_products (image_url, product_id, image_id) VALUES ('http://res.cloudinary.com/dpfmihznr/image/upload/v1716542764/c5yzeuof3wwywst1z6j2.png', 2, 'c5yzeuof3wwywst1z6j2');
+INSERT INTO images_products (image_url, product_id, image_id) VALUES ('http://res.cloudinary.com/dpfmihznr/image/upload/v1716542930/k1e130ymms1jqzaew1hw.png', 3, 'k1e130ymms1jqzaew1hw');
+INSERT INTO images_products (image_url, product_id, image_id) VALUES ('http://res.cloudinary.com/dpfmihznr/image/upload/v1716543941/uq8xkzdntdafcoiykuta.png', 4, 'uq8xkzdntdafcoiykuta');
+INSERT INTO images_products (image_url, product_id, image_id) VALUES ('http://res.cloudinary.com/dpfmihznr/image/upload/v1716544059/stpnbgdvyko6qh4qy1d9.png', 5, 'stpnbgdvyko6qh4qy1d9');
+INSERT INTO images_products (image_url, product_id, image_id) VALUES ('http://res.cloudinary.com/dpfmihznr/image/upload/v1716545985/trilwdtfpylxpjgqurlc.png', 8, 'trilwdtfpylxpjgqurlc');
+INSERT INTO images_products (image_url, product_id, image_id) VALUES ('http://res.cloudinary.com/dpfmihznr/image/upload/v1716545990/kn5v97ep6wyk3x5jysjb.png', 9, 'kn5v97ep6wyk3x5jysjb');
+INSERT INTO images_products (image_url, product_id, image_id) VALUES ('http://res.cloudinary.com/dpfmihznr/image/upload/v1716545992/izur2dfzbixyg9c5sjzg.png', 10, 'izur2dfzbixyg9c5sjzg');
+INSERT INTO images_products (image_url, product_id, image_id) VALUES ('http://res.cloudinary.com/dpfmihznr/image/upload/v1716545994/mk3zggiqwckb9gtzhsxx.png', 11, 'mk3zggiqwckb9gtzhsxx');
+INSERT INTO images_products (image_url, product_id, image_id) VALUES ('http://res.cloudinary.com/dpfmihznr/image/upload/v1716545996/jcmamc7fs5jijui1f6g9.png', 12, 'jcmamc7fs5jijui1f6g9');
+INSERT INTO images_products (image_url, product_id, image_id) VALUES ('http://res.cloudinary.com/dpfmihznr/image/upload/v1716545998/hemc3rj7jinyg7meuvjm.png', 13, 'hemc3rj7jinyg7meuvjm');
+INSERT INTO images_products (image_url, product_id, image_id) VALUES ('http://res.cloudinary.com/dpfmihznr/image/upload/v1716546000/bk5qqos6lem0thzj5vi1.png', 14, 'bk5qqos6lem0thzj5vi1');
+INSERT INTO images_products (image_url, product_id, image_id) VALUES ('http://res.cloudinary.com/dpfmihznr/image/upload/v1716546001/nuhjqlhgiclfdaxjlbyh.png', 15, 'nuhjqlhgiclfdaxjlbyh');
+INSERT INTO images_products (image_url, product_id, image_id) VALUES ('http://res.cloudinary.com/dpfmihznr/image/upload/v1716549443/woddpcptmetjkheygls7.png', 16, 'woddpcptmetjkheygls7');
+INSERT INTO images_products (image_url, product_id, image_id) VALUES ('http://res.cloudinary.com/dpfmihznr/image/upload/v1716549446/wtidxz1uhggue4qiti4z.png', 17, 'wtidxz1uhggue4qiti4z');
+INSERT INTO images_products (image_url, product_id, image_id) VALUES ('http://res.cloudinary.com/dpfmihznr/image/upload/v1716549448/bixnpbd0soajq7idcfyh.png', 18, 'bixnpbd0soajq7idcfyh');
+INSERT INTO images_products (image_url, product_id, image_id) VALUES ('http://res.cloudinary.com/dpfmihznr/image/upload/v1716549450/ljvn00uq5efdqmyg5uif.png', 21, 'ljvn00uq5efdqmyg5uif');
+INSERT INTO images_products (image_url, product_id, image_id) VALUES ('http://res.cloudinary.com/dpfmihznr/image/upload/v1716549452/rrgbvujjcjlroijgoarg.png', 22, 'rrgbvujjcjlroijgoarg');
+INSERT INTO images_products (image_url, product_id, image_id) VALUES ('http://res.cloudinary.com/dpfmihznr/image/upload/v1716549453/w6v3lain7fkjnli2kqbp.png', 24, 'w6v3lain7fkjnli2kqbp');
+INSERT INTO images_products (image_url, product_id, image_id) VALUES ('http://res.cloudinary.com/dpfmihznr/image/upload/v1716549455/vahcyjaeob3wy1a6e945.png', 25, 'vahcyjaeob3wy1a6e945');
+INSERT INTO images_products (image_url, product_id, image_id) VALUES ('http://res.cloudinary.com/dpfmihznr/image/upload/v1716549457/cdgj03uzxbsa5zdffhuz.png', 26, 'cdgj03uzxbsa5zdffhuz');
+INSERT INTO images_products (image_url, product_id, image_id) VALUES ('http://res.cloudinary.com/dpfmihznr/image/upload/v1716549460/zb5h1rk6z9exqhvdrdzl.png', 27, 'zb5h1rk6z9exqhvdrdzl');
+INSERT INTO images_products (image_url, product_id, image_id) VALUES ('http://res.cloudinary.com/dpfmihznr/image/upload/v1716549461/ugw3ylp6u9ooh8ppqtsc.png', 28, 'ugw3ylp6u9ooh8ppqtsc');
+INSERT INTO images_products (image_url, product_id, image_id) VALUES ('http://res.cloudinary.com/dpfmihznr/image/upload/v1716549469/foar8r2gt9yiwchzxtxb.png', 30, 'foar8r2gt9yiwchzxtxb');
+INSERT INTO images_products (image_url, product_id, image_id) VALUES ('https://res.cloudinary.com/dpfmihznr/image/upload/v1716549778/ymjnxazneaiz5iorz9xu.png', 29, 'ymjnxazneaiz5iorz9xu');

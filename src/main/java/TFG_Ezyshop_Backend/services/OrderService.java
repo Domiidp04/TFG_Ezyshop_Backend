@@ -248,8 +248,17 @@ public class OrderService {
     	return orderRepository.findByUserId(user.get().getId()).stream()
     			.map(OrderDto::new).collect(Collectors.toList());
     }
+    
+    public Long getNumberOfOrders() {
+        return orderRepository.countOrders();
+    }
 
 
-	
+    public Double getTotalBilledAmount() {
+        Double totalBilled = orderRepository.sumPaymentAmount();
+        totalBilled = Math.round(totalBilled * 100.0) / 100.0;
+        return totalBilled;
+    }
+
 
 }

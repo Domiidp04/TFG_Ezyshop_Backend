@@ -87,11 +87,17 @@ public class ProductController {
 		List<?> products = productService.getAllProducts();
 		return new ResponseEntity<>(products, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/{categoryId}/categories")
 	public ResponseEntity<List<?>> getProductsByCategoryId(@PathVariable("categoryId") Long categoryId) {
 		List<?> products = productService.getProductsByCategoryId(categoryId);
 		return new ResponseEntity<>(products, HttpStatus.OK);
 	}
+	
+	@GetMapping("/stock")
+	public Long totalStock() {
+	    return productService.getTotalStock();
+	}
+
 
 }
