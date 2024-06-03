@@ -79,6 +79,9 @@ public class ProductService {
 	@Transactional
 	public Product save(Product product) {
 		Category category = product.getCategoryProduct();
+		if (product.getDisabled() == null) {
+			product.setDisabled(false);
+		}
 		if (category != null) {
 			category.getProducts().add(product);
 			if (category.getProducts().stream().allMatch(Product::getDisabled)) {
@@ -100,6 +103,9 @@ public class ProductService {
 			if (product.getStock() == 0) {
 				product.setDisabled(true);
 			}
+			
+			product.setDisabled(false);
+			System.out.println(product);
 
 			productUpdate = productRepository.save(product);
 			// Forzar la transaccion

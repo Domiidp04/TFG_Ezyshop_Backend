@@ -109,3 +109,4 @@ INSERT INTO images_products (image_url, product_id, image_id) VALUES ('http://re
 INSERT INTO images_products (image_url, product_id, image_id) VALUES ('http://res.cloudinary.com/dpfmihznr/image/upload/v1716549461/ugw3ylp6u9ooh8ppqtsc.png', 28, 'ugw3ylp6u9ooh8ppqtsc');
 INSERT INTO images_products (image_url, product_id, image_id) VALUES ('http://res.cloudinary.com/dpfmihznr/image/upload/v1716549469/foar8r2gt9yiwchzxtxb.png', 30, 'foar8r2gt9yiwchzxtxb');
 INSERT INTO images_products (image_url, product_id, image_id) VALUES ('https://res.cloudinary.com/dpfmihznr/image/upload/v1716549778/ymjnxazneaiz5iorz9xu.png', 29, 'ymjnxazneaiz5iorz9xu');
+
