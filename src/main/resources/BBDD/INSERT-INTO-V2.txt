@@ -110,3 +110,27 @@ INSERT INTO images_products (image_url, product_id, image_id) VALUES ('http://re
 INSERT INTO images_products (image_url, product_id, image_id) VALUES ('http://res.cloudinary.com/dpfmihznr/image/upload/v1716549469/foar8r2gt9yiwchzxtxb.png', 30, 'foar8r2gt9yiwchzxtxb');
 INSERT INTO images_products (image_url, product_id, image_id) VALUES ('https://res.cloudinary.com/dpfmihznr/image/upload/v1716549778/ymjnxazneaiz5iorz9xu.png', 29, 'ymjnxazneaiz5iorz9xu');
 
+--- Insertamos los pedidos
+
+INSERT INTO orders (id, total_amount, shipping_amount, saved_amount, payment_amount, order_date, shipping_date, discount_id, user_id, intent, method, currency, payment, payment_id) VALUES (1, 1051.97, 1.99, NULL, 1051.97, '2024-05-27', NULL, NULL, 2, 'sale', 'paypal', 'EUR', true, 'PAYID-MZKEYJA3PC53753CH5432342');
+INSERT INTO orders (id, total_amount, shipping_amount, saved_amount, payment_amount, order_date, shipping_date, discount_id, user_id, intent, method, currency, payment, payment_id) VALUES (2, 1201.97, 1.99, NULL, 1201.97, '2024-05-28', NULL, NULL, 2, 'sale', 'paypal', 'EUR', false, NULL);
+INSERT INTO orders (id, total_amount, shipping_amount, saved_amount, payment_amount, order_date, shipping_date, discount_id, user_id, intent, method, currency, payment, payment_id) VALUES (3, 0, 1.99, NULL, 0, '2024-05-30', NULL, NULL, 2, 'sale', 'paypal', 'EUR', false, NULL);
+INSERT INTO orders (id, total_amount, shipping_amount, saved_amount, payment_amount, order_date, shipping_date, discount_id, user_id, intent, method, currency, payment, payment_id) VALUES (4, 351.98, 1.99, NULL, 351.98, '2024-05-30', NULL, NULL, 2, 'sale', 'paypal', 'EUR', true, 'PAYID-MZMFU5I3WD22976459689820');
+INSERT INTO orders (id, total_amount, shipping_amount, saved_amount, payment_amount, order_date, shipping_date, discount_id, user_id, intent, method, currency, payment, payment_id) VALUES (5, 501.98, 1.99, NULL, 501.98, '2024-05-31', NULL, NULL, 2, 'sale', 'paypal', 'EUR', false, NULL);
+INSERT INTO orders (id, total_amount, shipping_amount, saved_amount, payment_amount, order_date, shipping_date, discount_id, user_id, intent, method, currency, payment, payment_id) VALUES (6, 1701.97, 1.99, NULL, 1701.97, '2024-05-31', NULL, NULL, 2, 'sale', 'paypal', 'EUR', true, 'PAYID-MZM5QLQ6RM45327JA964221N');
+INSERT INTO orders (id, total_amount, shipping_amount, saved_amount, payment_amount, order_date, shipping_date, discount_id, user_id, intent, method, currency, payment, payment_id) VALUES (7, 101.97, 1.99, NULL, 101.97, '2024-06-01', NULL, NULL, 3, 'sale', 'paypal', 'EUR', true, 'PAYID-MZNTYNY254656679Y842434J');
+INSERT INTO orders (id, total_amount, shipping_amount, saved_amount, payment_amount, order_date, shipping_date, discount_id, user_id, intent, method, currency, payment, payment_id) VALUES (8, 451.98, 1.99, NULL, 451.98, '2024-06-02', NULL, NULL, 3, 'sale', 'paypal', 'EUR', false, NULL);
+
+--- Lineas de pedidos
+
+INSERT INTO orders_products (id, amount, price, order_id, product_id) VALUES (1, 1, 999.99, 1, 15);
+INSERT INTO orders_products (id, amount, price, order_id, product_id) VALUES (2, 1, 49.99, 1, 1);
+INSERT INTO orders_products (id, amount, price, order_id, product_id) VALUES (3, 1, 699.99, 2, 20);
+INSERT INTO orders_products (id, amount, price, order_id, product_id) VALUES (4, 1, 499.99, 2, 29);
+INSERT INTO orders_products (id, amount, price, order_id, product_id) VALUES (5, 1, 349.99, 4, 6);
+INSERT INTO orders_products (id, amount, price, order_id, product_id) VALUES (6, 1, 499.99, 5, 29);
+INSERT INTO orders_products (id, amount, price, order_id, product_id) VALUES (7, 1, 799.99, 6, 17);
+INSERT INTO orders_products (id, amount, price, order_id, product_id) VALUES (8, 1, 899.99, 6, 12);
+INSERT INTO orders_products (id, amount, price, order_id, product_id) VALUES (9, 1, 49.99, 7, 1);
+INSERT INTO orders_products (id, amount, price, order_id, product_id) VALUES (10, 1, 49.99, 7, 1);
+INSERT INTO orders_products (id, amount, price, order_id, product_id) VALUES (11, 1, 449.99, 8, 22);
