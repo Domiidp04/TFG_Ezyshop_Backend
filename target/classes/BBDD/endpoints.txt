@@ -1,0 +1,6 @@
+  -  Productos por novedad -> Productos que tengan discountPrice.
+  -  Ultimos 10 productos -> Filtrar por id hacia abajo.
+  -  Buscar segun palabras -> /products?id=joyas -> Palabras que aparezcan en la description. -> ---  SELECT * FROM products WHERE description LIKE '%Camiseta%basica%';
+  -  Productos mas comprados -> SELECT Products.*, SUM(Orders_Products.amount) as total_amount FROM Orders_Products JOIN Products ON Orders_Products.product_id = Products.id GROUP BY Products.id ORDER BY total_amount DESC;
+  
+  

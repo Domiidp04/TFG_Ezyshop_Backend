@@ -1,0 +1,92 @@
+-------------------------------BODY REGISTER USER------------------------------------------------------
+{
+    "username":"domi",
+    "password":"domi",
+    "email":"domi@domi.com",
+    "name":"Domingo",
+    "lastname":"Dominguez Peinado",
+    "zip":"41520",
+    "street":"Cristo de la misericordia",
+    "number":15
+}
+
+-------------------------------BODY CREAR USER------------------------------------------------------
+{
+    "username":"FER33",
+    "password":"ale",
+    "email":"FE3R3@domi.com",
+    "roleId":2,
+    "name":"Alejandro",
+    "disabled":false,
+    "locked":true,
+    "lastname":"Dominguez Peinado",
+    "zip":"41520",
+    "street":"Cristo de la misericordia",
+    "number":15
+}
+
+-------------------------------BODY UPDATE USER------------------------------------------------------
+{
+    "id":2,
+    "username":"user",
+    "password":"user",
+    "email":"user@user.com",
+    "name":"Usuario",
+    "lastname":"Usuario",
+    "zip":"41520",
+    "street":"Cristo de la misericordia",
+    "number":15
+}
+
+-------------------------------BODY CEATE PRODUCT------------------------------------------------------
+{
+    "title": "ProductNew",
+    "description": "Description Product New",
+    "price": 10.0,
+    "discountPrice": null,
+    "disabled":false,
+    "stock": 100,
+    "categoryId":2
+}
+
+-------------------------------BODY UPDATE PRODUCT------------------------------------------------------
+{
+	"id":20,
+    "title": "ProductNew",
+    "description": "Description Product New",
+    "price": 10.0,
+    "discountPrice": null,
+    "disabled":false,
+    "stock": 100,
+    "categoryId":2
+}
+
+-------------------------------BODY CREATE CATEGORY------------------------------------------------------
+{
+    "title": "Categoria BBBBBBBBB",
+    "description": "Description2Description2Description2"
+}
+
+-------------------------------BODY UPDATE CATEGORY------------------------------------------------------
+{
+	"id":9,
+    "title": "Categoria BBBBBBBBB",
+    "description": "Description2Description2Description2",
+    "id": 9,
+    "disabled": true
+}
+
+-------------------------------BODY CREATE ORDER------------------------------------------------------
+{
+    "orderProducts": [
+        {
+            "productId": 1,
+            "amount": 10
+        },
+        {
+            "productId": 2,
+            "amount": 5
+        }
+    ],
+    "discountCode": "CODE1"
+}
